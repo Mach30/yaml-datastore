@@ -1,0 +1,9 @@
+{
+    "companyName": "ACME, Inc",
+    "employees": [
+      "John",
+      "Anna",
+      "Peter"
+    ],
+    "foundedYear": 1949
+}
