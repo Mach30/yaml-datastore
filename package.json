@@ -1,0 +1,25 @@
+{
+  "name": "fs-yaml",
+  "version": "0.0.0",
+  "description": " Library for Storing and Manipulating Data Across Multiple YAML Files ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mach30/fs-yaml.git"
+  },
+  "keywords": [
+    "yaml",
+    "crud",
+    "filesystem",
+    "datastore"
+  ],
+  "author": "Mach 30",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Mach30/fs-yaml/issues"
+  },
+  "homepage": "https://github.com/Mach30/fs-yaml#readme"
+}
