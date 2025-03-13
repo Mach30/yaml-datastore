@@ -1,5 +1,5 @@
 {
-  "name": "fs-yaml",
+  "name": "yaml-datastore",
   "version": "0.0.0",
   "description": " Library for Storing and Manipulating Data Across Multiple YAML Files ",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mach30/fs-yaml.git"
+    "url": "git+https://github.com/Mach30/yaml-datastore.git"
   },
   "keywords": [
     "yaml",
@@ -19,7 +19,7 @@
   "author": "Mach 30",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Mach30/fs-yaml/issues"
+    "url": "https://github.com/Mach30/yaml-datastore/issues"
   },
-  "homepage": "https://github.com/Mach30/fs-yaml#readme"
+  "homepage": "https://github.com/Mach30/yaml-datastore#readme"
 }
