@@ -4,7 +4,7 @@
   "description": " Library for Storing and Manipulating Data Across Multiple YAML Files ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc mocha --forbid-only"
   },
   "repository": {
     "type": "git",
