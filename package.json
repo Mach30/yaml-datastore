@@ -11,7 +11,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "nyc mocha --forbid-only"
+    "test": "nyc mocha --forbid-only",
+    "lint": "eslint ./src/**/*.ts"
   },
   "repository": {
     "type": "git",
