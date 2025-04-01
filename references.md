@@ -7,3 +7,4 @@
 - [typedoc-plugin-markdown](https://typedoc-plugin-markdown.org/docs/quick-start)
 - [Remove --experimental-loader ExperimentalWarning as the option doesn't exist anymore / is no longer experimental #51196](https://github.com/nodejs/node/issues/51196)
 - [How to run mocha with the tsx TypeScript runner](https://stackoverflow.com/questions/78098004/how-to-run-mocha-with-the-tsx-typescript-runner)
+- [Unknown file extension ".ts" for a TypeScript file](https://stackoverflow.com/questions/62096269/unknown-file-extension-ts-for-a-typescript-file)
