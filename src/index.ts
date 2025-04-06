@@ -1,1 +1,1 @@
-//export * from "./idgen.js";
+export { generateIDs } from "./idgen.js";

@@ -4,6 +4,9 @@ import prand from "pure-rand";
 const seed = 79 + 83 + 72 + 87;
 let rng = prand.xorshift128plus(seed);
 
+// List of Hexidecimal Characters
+const chars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+
 /**
  * Returns a set of uniformly distributed integers between lBound and uBound, inclusive
  *
@@ -38,4 +41,43 @@ export function uniformints(
  */
 export function resetRNG() {
   rng = prand.xorshift128plus(seed);
+}
+
+/**
+ * Returns a list of short ID's
+ * 
+ * @param numIDs number of short ID's to generate
+ * @param numSkip a kind of starting index for short ID's
+ * @returns a list of short ID's or empty array if numIDs is not an integer or less than one or numSkip is not an integer or less than 0
+ */
+export function generateIDs(numIDs: number, numSkip: number): string[] {
+  // Reset RNG
+  resetRNG();
+
+  // Hardcoded ID length
+  const idLen = 6;
+
+  const lBound = 0;
+  const uBound = 15;
+
+  let result: string[] = [];
+
+  if (
+    Number.isInteger(numIDs) &&
+    Number.isInteger(numSkip) &&
+    numIDs > 0 &&
+    numSkip >= 0
+  ) {
+    for (let i = 0; i < numSkip; i++) {
+      uniformints(lBound, uBound, idLen);
+    }
+
+    for (let i = 0; i < numIDs; i++) {
+      let indices = uniformints(lBound, uBound, idLen);
+      let id = chars[indices[0]]+chars[indices[1]]+chars[indices[2]]+chars[indices[3]]+chars[indices[4]]+chars[indices[5]];
+      result.push(id);
+    }
+  }
+
+  return result;
 }
