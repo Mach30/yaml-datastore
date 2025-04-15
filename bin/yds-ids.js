@@ -15,6 +15,7 @@ if ( numArgs == 0 || argv[2] == "--help" ) {
     console.log("  numIDs       number of IDs to generate")
     console.log("  numSkip      number of IDs to skip before generating")
     console.log("")
+    process.exit(0)
 }
 
 const numIDs = parseInt(argv[2]);
