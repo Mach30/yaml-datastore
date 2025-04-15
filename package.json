@@ -15,6 +15,9 @@
     "docs": "typedoc",
     "lint": "eslint ./src/**/*.ts"
   },
+  "bin": {
+    "yds-ids": "./bin/yds-ids.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mach30/yaml-datastore.git"
