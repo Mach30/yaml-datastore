@@ -1,7 +1,7 @@
 {
-    "name": "John Smith",
-    "age": 42,
-    "attending": true,
-    "plusOne": null,
-    "state": "WA"
+  "name": "John Smith",
+  "age": 42,
+  "attending": true,
+  "plusOne": null,
+  "state": "WA"
 }
