@@ -1,0 +1,19 @@
+{
+    "myObj": {
+      "lyrics_txt": "Mary had a little lamb,\nIt's fleece was white as snow;\nAnd everywhere that Mary went\nThe lamb was sure to go.",
+      "personInfo": {
+        "name": "John Smith",
+        "age": 42,
+        "attending": true,
+        "plusOne": null,
+        "state": "WA"
+      },
+      "primeNumbers": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ]
+    }
+  }
