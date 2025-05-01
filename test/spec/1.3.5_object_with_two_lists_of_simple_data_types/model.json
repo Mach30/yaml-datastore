@@ -1,0 +1,16 @@
+{
+  "personInfo1": [
+    "James T. Kirk",
+    32,
+    false,
+    null,
+    "IA"
+  ],
+  "personInfo2": [
+    "Spock",
+    35,
+    false,
+    null,
+    "Vulcan"
+  ]
+}
