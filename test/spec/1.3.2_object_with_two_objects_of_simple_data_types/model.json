@@ -1,0 +1,17 @@
+{
+  "firstName": "Tony",
+  "lastName": "Stark",
+  "age": 48,
+  "address1": {
+    "streetAddress": "10880 Malibu Point",
+    "city": "Malibu",
+    "state": "CA",
+    "postalCode": "90265"
+  },
+  "address2": {
+    "streetAddress": "200 Park Ave",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10166"
+  }
+}
