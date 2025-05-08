@@ -61,8 +61,8 @@ temporary list of specs in markdown
 - 2.1_list_of_simple_data_types: all contents are simple
 - 2.2_list_of_complex_data_type
   - 2.2.1_list_of_complex_string
-  - 2.2.2_list_of_object_of_simple_data_types
-  - 2.2.3_list_of_object_of_complex_data_types
+  - 2.2.2_list_of_objects_of_simple_data_types
+  - 2.2.3_list_of_objects_of_complex_data_types
   - 2.2.4_list_of_list_of_simple_data_type
   - 2.2.5_list_of_list_of_simple_data_types
   - 2.2.6_list_of_list_of_complex_strings
