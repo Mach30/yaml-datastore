@@ -1,0 +1,34 @@
+{
+  "ncc1701Commanders": [
+    {
+      "name": "James T. Kirk",
+      "age": 32,
+      "attending": false,
+      "plusOne": null,
+      "state": "IA"
+    },
+    {
+      "name": "Spock",
+      "age": 35,
+      "attending": false,
+      "plusOne": null,
+      "state": "Vulcan"
+    }
+  ],
+  "ncc1701dCommanders": [
+    {
+      "name": "Jean Luc Picard",
+      "age": 59,
+      "attending": true,
+      "plusOne": null,
+      "state": "CA"
+    },
+    {
+      "name": "William T. Riker",
+      "age": 29,
+      "attending": true,
+      "plusOne": null,
+      "state": "AK"
+    }
+  ]
+}
