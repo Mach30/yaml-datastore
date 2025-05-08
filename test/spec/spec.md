@@ -55,6 +55,9 @@ temporary list of specs in markdown
   - 1.3.7_object_with_two_lists_of_complex_data_types
     - 1.3.7.1_object_with_two_lists_of_objects_of_simple_data_types
     - 1.3.7.2_object_with_two_lists_of_list_of_simple_data_type
+- 1.4_object_with_empty_elements
+  - 1.4.1_object_with_empty_object
+  - 1.4.2_object_with_empty_list
 
 ### lists
 
@@ -69,6 +72,9 @@ temporary list of specs in markdown
   - 2.2.7_list_of_list_of_complex_data_types
     - 2.2.7.1_list_of_list_of_objects_of_simple_data_types
     - 2.2.7.2_list_of_list_of_list_of_simple_data_type
+- 2.3_list_with_empty_elements
+  - 2.3.1_list_with_empty_object
+  - 2.3.2_list_with_empty_list
 
 ### representative objects
 

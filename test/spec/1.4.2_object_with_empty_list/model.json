@@ -1,0 +1,17 @@
+{
+  "license": "CC0",
+  "parts": {
+    "filament": {
+      "id": "filament",
+      "description": "Filament",
+      "quantity": 1.6,
+      "quantityUnits": "g",
+      "options": ["pla-filament-generic"],
+      "selectedOption": 0,
+      "notes": "Thickness to match selected 3D printer specs",
+      "descriptionLong": "filament: Filament",
+      "descriptionSelected": "filament: Filament (PLA Filament (generic) v1.0.0)"
+    }
+  },
+  "precautions": []
+}
