@@ -1,0 +1,5 @@
+firstName: Tony
+lastName: Stark
+age: 48
+address1: ((address1/_this.yaml))
+address2: ((address2/_this.yaml))
