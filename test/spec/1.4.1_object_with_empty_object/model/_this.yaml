@@ -1,0 +1,3 @@
+license: CC0
+parts: ((parts/_this.yaml))
+tools: ((tools/_this.yaml))
