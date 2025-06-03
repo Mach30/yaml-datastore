@@ -1,9 +1,9 @@
-name: trrs-wssm-jig
+id: pla-filament-generic
 version: "1.0.0"
-description: TRRS Wheel Speed Sensor Module Jig
-license: (CERN-OHL-1.2 AND Unlicense AND CC-BY-SA-3.0)
+description: PLA Filament (generic)
+license: (Unlicense AND CC0-1.0)
 author: Model B Rev 2, LLC (http://modelb.biz)
-dependencies: ((dependencies/_this.yaml))
+dependencies: ((dependncies/_this.yaml))
 components: ((components/_this.yaml))
 parts: ((parts/_this.yaml))
 tools: ((tools/_this.yaml))

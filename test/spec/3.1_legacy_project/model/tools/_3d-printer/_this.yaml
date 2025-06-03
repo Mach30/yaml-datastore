@@ -1,0 +1,9 @@
+id: _3d-printer
+description: 3D Printer
+quantity: 1
+quantityUnits: part
+options: ((options.yaml))
+selectedOptions: 0
+notes: Any FDM 3D printer compatible with selected filament
+descriptionLong: "_3d-printer: 3D Printer"
+descriptionSelected: "_3d-printer: 3D Printer (3D Printer (generic) v1.0.0)"
