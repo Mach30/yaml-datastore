@@ -1,0 +1,4 @@
+3d-printer-generic: ((3d-printer-generic/_this.yaml))
+pc-generic: ((pc-generic/_this.yaml))
+pla-filament-generic: ((pla-filament-generic/_this.yaml))
+slicer-software-generic: ((slicer-software-generic/_this.yaml))

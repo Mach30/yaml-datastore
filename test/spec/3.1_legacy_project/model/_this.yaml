@@ -1,0 +1,10 @@
+name: trrs-wssm-jig
+version: "1.0.0"
+license: (CERN-OHL-1.2 AND Unlicense AND CC-BY-SA-3.0)
+author: Model B Rev 2, LLC (http://modelb.biz)
+dependencies: ((dependencies/_this.yaml))
+components: ((components/_this.yaml))
+parts: ((parts/_this.yaml))
+tools: ((tools/_this.yaml))
+precautions: ((precautions/_this.yaml))
+assemblySteps: ((assemblySteps/_this.yaml))
