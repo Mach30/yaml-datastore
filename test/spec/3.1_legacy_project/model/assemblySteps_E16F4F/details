@@ -1,0 +1,10 @@
+. Launch the *Slicer* software on your *Personal Computer*
+. Open the _trrs-wssm-jig.stl_ geometry file in the *Slicer*
+. (Optional) Suggested settings for *Slicer*, otherwise use default settings for selected *Filament*
+.. Create Raft = True
+.. Skirt Distance = Far (10mm)
+.. Generate Support Material = True
+.. Support Percent = 30%
+. Ensure *Filament* is loaded in the *3D Printer*
+. Print the sliced geometry following the manufacturer's instructions for the *3D Printer*
+. Remove the completed *TRRS Wheel Speed Sensor Module Jig* from the *3D Printer*

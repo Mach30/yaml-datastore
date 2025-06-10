@@ -1,0 +1,9 @@
+id: slicer
+description: Slicer
+quantity: 1
+quantityUnits: part
+options: ((options.yaml))
+selectedOptions: 0
+notes: User's choice of slicer software
+descriptionLong: "slicer: Slicer"
+descriptionSelected: "slicer: Slicer (Slicer Software (generic) v1.0.0)"
