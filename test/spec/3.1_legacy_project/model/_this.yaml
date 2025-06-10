@@ -3,9 +3,9 @@ version: "1.0.0"
 description: TRRS Wheel Speed Sensor Module Jig
 license: (CERN-OHL-1.2 AND Unlicense AND CC-BY-SA-3.0)
 author: Model B Rev 2, LLC (http://modelb.biz)
-dependencies: ((dependencies/_this.yaml))
+dependencies: {}
 components: ((components/_this.yaml))
 parts: ((parts/_this.yaml))
 tools: ((tools/_this.yaml))
-precautions: ((precautions.yaml))
+precautions: []
 assemblySteps: ((assemblySteps.yaml))

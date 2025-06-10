@@ -1,4 +1,4 @@
 summary: ""
-requiredParts: ((requiredParts.yaml))
-requiredTools: ((requiredTools.yaml))
+requiredParts: []
+requiredTools: []
 details: ((details))

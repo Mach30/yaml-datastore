@@ -1,5 +1,5 @@
 id: filament
-description: filament
+description: Filament
 quantity: 1.6
 quantityUnits: g
 options: ((options.yaml))
