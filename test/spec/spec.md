@@ -10,6 +10,8 @@ temporary list of specs in markdown
 - numbers
 - booleans
 - null
+- empty object
+- empty list
 
 ### complex
 
