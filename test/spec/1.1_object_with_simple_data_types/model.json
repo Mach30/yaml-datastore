@@ -3,5 +3,8 @@
   "age": 42,
   "attending": true,
   "plusOne": null,
-  "state": "WA"
+  "state": "WA",
+  "degrees": {},
+  "aliases": [],
+  "notes": ""
 }
