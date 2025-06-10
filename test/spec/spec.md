@@ -80,4 +80,4 @@ temporary list of specs in markdown
 
 ### representative objects
 
-- 3.1_project
+- 3.1_legacy_project
