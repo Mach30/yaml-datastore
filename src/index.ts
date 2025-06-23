@@ -1,2 +1,2 @@
 export { generateIDs } from "./idgen.js";
-export { LoadResult } from "./read.js";
+export { LoadResult, load } from "./read.js";

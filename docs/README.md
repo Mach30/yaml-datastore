@@ -11,3 +11,4 @@
 ## Functions
 
 - [generateIDs](functions/generateIDs.md)
+- [load](functions/load.md)
