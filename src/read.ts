@@ -1,5 +1,5 @@
 export class LoadResult {
-  private _success: boolean; //TODO: on success, message contains element path
+  private _success: boolean;
   private _element: any;
   private _message: string;
 
@@ -14,6 +14,7 @@ export class LoadResult {
   public get element() {
     return this._element;
   }
+  /** contains element path on success */
   public get message() {
     return this._message;
   }
