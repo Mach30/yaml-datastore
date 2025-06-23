@@ -6,7 +6,7 @@
 
 # Class: LoadResult
 
-Defined in: [read.ts:1](https://github.com/Mach30/yaml-datastore/blob/2321b7b4162b7259486f91f31a076109f35c0963/src/read.ts#L1)
+Defined in: [read.ts:1](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L1)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [read.ts:1](https://github.com/Mach30/yaml-datastore/blob/2321b7b416
 
 > **new LoadResult**(`success`, `element`, `message`): `LoadResult`
 
-Defined in: [read.ts:6](https://github.com/Mach30/yaml-datastore/blob/2321b7b4162b7259486f91f31a076109f35c0963/src/read.ts#L6)
+Defined in: [read.ts:6](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L6)
 
 #### Parameters
 
@@ -42,7 +42,7 @@ Defined in: [read.ts:6](https://github.com/Mach30/yaml-datastore/blob/2321b7b416
 
 > **get** **element**(): `any`
 
-Defined in: [read.ts:14](https://github.com/Mach30/yaml-datastore/blob/2321b7b4162b7259486f91f31a076109f35c0963/src/read.ts#L14)
+Defined in: [read.ts:14](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L14)
 
 ##### Returns
 
@@ -56,7 +56,9 @@ Defined in: [read.ts:14](https://github.com/Mach30/yaml-datastore/blob/2321b7b41
 
 > **get** **message**(): `string`
 
-Defined in: [read.ts:17](https://github.com/Mach30/yaml-datastore/blob/2321b7b4162b7259486f91f31a076109f35c0963/src/read.ts#L17)
+Defined in: [read.ts:18](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L18)
+
+contains element path on success
 
 ##### Returns
 
@@ -70,7 +72,7 @@ Defined in: [read.ts:17](https://github.com/Mach30/yaml-datastore/blob/2321b7b41
 
 > **get** **success**(): `boolean`
 
-Defined in: [read.ts:11](https://github.com/Mach30/yaml-datastore/blob/2321b7b4162b7259486f91f31a076109f35c0963/src/read.ts#L11)
+Defined in: [read.ts:11](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L11)
 
 ##### Returns
 
