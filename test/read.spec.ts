@@ -4,11 +4,11 @@ import fs from "node:fs";
 import path from "path";
 
 describe("Test load function", () => {
-  it("should return a LoadResult object where success is false, element is null, and message is an empty string, given an empty working directory path and empty element path", () => {
+  it("should return a LoadResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path", () => {
     const result = load("", "");
     expect(result.success).to.equal(false);
     expect(result.element).to.equal(null);
-    expect(result.message).to.equal("");
+    expect(result.message).to.equal(""); // TODO: make this correct error message string for empty directory path
   });
   it("should return a LoadResult object where success is true and message is a string containing element path, given a valid working directory path and element path", () => {
     // Get list of items in current directory
