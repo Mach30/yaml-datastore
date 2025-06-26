@@ -14,7 +14,7 @@ export class LoadResult {
   public get element() {
     return this._element;
   }
-  /** contains element path on success */
+  /** contains element path on success or an explanation of the failure */
   public get message() {
     return this._message;
   }
