@@ -12,16 +12,26 @@ describe("Test load function", () => {
     expect(result.message).to.equal("");
   });
   it("should return a LoadResult object where success is true and message is a string containing element path, given a valid working directory path and element path", () => {
-    const specDirName = "1.1_object_with_simple_data_types/";
-    const workingDirectoryPath = path.join("test/spec", specDirName);
-    const result = load(workingDirectoryPath, "model");
-    const model = fs.readFileSync(
-      path.resolve(workingDirectoryPath, "model.json"),
-      "utf8"
-    );
-    console.log(model);
-    //expect(result.success).to.equal(true);
-    //expect(result.element).to.equal(model.toString());
-    //expect(result.message).to.equal("model");
+    // Get list of items in current directory
+    const rawSpecDir = fs.readdirSync("test/spec");
+
+    // Filter only directories (excluding hidden ones if desired)
+    const specDir = rawSpecDir.filter((rawSpecDir) => {
+      const fullPath = path.join("test/spec", rawSpecDir);
+      return fs.statSync(fullPath).isDirectory();
+    });
+
+    for (let spec of specDir) {
+      const workingDirectoryPath = path.join("test/spec", spec);
+      const result = load(workingDirectoryPath, "model");
+      const model = fs.readFileSync(
+        path.resolve(workingDirectoryPath, "model.json"),
+        "utf8"
+      );
+      console.log(model);
+      //expect(result.success).to.equal(true);
+      //expect(result.element).to.equal(model.toString());
+      //expect(result.message).to.equal("model");
+    }
   });
 });
