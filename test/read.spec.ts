@@ -1,6 +1,5 @@
 import { load } from "../src/index";
 import { expect } from "chai";
-import shell from "shelljs";
 import fs from "node:fs";
 import path from "path";
 
