@@ -8,7 +8,7 @@
 
 > **load**(`workingDirectoryPath`, `elementPath`, `depth`): [`LoadResult`](../classes/LoadResult.md)
 
-Defined in: load.ts:30
+Defined in: [load.ts:44](https://github.com/Mach30/yaml-datastore/blob/107c3021f004a56bd84cceb19e99ed5c9de4599c/src/load.ts#L44)
 
 Returns a in-memory representation of the element in working directory specified by element path
 
@@ -35,3 +35,5 @@ integer from -1 to depth of element indicating how deep into element's hierachy 
 ## Returns
 
 [`LoadResult`](../classes/LoadResult.md)
+
+a LoadResult containing the status and content of the load function

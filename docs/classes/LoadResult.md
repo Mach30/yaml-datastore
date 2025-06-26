@@ -6,7 +6,9 @@
 
 # Class: LoadResult
 
-Defined in: load.ts:1
+Defined in: [load.ts:4](https://github.com/Mach30/yaml-datastore/blob/107c3021f004a56bd84cceb19e99ed5c9de4599c/src/load.ts#L4)
+
+Represents results of a call to the load function
 
 ## Constructors
 
@@ -14,7 +16,9 @@ Defined in: load.ts:1
 
 > **new LoadResult**(`success`, `element`, `message`): `LoadResult`
 
-Defined in: load.ts:6
+Defined in: [load.ts:17](https://github.com/Mach30/yaml-datastore/blob/107c3021f004a56bd84cceb19e99ed5c9de4599c/src/load.ts#L17)
+
+Default constructor for LoadResult
 
 #### Parameters
 
@@ -22,17 +26,25 @@ Defined in: load.ts:6
 
 `boolean`
 
+success status of load() operation
+
 ##### element
 
 `any`
+
+element read into memory by load() operation
 
 ##### message
 
 `string`
 
+message describing success status of load() operation
+
 #### Returns
 
 `LoadResult`
+
+new LoadResult object
 
 ## Accessors
 
@@ -42,11 +54,13 @@ Defined in: load.ts:6
 
 > **get** **element**(): `any`
 
-Defined in: load.ts:14
+Defined in: [load.ts:27](https://github.com/Mach30/yaml-datastore/blob/107c3021f004a56bd84cceb19e99ed5c9de4599c/src/load.ts#L27)
 
 ##### Returns
 
 `any`
+
+element read into memory on success or null on failure.
 
 ***
 
@@ -56,13 +70,13 @@ Defined in: load.ts:14
 
 > **get** **message**(): `string`
 
-Defined in: load.ts:18
-
-contains element path on success or an explanation of the failure
+Defined in: [load.ts:31](https://github.com/Mach30/yaml-datastore/blob/107c3021f004a56bd84cceb19e99ed5c9de4599c/src/load.ts#L31)
 
 ##### Returns
 
 `string`
+
+element path on success or an explanation of the failure.
 
 ***
 
@@ -72,8 +86,10 @@ contains element path on success or an explanation of the failure
 
 > **get** **success**(): `boolean`
 
-Defined in: load.ts:11
+Defined in: [load.ts:23](https://github.com/Mach30/yaml-datastore/blob/107c3021f004a56bd84cceb19e99ed5c9de4599c/src/load.ts#L23)
 
 ##### Returns
 
 `boolean`
+
+success status.
