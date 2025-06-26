@@ -13,11 +13,7 @@ describe("Test load function", () => {
   });
   it("should return a LoadResult object with true success and message containing element path given a valid working directory path and element path", () => {
     const specDirName = "1.1_object_with_simple_data_types/";
-    const specRelativePath = path.join("test/spec", specDirName);
-    shell.cp("-r", specRelativePath, "/tmp");
-    const tmpSpecPath = path.join("/tmp", specDirName);
-    shell.cd(tmpSpecPath);
-    const workingDirectoryPath = shell.pwd().stdout;
+    const workingDirectoryPath = path.join("test/spec", specDirName);
     const result = load(workingDirectoryPath, "model");
     const model = fs.readFileSync(
       path.resolve(workingDirectoryPath, "model.json"),
@@ -27,6 +23,5 @@ describe("Test load function", () => {
     //expect(result.success).to.equal(true);
     //expect(result.element).to.equal(model.toString());
     //expect(result.message).to.equal("model");
-    shell.cmd("rm", "-rf", tmpSpecPath);
   });
 });
