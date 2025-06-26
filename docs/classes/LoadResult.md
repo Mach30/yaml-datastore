@@ -6,7 +6,7 @@
 
 # Class: LoadResult
 
-Defined in: [read.ts:1](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L1)
+Defined in: load.ts:1
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [read.ts:1](https://github.com/Mach30/yaml-datastore/blob/a68a7a7503
 
 > **new LoadResult**(`success`, `element`, `message`): `LoadResult`
 
-Defined in: [read.ts:6](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L6)
+Defined in: load.ts:6
 
 #### Parameters
 
@@ -42,7 +42,7 @@ Defined in: [read.ts:6](https://github.com/Mach30/yaml-datastore/blob/a68a7a7503
 
 > **get** **element**(): `any`
 
-Defined in: [read.ts:14](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L14)
+Defined in: load.ts:14
 
 ##### Returns
 
@@ -56,9 +56,9 @@ Defined in: [read.ts:14](https://github.com/Mach30/yaml-datastore/blob/a68a7a750
 
 > **get** **message**(): `string`
 
-Defined in: [read.ts:18](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L18)
+Defined in: load.ts:18
 
-contains element path on success
+contains element path on success or an explanation of the failure
 
 ##### Returns
 
@@ -72,7 +72,7 @@ contains element path on success
 
 > **get** **success**(): `boolean`
 
-Defined in: [read.ts:11](https://github.com/Mach30/yaml-datastore/blob/a68a7a750328e67f616d31239ee50b9cadd57721/src/read.ts#L11)
+Defined in: load.ts:11
 
 ##### Returns
 
