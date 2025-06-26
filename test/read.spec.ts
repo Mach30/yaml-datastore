@@ -5,13 +5,13 @@ import fs from "node:fs";
 import path from "path";
 
 describe("Test load function", () => {
-  it("should return a LoadResult object with success equals false, element equals null, and message equals empty string, given an empty working directory path, and empty element path", () => {
+  it("should return a LoadResult object where success is false, element is null, and message is an empty string, given an empty working directory path and empty element path", () => {
     const result = load("", "");
     expect(result.success).to.equal(false);
     expect(result.element).to.equal(null);
     expect(result.message).to.equal("");
   });
-  it("should return a LoadResult object with true success and message containing element path given a valid working directory path and element path", () => {
+  it("should return a LoadResult object where success is true and message is a string containing element path, given a valid working directory path and element path", () => {
     const specDirName = "1.1_object_with_simple_data_types/";
     const workingDirectoryPath = path.join("test/spec", specDirName);
     const result = load(workingDirectoryPath, "model");
