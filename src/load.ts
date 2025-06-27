@@ -16,7 +16,11 @@ export class LoadResult {
    */
   constructor(success: boolean, element: any, message: string) {
     this._success = success;
-    this._element = element;
+    if (this._success) {
+      this._element = element;
+    } else {
+      this._element = null;
+    }
     this._message = message;
   }
   /** @returns success status. */
