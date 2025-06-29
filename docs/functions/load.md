@@ -8,7 +8,7 @@
 
 > **load**(`workingDirectoryPath`, `elementPath`, `depth`): [`LoadResult`](../classes/LoadResult.md)
 
-Defined in: [load.ts:66](https://github.com/Mach30/yaml-datastore/blob/28471083cfa333dfd0cf338ce5a0885ada63858b/src/load.ts#L66)
+Defined in: [load.ts:52](https://github.com/Mach30/yaml-datastore/blob/89fdca848a70e744e3dc591eccee1ffc52a5f89e/src/load.ts#L52)
 
 Returns a in-memory representation of the element in working directory specified by element path
 
@@ -18,7 +18,7 @@ Returns a in-memory representation of the element in working directory specified
 
 `string`
 
-relative or absolute file path to working directory containing yaml-datastore serialized content
+relative or absolute path to working directory containing yaml-datastore serialized content
 
 ### elementPath
 
