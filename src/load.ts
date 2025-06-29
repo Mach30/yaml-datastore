@@ -1,3 +1,7 @@
+import shell from "shelljs";
+import path from "path";
+import yaml from "js-yaml";
+
 /**
  * Represents results of a call to the load function
  */
@@ -50,5 +54,19 @@ export function load(
   elementPath: string,
   depth: number = -1
 ): LoadResult {
+  const lsWorkingDirectoryPath = shell.ls(workingDirectoryPath).stdout;
+  if (
+    workingDirectoryPath != "" &&
+    lsWorkingDirectoryPath.includes(elementPath) &&
+    depth == -1
+  ) {
+    const relativeElementPath = path.join(workingDirectoryPath, elementPath);
+    const lsElementPath = shell.ls(relativeElementPath).stdout;
+    if (lsElementPath.includes("_this.yaml")) {
+      const thisYamlPath = path.join(relativeElementPath, "_this.yaml");
+      const thisYaml = yaml.load(shell.cat(thisYamlPath).stdout);
+      return new LoadResult(true, thisYaml, elementPath);
+    }
+  }
   return new LoadResult(false, null, "");
 }
