@@ -81,7 +81,7 @@ export function load(
       const thisYamlFullPath = path.join(fullElementDirPath, "_this.yaml");
       let thisYaml = yaml.load(shell.cat(thisYamlFullPath).stdout);
       // iterate through elements of thisYaml and replace ((filepath)) with its associated complex data type
-      Object.entries(thisYaml).forEach(([key, value]) => {
+      Object.entries(thisYaml as any).forEach(([key, value]) => {
         const regex = /\(\(.*\)\)/;
         const re = new RegExp(regex);
         if (typeof value == "string") {
