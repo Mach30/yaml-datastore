@@ -87,7 +87,7 @@ export function load(
         if (typeof value == "string") {
           if (re.test(value.toString())) {
             // parse filepath from ((filepath))
-            const aComplexDataTypeFilePath = value
+            const aComplexDataTypeFilePath = (value as any)
               .match(regex)[0]
               .split("((")[1]
               .split("))")[0];
