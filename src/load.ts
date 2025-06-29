@@ -104,7 +104,7 @@ export function load(
               .split("/")
               .slice(-2, -1)
               .join("/");
-            thisYaml[key] = load(
+            (thisYaml as any)[key] = load(
               newWorkingDirectoryPath,
               newElementPath
             ).element;
