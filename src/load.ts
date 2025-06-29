@@ -42,23 +42,9 @@ export class LoadResult {
 }
 
 /**
- * Returns a relative directory path for a given elementPath
- *
- * @param elementPath object path (dot separated, with support for bracketed indexing for list elements or key-value pairs in objects) from working directory to element to be read into memory (e.g., top-element.sub-element.property[3])
- */
-function toElementDirPath(elementPath: string): string {
-  const elementPathAsArray = elementPath.split(".");
-  if (elementPathAsArray.length > 1) {
-    return elementPath.split(".").slice(0, -1).join("/");
-  } else {
-    return elementPath;
-  }
-}
-
-/**
  * Returns a in-memory representation of the element in working directory specified by element path
  *
- * @param workingDirectoryPath relative or absolute file path to working directory containing yaml-datastore serialized content
+ * @param workingDirectoryPath relative or absolute path to working directory containing yaml-datastore serialized content
  * @param elementPath object path (dot separated, with support for bracketed indexing for list elements or key-value pairs in objects) from working directory to element to be read into memory (e.g., top-element.sub-element.property[3])
  * @param depth integer from -1 to depth of element indicating how deep into element's hierachy to read into memory (-1 = read full depth. Defaults to -1)
  * @returns a LoadResult containing the status and content of the load function
@@ -69,7 +55,20 @@ export function load(
   depth: number = -1
 ): LoadResult {
   const lsWorkingDirectoryPath = shell.ls(workingDirectoryPath).stdout;
-  const elementDirPath = toElementDirPath(elementPath);
+
+  // parse elementPath as relative (file or directory) path
+  let elementDirPath = elementPath;
+  //const elementPathAsArray = elementPath.split(".");
+  // if (elementPathAsArray.length == 1) {
+  //let elementPathAsRelativePath = elementPathAsArray.join("/");
+  //let lsElementPathAsRelativePath = shell.ls(elementPathAsRelativePath).stdout;
+  // determine if elementPath is an object
+  //if (lsElementPathAsRelativePath.includes("_this.yaml")) {
+  //  elementDirPath = elementPathAsRelativePath;
+  //console.log(workingDirectoryPath, elementDirPath);
+  //}
+  // }
+
   if (
     workingDirectoryPath != "" &&
     lsWorkingDirectoryPath.includes(elementDirPath) &&
@@ -77,6 +76,7 @@ export function load(
   ) {
     const fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
     const lsfullElementDirPath = shell.ls(fullElementDirPath).stdout;
+    // determine if elementDirPath is an object
     if (lsfullElementDirPath.includes("_this.yaml")) {
       const thisYamlFullPath = path.join(fullElementDirPath, "_this.yaml");
       let thisYaml = yaml.load(shell.cat(thisYamlFullPath).stdout);
@@ -100,10 +100,24 @@ export function load(
               .split("/")
               .slice(0, -2)
               .join("/");
-            const newElementPath = fullElementDirPath
-              .split("/")
-              .slice(-2, -1)
-              .join("/");
+            let newElementPath = "";
+            if (fullElementDirPath.includes("_this.yaml")) {
+              newElementPath = fullElementDirPath
+                .split("/")
+                .slice(-2, -1)
+                .join(".");
+            } else {
+              const fullElementDirPathAsArray = fullElementDirPath
+                .split("/")
+                .slice(-2, -1);
+              const elementName = fullElementDirPath
+                .split("/")
+                .slice(-1)[0]
+                .replace(".yaml", "")
+                .replace(".", "_");
+              fullElementDirPathAsArray.push(elementName);
+              (newElementPath as any) = fullElementDirPathAsArray.join(".");
+            }
             (thisYaml as any)[key] = load(
               newWorkingDirectoryPath,
               newElementPath
@@ -111,7 +125,6 @@ export function load(
           }
         }
       });
-      //console.log(thisYaml);
       return new LoadResult(true, thisYaml, elementPath);
     }
   }
