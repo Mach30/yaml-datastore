@@ -59,26 +59,63 @@ export function load(
     let elementPathAsRelativePath = elementPath;
     const elementPathAsArray = elementPath.split(".");
     if (elementPathAsArray.length > 1) {
+      // handle case where element filename has underscores
       const elementDirPath = elementPathAsArray.slice(0, -1).join("/");
       const elementSplitName = elementPathAsArray.slice(-1)[0].split("_");
+      let elementName = "";
+      let elementExt = "";
       let elementFilename = "";
+      let fullElementDirPath = "";
+      let lsFullElementDirPath = "";
+      let fullElementFilePath = "";
       if (elementSplitName.length > 1) {
-        // handle case where element is a text document
-        const elementName = elementSplitName.slice(0, -1).join("_");
-        const elementExt = elementSplitName.slice(-1)[0];
+        // handle case where element is a YAML file
+        elementName = elementSplitName.join("_");
+        elementExt = "yaml";
         elementFilename = [elementName, elementExt].join(".");
-        elementPathAsRelativePath = path.join(elementDirPath, elementFilename);
-        const fullElementDirPath = path.join(
-          workingDirectoryPath,
-          elementPathAsRelativePath
-        );
-        const elementAsString = shell.cat(fullElementDirPath);
-        return new LoadResult(true, elementAsString, elementPath);
+        fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
+        lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
+        if (lsFullElementDirPath.includes(elementFilename)) {
+          fullElementFilePath = path.join(fullElementDirPath, elementFilename);
+          const elementContent = shell.cat(fullElementFilePath);
+          return new LoadResult(true, elementContent, elementPath);
+        }
+
+        // handle case where element is a text document
+        elementName = elementSplitName.slice(0, -1).join("_");
+        elementExt = elementSplitName.slice(-1)[0];
+        elementFilename = [elementName, elementExt].join(".");
+        fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
+        lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
+        if (lsFullElementDirPath.includes(elementFilename)) {
+          fullElementFilePath = path.join(fullElementDirPath, elementFilename);
+          const elementContent = shell.cat(fullElementFilePath);
+          return new LoadResult(true, elementContent, elementPath);
+        }
       } else {
-        // handle case where element is a text document, YAML file, or directory
-        const elementName = elementSplitName[0];
+        // handle case where element filename doesn't have underscores
+        elementName = elementSplitName.join("");
+
+        // handle case where element is a YAML file
+        elementExt = "yaml";
+        elementFilename = [elementName, elementExt].join(".");
+        fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
+        lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
+        if (lsFullElementDirPath.includes(elementFilename)) {
+          fullElementFilePath = path.join(fullElementDirPath, elementFilename);
+          const elementContent = shell.cat(fullElementFilePath);
+          return new LoadResult(true, elementContent, elementPath);
+        }
+
+        // handle case where element is a text document
         elementFilename = elementName;
-        elementPathAsRelativePath = path.join(elementDirPath, elementFilename);
+        fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
+        lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
+        if (lsFullElementDirPath.includes(elementFilename)) {
+          fullElementFilePath = path.join(fullElementDirPath, elementFilename);
+          const elementContent = shell.cat(fullElementFilePath);
+          return new LoadResult(true, elementContent, elementPath);
+        }
       }
     } else {
       const fullElementDirPath = path.join(
