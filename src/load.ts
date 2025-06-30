@@ -55,6 +55,11 @@ export function load(
   depth: number = -1
 ): LoadResult {
   if (workingDirectoryPath != "" && depth == -1) {
+    // anonymous function used for parsing strings enclosed between double parentheses
+    const parseDoubleParentheses = function (aString: string): string {
+      return (aString as any).split("((")[1].split("))")[0];
+    };
+
     // parse elementPath as relative (file or directory) path
     let elementPathAsRelativePath = elementPath;
     const elementPathAsArray = elementPath.split(".");
@@ -136,10 +141,7 @@ export function load(
           if (typeof value == "string") {
             if (re.test(value.toString())) {
               // parse filepath from ((filepath))
-              const aComplexDataTypeFilePath = (value as any)
-                .match(regex)[0]
-                .split("((")[1]
-                .split("))")[0];
+              const aComplexDataTypeFilePath = parseDoubleParentheses(value);
               const fullElementDirPath = path.join(
                 workingDirectoryPath,
                 elementPathAsRelativePath,
