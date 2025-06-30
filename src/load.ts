@@ -78,7 +78,8 @@ export function load(
         if (lsFullElementDirPath.includes(elementFilename)) {
           fullElementFilePath = path.join(fullElementDirPath, elementFilename);
           const elementContent = shell.cat(fullElementFilePath);
-          return new LoadResult(true, elementContent, elementPath);
+          const yamlContentAsJSON = yaml.load(elementContent);
+          return new LoadResult(true, yamlContentAsJSON, elementPath);
         }
 
         // handle case where element is a text document
@@ -104,7 +105,8 @@ export function load(
         if (lsFullElementDirPath.includes(elementFilename)) {
           fullElementFilePath = path.join(fullElementDirPath, elementFilename);
           const elementContent = shell.cat(fullElementFilePath);
-          return new LoadResult(true, elementContent, elementPath);
+          const yamlContentAsJSON = yaml.load(elementContent);
+          return new LoadResult(true, yamlContentAsJSON, elementPath);
         }
 
         // handle case where element is a text document
