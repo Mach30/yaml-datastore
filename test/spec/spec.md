@@ -81,3 +81,15 @@ temporary list of specs in markdown
 ### representative objects
 
 - 3.1_legacy_project
+
+## elementPath meanings
+
+| Case name | elementPath  | object interpretation    | list interpretation   | property interpretation  | comments                                    |
+|-----------|--------------|--------------------------|-----------------------|--------------------------|---------------------------------------------|
+|           |              | ((_this.yaml))           |                       |                          |                                             |
+|           | model        | ((model/_this.yaml))     | ((model.yaml))        | ((_this.yaml)).model     |                                             |
+|           | model.foo    | ((model/foo/_this.yaml)) | ((model/foo.yaml))    | ((model/_this.yaml)).foo |                                             |
+|           | model[1]     | ((((model.yaml))[1]))    | ((((model.yaml))[1])) | ((model.yaml))[1]        |                                             |
+|           | model[1].foo |                          |                       |                          | model[1] must be an object, error otherwise |
+|           | model[1][5]  |                          |                       |                          | model[1] must be a list, error otherwise    |
+
