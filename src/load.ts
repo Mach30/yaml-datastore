@@ -60,6 +60,57 @@ export function load(
       return (aString as any).split("((")[1].split("))")[0];
     };
 
+    // anonymous function used for loading _this.yaml
+    const loadThisYaml = function (
+      thisYamlContents: string,
+      elementDirPath: string
+    ): LoadResult {
+      const thisYaml = yaml.load(thisYamlContents);
+      // iterate through elements of thisYaml and replace ((filepath)) with its associated complex data type
+      Object.entries(thisYaml as any).forEach(([key, value]) => {
+        const regex = /\(\(.*\)\)/;
+        const re = new RegExp(regex);
+        if (typeof value == "string") {
+          if (re.test(value.toString())) {
+            // parse filepath from ((filepath))
+            const aComplexDataTypeFilePath = parseDoubleParentheses(value);
+            const fullElementDirPath = path.join(
+              workingDirectoryPath,
+              elementDirPath,
+              aComplexDataTypeFilePath
+            );
+            const newWorkingDirectoryPath = fullElementDirPath
+              .split("/")
+              .slice(0, -2)
+              .join("/");
+            let newElementPath = "";
+            if (fullElementDirPath.includes("_this.yaml")) {
+              newElementPath = fullElementDirPath
+                .split("/")
+                .slice(-2, -1)
+                .join(".");
+            } else {
+              const fullElementDirPathAsArray = fullElementDirPath
+                .split("/")
+                .slice(-2, -1);
+              const elementName = fullElementDirPath
+                .split("/")
+                .slice(-1)[0]
+                .replace(".yaml", "")
+                .replace(".", "_");
+              fullElementDirPathAsArray.push(elementName);
+              (newElementPath as any) = fullElementDirPathAsArray.join(".");
+            }
+            (thisYaml as any)[key] = load(
+              newWorkingDirectoryPath,
+              newElementPath
+            ).element;
+          }
+        }
+      });
+      return new LoadResult(true, thisYaml, elementPath);
+    };
+
     // parse elementPath as relative (file or directory) path
     const elementPathAsArray = elementPath.split(".");
     if (elementPathAsArray.length > 1) {
@@ -128,50 +179,8 @@ export function load(
       // determine if elementDirPath is an object
       if (lsFullElementDirPath.includes("_this.yaml")) {
         const thisYamlFullPath = path.join(fullElementDirPath, "_this.yaml");
-        let thisYaml = yaml.load(shell.cat(thisYamlFullPath).stdout);
-        // iterate through elements of thisYaml and replace ((filepath)) with its associated complex data type
-        Object.entries(thisYaml as any).forEach(([key, value]) => {
-          const regex = /\(\(.*\)\)/;
-          const re = new RegExp(regex);
-          if (typeof value == "string") {
-            if (re.test(value.toString())) {
-              // parse filepath from ((filepath))
-              const aComplexDataTypeFilePath = parseDoubleParentheses(value);
-              const fullElementDirPath = path.join(
-                workingDirectoryPath,
-                elementDirPath,
-                aComplexDataTypeFilePath
-              );
-              const newWorkingDirectoryPath = fullElementDirPath
-                .split("/")
-                .slice(0, -2)
-                .join("/");
-              let newElementPath = "";
-              if (fullElementDirPath.includes("_this.yaml")) {
-                newElementPath = fullElementDirPath
-                  .split("/")
-                  .slice(-2, -1)
-                  .join(".");
-              } else {
-                const fullElementDirPathAsArray = fullElementDirPath
-                  .split("/")
-                  .slice(-2, -1);
-                const elementName = fullElementDirPath
-                  .split("/")
-                  .slice(-1)[0]
-                  .replace(".yaml", "")
-                  .replace(".", "_");
-                fullElementDirPathAsArray.push(elementName);
-                (newElementPath as any) = fullElementDirPathAsArray.join(".");
-              }
-              (thisYaml as any)[key] = load(
-                newWorkingDirectoryPath,
-                newElementPath
-              ).element;
-            }
-          }
-        });
-        return new LoadResult(true, thisYaml, elementPath);
+        const thisYamlContents = shell.cat(thisYamlFullPath).stdout;
+        return loadThisYaml(thisYamlContents, elementDirPath);
       }
     }
   }
