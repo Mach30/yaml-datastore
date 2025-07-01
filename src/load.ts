@@ -2,6 +2,9 @@ import path from "path";
 import fs from "node:fs";
 import yaml from "js-yaml";
 
+export const EMPTY_WORKINGDIR_PATH_ERROR =
+  "Error: Cannot load from empty working directory path";
+
 /**
  * Represents results of a call to the load function
  */
@@ -178,7 +181,9 @@ export function load(
   elementPath: string,
   depth: number = -1
 ): LoadResult {
-  if (workingDirectoryPath != "" && depth == -1) {
+  if (workingDirectoryPath === "") {
+    return new LoadResult(false, null, EMPTY_WORKINGDIR_PATH_ERROR);
+  } else {
     // extract relative file path, given working directory path and element path
     const elementFilePath = toElementFilePath(
       workingDirectoryPath,

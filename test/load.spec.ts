@@ -1,4 +1,5 @@
 import { load } from "../src/index";
+import { EMPTY_WORKINGDIR_PATH_ERROR } from "../src/load";
 import { expect } from "chai";
 import fs from "node:fs";
 import path from "path";
@@ -24,7 +25,7 @@ describe("Test load function", () => {
     const result = load("", "");
     expect(result.success).to.equal(false);
     expect(result.element).to.equal(null);
-    expect(result.message).to.equal(""); // TODO: make this correct error message string for empty directory path
+    expect(result.message).to.equal(EMPTY_WORKINGDIR_PATH_ERROR); // TODO: make this correct error message string for empty directory path
   });
   it("should load object with simple data types", () => {
     runBasicLoadTest("1.1_object_with_simple_data_types");
