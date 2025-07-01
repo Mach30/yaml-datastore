@@ -27,6 +27,12 @@ describe("Test load function", () => {
     expect(result.element).to.equal(null);
     expect(result.message).to.equal(EMPTY_WORKINGDIR_PATH_ERROR); // TODO: make this correct error message string for empty directory path
   });
+  it("should return a LoadResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path and a non-empty element path", () => {
+    const result = load("", "model");
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message).to.equal(EMPTY_WORKINGDIR_PATH_ERROR); // TODO: make this correct error message string for empty directory path
+  });
   it("should load object with simple data types", () => {
     runBasicLoadTest("1.1_object_with_simple_data_types");
   });
