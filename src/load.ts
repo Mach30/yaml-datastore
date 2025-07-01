@@ -61,25 +61,25 @@ export function load(
     };
 
     // parse elementPath as relative (file or directory) path
-    let elementPathAsRelativePath = elementPath;
     const elementPathAsArray = elementPath.split(".");
     if (elementPathAsArray.length > 1) {
       // handle case where element filename has underscores
       const elementDirPath = elementPathAsArray.slice(0, -1).join("/");
       const elementSplitName = elementPathAsArray.slice(-1)[0].split("_");
+      const fullElementDirPath = path.join(
+        workingDirectoryPath,
+        elementDirPath
+      );
+      const lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
       let elementName = "";
       let elementExt = "";
       let elementFilename = "";
-      let fullElementDirPath = "";
-      let lsFullElementDirPath = "";
       let fullElementFilePath = "";
       if (elementSplitName.length > 1) {
         // handle case where element is a YAML file
         elementName = elementSplitName.join("_");
         elementExt = "yaml";
         elementFilename = [elementName, elementExt].join(".");
-        fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
-        lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
         if (lsFullElementDirPath.includes(elementFilename)) {
           fullElementFilePath = path.join(fullElementDirPath, elementFilename);
           const elementContent = shell.cat(fullElementFilePath);
@@ -91,8 +91,6 @@ export function load(
         elementName = elementSplitName.slice(0, -1).join("_");
         elementExt = elementSplitName.slice(-1)[0];
         elementFilename = [elementName, elementExt].join(".");
-        fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
-        lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
         if (lsFullElementDirPath.includes(elementFilename)) {
           fullElementFilePath = path.join(fullElementDirPath, elementFilename);
           const elementContent = shell.cat(fullElementFilePath);
@@ -105,8 +103,6 @@ export function load(
         // handle case where element is a YAML file
         elementExt = "yaml";
         elementFilename = [elementName, elementExt].join(".");
-        fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
-        lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
         if (lsFullElementDirPath.includes(elementFilename)) {
           fullElementFilePath = path.join(fullElementDirPath, elementFilename);
           const elementContent = shell.cat(fullElementFilePath);
@@ -116,8 +112,6 @@ export function load(
 
         // handle case where element is a text document
         elementFilename = elementName;
-        fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
-        lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
         if (lsFullElementDirPath.includes(elementFilename)) {
           fullElementFilePath = path.join(fullElementDirPath, elementFilename);
           const elementContent = shell.cat(fullElementFilePath);
@@ -125,13 +119,14 @@ export function load(
         }
       }
     } else {
+      const elementDirPath = elementPath;
       const fullElementDirPath = path.join(
         workingDirectoryPath,
-        elementPathAsRelativePath
+        elementDirPath
       );
-      const lsfullElementDirPath = shell.ls(fullElementDirPath).stdout;
-      // determine if elementPathAsRelativePath is an object
-      if (lsfullElementDirPath.includes("_this.yaml")) {
+      const lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
+      // determine if elementDirPath is an object
+      if (lsFullElementDirPath.includes("_this.yaml")) {
         const thisYamlFullPath = path.join(fullElementDirPath, "_this.yaml");
         let thisYaml = yaml.load(shell.cat(thisYamlFullPath).stdout);
         // iterate through elements of thisYaml and replace ((filepath)) with its associated complex data type
@@ -144,7 +139,7 @@ export function load(
               const aComplexDataTypeFilePath = parseDoubleParentheses(value);
               const fullElementDirPath = path.join(
                 workingDirectoryPath,
-                elementPathAsRelativePath,
+                elementDirPath,
                 aComplexDataTypeFilePath
               );
               const newWorkingDirectoryPath = fullElementDirPath
