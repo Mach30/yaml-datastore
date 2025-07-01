@@ -206,19 +206,19 @@ export function load(
       workingDirectoryPath,
       elementPath
     );
-    let elementContent = "";
 
-    (elementContent as any) = fs.readFileSync(fullElementFilePath, "utf8");
-    if (fullElementFilePath.slice(-10) == "_this.yaml") {
+    let elementContent = fs.readFileSync(fullElementFilePath, "utf8");
+
+    if (fullElementFilePath.slice(-10) === "_this.yaml") {
       // handle case where element content is YAML object
       return loadThisYaml(fullElementFilePath, elementPath);
-    } else if (fullElementFilePath.slice(-5) == ".yaml") {
+    } else if (fullElementFilePath.slice(-5) === ".yaml") {
       // handle case where element content is a YAML list
       const aYamlList = yaml.load(elementContent);
       return new LoadResult(true, aYamlList, elementPath);
+    } else {
+      // handle case where element content is a text document
+      return new LoadResult(true, elementContent, elementPath);
     }
-    // handle case where element content is a text document
-    return new LoadResult(true, elementContent, elementPath);
   }
-  return new LoadResult(false, null, "");
 }
