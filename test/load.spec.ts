@@ -20,6 +20,8 @@ function runBasicLoadTest(specCaseName: string) {
   expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
 }
 
+// TODO test invalid working directory path
+// TODO test invalid element path
 describe("Test load function", () => {
   it("should return a LoadResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path", () => {
     const result = load("", "");
