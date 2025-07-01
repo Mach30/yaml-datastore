@@ -41,6 +41,130 @@ export class LoadResult {
   }
 }
 
+// local function used for parsing strings enclosed between double parentheses
+function parseDoubleParentheses(aString: string): string {
+  return (aString as any).split("((")[1].split("))")[0];
+}
+
+// local function used for loading _this.yaml
+function loadThisYaml(
+  workingDirectoryPath: string,
+  elementFilePath: string,
+  elementPath: string
+): LoadResult {
+  const fullElementFilePath = path.join(workingDirectoryPath, elementFilePath);
+  const thisYamlContent = fs.readFileSync(fullElementFilePath, "utf8");
+  const thisYaml = yaml.load(thisYamlContent);
+  // iterate through elements of thisYaml and replace ((filepath)) with its associated complex data type
+  Object.entries(thisYaml as any).forEach(([key, value]) => {
+    const regex = /\(\(.*\)\)/;
+    const re = new RegExp(regex);
+    if (typeof value == "string") {
+      if (re.test(value.toString())) {
+        // parse filepath from ((filepath))
+        const aComplexDataTypeFilePath = parseDoubleParentheses(value);
+        const fullElementFilePath = path.join(
+          workingDirectoryPath,
+          elementFilePath.slice(0, -10),
+          aComplexDataTypeFilePath
+        );
+        const newWorkingDirectoryPath = fullElementFilePath
+          .split("/")
+          .slice(0, -2)
+          .join("/");
+        let newElementPath = "";
+        if (fullElementFilePath.includes("_this.yaml")) {
+          newElementPath = fullElementFilePath
+            .split("/")
+            .slice(-2, -1)
+            .join(".");
+        } else {
+          const fullElementFilePathAsArray = fullElementFilePath
+            .split("/")
+            .slice(-2, -1);
+          const elementName = fullElementFilePath
+            .split("/")
+            .slice(-1)[0]
+            .replace(".yaml", "")
+            .replace(".", "_");
+          fullElementFilePathAsArray.push(elementName);
+          (newElementPath as any) = fullElementFilePathAsArray.join(".");
+        }
+        (thisYaml as any)[key] = load(
+          newWorkingDirectoryPath,
+          newElementPath
+        ).element;
+      }
+    }
+  });
+  return new LoadResult(true, thisYaml, elementPath);
+}
+
+// local function used for extracting relative filepath from workingDirectoryPath and elementPath
+function toElementFilePath(
+  workingDirectoryPath: string,
+  elementPath: string
+): string {
+  // split elementPath delimitted by "." into array
+  const elementPathAsArray = elementPath.split(".");
+  if (elementPathAsArray.length > 1) {
+    // handle case where element filename has underscores
+    const elementDirPath = elementPathAsArray.slice(0, -1).join("/");
+    const elementSplitName = elementPathAsArray.slice(-1)[0].split("_");
+    const fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
+    const lsFullElementDirPath = fs.readdirSync(fullElementDirPath);
+    let elementName = "";
+    let elementExt = "";
+    let elementFilename = "";
+    if (elementSplitName.length > 1) {
+      // handle case where element is a YAML file
+      elementName = elementSplitName.join("_");
+      elementExt = "yaml";
+      elementFilename = [elementName, elementExt].join(".");
+      if (lsFullElementDirPath.includes(elementFilename)) {
+        const elementFilePath = path.join(elementDirPath, elementFilename);
+        return elementFilePath;
+      }
+
+      // handle case where element is a text document
+      elementName = elementSplitName.slice(0, -1).join("_");
+      elementExt = elementSplitName.slice(-1)[0];
+      elementFilename = [elementName, elementExt].join(".");
+      if (lsFullElementDirPath.includes(elementFilename)) {
+        const elementFilePath = path.join(elementDirPath, elementFilename);
+        return elementFilePath;
+      }
+    } else {
+      // handle case where element filename doesn't have underscores
+      elementName = elementSplitName.join("");
+
+      // handle case where element is a YAML file
+      elementExt = "yaml";
+      elementFilename = [elementName, elementExt].join(".");
+      if (lsFullElementDirPath.includes(elementFilename)) {
+        const elementFilePath = path.join(elementDirPath, elementFilename);
+        return elementFilePath;
+      }
+
+      // handle case where element is a text document
+      elementFilename = elementName;
+      if (lsFullElementDirPath.includes(elementFilename)) {
+        const elementFilePath = path.join(elementDirPath, elementFilename);
+        return elementFilePath;
+      }
+    }
+  }
+  const elementDirPath = elementPath;
+  const fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
+  const lsFullElementDirPath = fs.readdirSync(fullElementDirPath);
+  // handle case where element is an object
+  if (lsFullElementDirPath.includes("_this.yaml")) {
+    const elementFilePath = path.join(elementDirPath, "_this.yaml");
+    return elementFilePath;
+  }
+  return "";
+}
+
 /**
  * Returns a in-memory representation of the element in working directory specified by element path
  *
@@ -55,138 +179,6 @@ export function load(
   depth: number = -1
 ): LoadResult {
   if (workingDirectoryPath != "" && depth == -1) {
-    // anonymous function used for parsing strings enclosed between double parentheses
-    const parseDoubleParentheses = function (aString: string): string {
-      return (aString as any).split("((")[1].split("))")[0];
-    };
-
-    // anonymous function used for loading _this.yaml
-    const loadThisYaml = function (
-      workingDirectoryPath: string,
-      elementFilePath: string
-    ): LoadResult {
-      const fullElementFilePath = path.join(
-        workingDirectoryPath,
-        elementFilePath
-      );
-      const thisYamlContent = fs.readFileSync(fullElementFilePath, "utf8");
-      const thisYaml = yaml.load(thisYamlContent);
-      // iterate through elements of thisYaml and replace ((filepath)) with its associated complex data type
-      Object.entries(thisYaml as any).forEach(([key, value]) => {
-        const regex = /\(\(.*\)\)/;
-        const re = new RegExp(regex);
-        if (typeof value == "string") {
-          if (re.test(value.toString())) {
-            // parse filepath from ((filepath))
-            const aComplexDataTypeFilePath = parseDoubleParentheses(value);
-            const fullElementFilePath = path.join(
-              workingDirectoryPath,
-              elementFilePath.slice(0, -10),
-              aComplexDataTypeFilePath
-            );
-            const newWorkingDirectoryPath = fullElementFilePath
-              .split("/")
-              .slice(0, -2)
-              .join("/");
-            let newElementPath = "";
-            if (fullElementFilePath.includes("_this.yaml")) {
-              newElementPath = fullElementFilePath
-                .split("/")
-                .slice(-2, -1)
-                .join(".");
-            } else {
-              const fullElementFilePathAsArray = fullElementFilePath
-                .split("/")
-                .slice(-2, -1);
-              const elementName = fullElementFilePath
-                .split("/")
-                .slice(-1)[0]
-                .replace(".yaml", "")
-                .replace(".", "_");
-              fullElementFilePathAsArray.push(elementName);
-              (newElementPath as any) = fullElementFilePathAsArray.join(".");
-            }
-            (thisYaml as any)[key] = load(
-              newWorkingDirectoryPath,
-              newElementPath
-            ).element;
-          }
-        }
-      });
-      return new LoadResult(true, thisYaml, elementPath);
-    };
-
-    // anonymous function used for extracting relative filepath from workingDirectoryPath and elementPath
-    const toElementFilePath = function (
-      workingDirectoryPath: string,
-      elementPath: string
-    ): string {
-      // split elementPath delimitted by "." into array
-      const elementPathAsArray = elementPath.split(".");
-      if (elementPathAsArray.length > 1) {
-        // handle case where element filename has underscores
-        const elementDirPath = elementPathAsArray.slice(0, -1).join("/");
-        const elementSplitName = elementPathAsArray.slice(-1)[0].split("_");
-        const fullElementDirPath = path.join(
-          workingDirectoryPath,
-          elementDirPath
-        );
-        const lsFullElementDirPath = fs.readdirSync(fullElementDirPath);
-        let elementName = "";
-        let elementExt = "";
-        let elementFilename = "";
-        if (elementSplitName.length > 1) {
-          // handle case where element is a YAML file
-          elementName = elementSplitName.join("_");
-          elementExt = "yaml";
-          elementFilename = [elementName, elementExt].join(".");
-          if (lsFullElementDirPath.includes(elementFilename)) {
-            const elementFilePath = path.join(elementDirPath, elementFilename);
-            return elementFilePath;
-          }
-
-          // handle case where element is a text document
-          elementName = elementSplitName.slice(0, -1).join("_");
-          elementExt = elementSplitName.slice(-1)[0];
-          elementFilename = [elementName, elementExt].join(".");
-          if (lsFullElementDirPath.includes(elementFilename)) {
-            const elementFilePath = path.join(elementDirPath, elementFilename);
-            return elementFilePath;
-          }
-        } else {
-          // handle case where element filename doesn't have underscores
-          elementName = elementSplitName.join("");
-
-          // handle case where element is a YAML file
-          elementExt = "yaml";
-          elementFilename = [elementName, elementExt].join(".");
-          if (lsFullElementDirPath.includes(elementFilename)) {
-            const elementFilePath = path.join(elementDirPath, elementFilename);
-            return elementFilePath;
-          }
-
-          // handle case where element is a text document
-          elementFilename = elementName;
-          if (lsFullElementDirPath.includes(elementFilename)) {
-            const elementFilePath = path.join(elementDirPath, elementFilename);
-            return elementFilePath;
-          }
-        }
-      }
-      const elementDirPath = elementPath;
-      const fullElementDirPath = path.join(
-        workingDirectoryPath,
-        elementDirPath
-      );
-      const lsFullElementDirPath = fs.readdirSync(fullElementDirPath);
-      // handle case where element is an object
-      if (lsFullElementDirPath.includes("_this.yaml")) {
-        const elementFilePath = path.join(elementDirPath, "_this.yaml");
-        return elementFilePath;
-      }
-      return "";
-    };
-
     // extract relative file path, given working directory path and element path
     const elementFilePath = toElementFilePath(
       workingDirectoryPath,
@@ -201,7 +193,7 @@ export function load(
     (elementContent as any) = fs.readFileSync(fullElementFilePath, "utf8");
     if (elementFilePath.slice(-10) == "_this.yaml") {
       // handle case where element content is YAML object
-      return loadThisYaml(workingDirectoryPath, elementFilePath);
+      return loadThisYaml(workingDirectoryPath, elementFilePath, elementPath);
     } else if (elementFilePath.slice(-5) == ".yaml") {
       // handle case where element content is a YAML list
       const aYamlList = yaml.load(elementContent);
