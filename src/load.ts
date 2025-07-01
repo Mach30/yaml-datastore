@@ -1,5 +1,5 @@
-import shell from "shelljs";
 import path from "path";
+import fs from "node:fs";
 import yaml from "js-yaml";
 
 /**
@@ -69,7 +69,7 @@ export function load(
         workingDirectoryPath,
         elementFilePath
       );
-      const thisYamlContent = shell.cat(fullElementFilePath).stdout;
+      const thisYamlContent = fs.readFileSync(fullElementFilePath, "utf8");
       const thisYaml = yaml.load(thisYamlContent);
       // iterate through elements of thisYaml and replace ((filepath)) with its associated complex data type
       Object.entries(thisYaml as any).forEach(([key, value]) => {
@@ -131,7 +131,7 @@ export function load(
           workingDirectoryPath,
           elementDirPath
         );
-        const lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
+        const lsFullElementDirPath = fs.readdirSync(fullElementDirPath);
         let elementName = "";
         let elementExt = "";
         let elementFilename = "";
@@ -178,7 +178,7 @@ export function load(
         workingDirectoryPath,
         elementDirPath
       );
-      const lsFullElementDirPath = shell.ls(fullElementDirPath).stdout;
+      const lsFullElementDirPath = fs.readdirSync(fullElementDirPath);
       // handle case where element is an object
       if (lsFullElementDirPath.includes("_this.yaml")) {
         const elementFilePath = path.join(elementDirPath, "_this.yaml");
@@ -198,7 +198,7 @@ export function load(
     );
     let elementContent = "";
 
-    (elementContent as any) = shell.cat(fullElementFilePath).stdout;
+    (elementContent as any) = fs.readFileSync(fullElementFilePath, "utf8");
     if (elementFilePath.slice(-10) == "_this.yaml") {
       // handle case where element content is YAML object
       return loadThisYaml(workingDirectoryPath, elementFilePath);
