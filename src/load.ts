@@ -42,8 +42,8 @@ export class LoadResult {
 }
 
 // local function used for parsing strings enclosed between double parentheses
-function parseDoubleParentheses(aString: string): string {
-  return (aString as any).split("((")[1].split("))")[0];
+function trimDoubleParentheses(aString: string): string {
+  return aString.slice(2, -2);
 }
 
 // local function used for loading _this.yaml
@@ -62,7 +62,7 @@ function loadThisYaml(
     if (typeof value == "string") {
       if (re.test(value.toString())) {
         // parse filepath from ((filepath))
-        const aComplexDataTypeFilePath = parseDoubleParentheses(value);
+        const aComplexDataTypeFilePath = trimDoubleParentheses(value);
         const fullElementFilePath = path.join(
           workingDirectoryPath,
           elementFilePath.slice(0, -10),
