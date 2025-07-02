@@ -5,6 +5,10 @@ import yaml from "js-yaml";
 export const EMPTY_WORKINGDIR_PATH_ERROR =
   "Error: Cannot load from empty working directory path";
 
+// Regular Expression used for matching element file paths enclosed between double parentheses
+const regex = /\(\(.*\)\)/;
+const re = new RegExp(regex);
+
 /**
  * Represents results of a call to the load function
  */
@@ -71,10 +75,8 @@ function loadThisYaml(
 ): LoadResult {
   const thisYamlContent = fs.readFileSync(fullElementFilePath, "utf8");
   const thisYaml = yaml.load(thisYamlContent);
-  // iterate through elements of thisYaml and replace ((filepath)) with its associated complex data type
+  // iterate through elements of thisYaml and replace ((filepath)) with its loaded complex data type
   Object.entries(thisYaml as any).forEach(([key, value]) => {
-    const regex = /\(\(.*\)\)/;
-    const re = new RegExp(regex);
     if (typeof value == "string") {
       if (re.test(value.toString())) {
         // parse filepath from ((filepath))
@@ -91,6 +93,36 @@ function loadThisYaml(
   return new LoadResult(true, thisYaml, elementPath);
 }
 
+// local function used for loading a YAML list
+function loadYamlList(
+  fullElementFilePath: string,
+  elementPath: string
+): LoadResult {
+  const aYamlListContent = fs.readFileSync(fullElementFilePath, "utf-8");
+  let aYamlListAsJsObject = yaml.load(aYamlListContent);
+  // iterate through elements of list and replace ((filepath)) with its loaded complex data type
+  for (let i = 0; i < (aYamlListAsJsObject as any).length; i++) {
+    if (typeof (aYamlListAsJsObject as any)[i] == "string") {
+      if (re.test((aYamlListAsJsObject as any)[i].toString())) {
+        // parse filepath from ((filepath))
+        const fullElementDirPath = fullElementFilePath
+          .split("/")
+          .slice(0, -1)
+          .join("/");
+        const aComplexDataTypeFilePath = trimDoubleParentheses(
+          (aYamlListAsJsObject as any)[i]
+        );
+        const newElementPath = toElementPath(aComplexDataTypeFilePath);
+        (aYamlListAsJsObject as any)[i] = load(
+          fullElementDirPath,
+          newElementPath
+        ).element;
+      }
+    }
+  }
+  return new LoadResult(true, aYamlListAsJsObject, elementPath);
+}
+
 // local function used for extracting relative filepath from workingDirectoryPath and elementPath
 function toFullElementFilePath(
   workingDirectoryPath: string,
@@ -102,6 +134,7 @@ function toFullElementFilePath(
   const elementDirPath = elementPathAsArray.slice(0, -1).join("/");
   const elementSplitName = elementPathAsArray.slice(-1)[0].split("_");
   let thisYamlFullFilePath = "";
+  let aYamlListFullFilePath = "";
   let aTextDocFullFilePath = "";
   let elementName = "";
   if (elementSplitName.length > 1) {
@@ -114,6 +147,12 @@ function toFullElementFilePath(
       "_this.yaml"
     );
 
+    // handle case where element is a YAML list
+    aYamlListFullFilePath = path.join(
+      workingDirectoryPath,
+      elementDirPath,
+      [elementName, "yaml"].join(".")
+    );
     // handle case where element is a text document
     elementName = elementSplitName.slice(0, -1).join("_");
     let elementExt = elementSplitName.slice(-1)[0];
@@ -134,6 +173,13 @@ function toFullElementFilePath(
       "_this.yaml"
     );
 
+    // handle case where element is a YAML list
+    aYamlListFullFilePath = path.join(
+      workingDirectoryPath,
+      elementDirPath,
+      [elementName, "yaml"].join(".")
+    );
+
     // handle case where element is a text document
     aTextDocFullFilePath = path.join(
       workingDirectoryPath,
@@ -141,12 +187,6 @@ function toFullElementFilePath(
       elementName
     );
   }
-  // handle case where element is a YAML list
-  const aYamlListFullFilePath = path.join(
-    workingDirectoryPath,
-    elementDirPath,
-    [elementName, "yaml"].join(".")
-  );
 
   if (fs.existsSync(thisYamlFullFilePath)) {
     return thisYamlFullFilePath;
@@ -187,7 +227,7 @@ export function load(
     } else if (fullElementFilePath.slice(-5) === ".yaml") {
       // handle case where element content is a YAML list
       const aYamlList = yaml.load(elementContent);
-      return new LoadResult(true, aYamlList, elementPath);
+      return loadYamlList(fullElementFilePath, elementPath);
     } else {
       // handle case where element content is a text document
       return new LoadResult(true, elementContent, elementPath);
