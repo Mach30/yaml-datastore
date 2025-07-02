@@ -5,9 +5,11 @@ import yaml from "js-yaml";
 export const EMPTY_WORKINGDIR_PATH_ERROR =
   "Error: Cannot load from empty working directory path";
 
-// Regular Expression used for matching element file paths enclosed between double parentheses
-const regex = /\(\(.*\)\)/;
-const re = new RegExp(regex);
+// Regular expression used for matching element file paths enclosed between double parentheses
+const doubleParenthesesRegEx = new RegExp(/\(\(.*\)\)/);
+
+// Regular expression used for matching 6-character uppercase alphanumeric string
+const idRegex = new RegExp(/^[A-Z0-9]{6}$/);
 
 /**
  * Represents results of a call to the load function
@@ -78,7 +80,7 @@ function loadThisYaml(
   // iterate through elements of thisYaml and replace ((filepath)) with its loaded complex data type
   Object.entries(thisYaml as any).forEach(([key, value]) => {
     if (typeof value == "string") {
-      if (re.test(value.toString())) {
+      if (doubleParenthesesRegEx.test(value)) {
         // parse filepath from ((filepath))
         const fullElementDirPath = fullElementFilePath.slice(0, -10);
         const aComplexDataTypeFilePath = trimDoubleParentheses(value);
@@ -103,7 +105,7 @@ function loadYamlList(
   // iterate through elements of list and replace ((filepath)) with its loaded complex data type
   for (let i = 0; i < (aYamlListAsJsObject as any).length; i++) {
     if (typeof (aYamlListAsJsObject as any)[i] == "string") {
-      if (re.test((aYamlListAsJsObject as any)[i].toString())) {
+      if (doubleParenthesesRegEx.test((aYamlListAsJsObject as any)[i])) {
         // parse filepath from ((filepath))
         const fullElementDirPath = fullElementFilePath
           .split("/")
@@ -156,11 +158,21 @@ function toFullElementFilePath(
     // handle case where element is a text document
     elementName = elementSplitName.slice(0, -1).join("_");
     let elementExt = elementSplitName.slice(-1)[0];
-    aTextDocFullFilePath = path.join(
-      workingDirectoryPath,
-      elementDirPath,
-      [elementName, elementExt].join(".")
-    );
+    if (idRegex.test(elementExt)) {
+      // handle case where string followng _ (underscore) is an ID
+      aTextDocFullFilePath = path.join(
+        workingDirectoryPath,
+        elementDirPath,
+        [elementName, elementExt].join("_")
+      );
+    } else {
+      // handle case where string following _ (undescore) is a file extension
+      aTextDocFullFilePath = path.join(
+        workingDirectoryPath,
+        elementDirPath,
+        [elementName, elementExt].join(".")
+      );
+    }
   } else {
     // handle case where element filename doesn't have underscores
     elementName = elementSplitName.join("");
