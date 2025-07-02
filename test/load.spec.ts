@@ -98,6 +98,39 @@ describe("Test load function", () => {
   it("should load object with empty list", () => {
     runBasicLoadTest("1.4.2_object_with_empty_list");
   });
+  it("should load list of simple data types", () => {
+    runBasicLoadTest("2.1_list_of_simple_data_types");
+  });
+  it("should load list of complex string", () => {
+    runBasicLoadTest("2.2.1_list_of_complex_string");
+  });
+  it("should load list of objects of simple data types", () => {
+    runBasicLoadTest("2.2.2_list_of_objects_of_simple_data_types");
+  });
+  it("should load list of objects of complex data types", () => {
+    runBasicLoadTest("2.2.3_list_of_objects_of_complex_data_types");
+  });
+  it("should load list of list of simple data type", () => {
+    runBasicLoadTest("2.2.4_list_of_list_of_simple_data_type");
+  });
+  it("should load list of list of simple data types", () => {
+    runBasicLoadTest("2.2.5_list_of_list_of_simple_data_types");
+  });
+  it("should load list of list of complex strings", () => {
+    runBasicLoadTest("2.2.6_list_of_list_of_complex_strings");
+  });
+  it("should load list of list of objects of simple data types", () => {
+    runBasicLoadTest("2.2.7.1_list_of_list_of_objects_of_simple_data_types");
+  });
+  it("should load list of list of of list simple data type", () => {
+    runBasicLoadTest("2.2.7.2_list_of_list_of_list_of_simple_data_type");
+  });
+  it("should load list with empty object", () => {
+    runBasicLoadTest("2.3.1_list_with_empty_object");
+  });
+  it("should load list with empty list", () => {
+    runBasicLoadTest("2.3.2_list_with_empty_list");
+  });
   it("should load object of simple data types via dot-separated element path", () => {
     const specCasePath = path.join(
       "test/spec",
