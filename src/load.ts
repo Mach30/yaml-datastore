@@ -98,93 +98,63 @@ function toFullElementFilePath(
 ): string {
   // split elementPath delimitted by "." into array
   const elementPathAsArray = elementPath.split(".");
-  if (elementPathAsArray.length > 1) {
-    // handle case where element filename has underscores
-    const elementDirPath = elementPathAsArray.slice(0, -1).join("/");
-    const elementSplitName = elementPathAsArray.slice(-1)[0].split("_");
-    const fullElementDirPath = path.join(workingDirectoryPath, elementDirPath);
-    const lsFullElementDirPath = fs.readdirSync(fullElementDirPath);
-    let elementName = "";
-    let elementExt = "";
-    let elementFilename = "";
-    if (elementSplitName.length > 1) {
-      // handle case where element is a YAML file
-      elementName = elementSplitName.join("_");
-      elementExt = "yaml";
-      elementFilename = [elementName, elementExt].join(".");
-      if (lsFullElementDirPath.includes(elementFilename)) {
-        const fullElementFilePath = path.join(
-          workingDirectoryPath,
-          elementDirPath,
-          elementFilename
-        );
-        return fullElementFilePath;
-      }
+  // handle case where element filename has underscores for returning file paths with extensions
+  const elementDirPath = elementPathAsArray.slice(0, -1).join("/");
+  const elementSplitName = elementPathAsArray.slice(-1)[0].split("_");
+  let thisYamlFullFilePath = "";
+  let aTextDocFullFilePath = "";
+  let elementName = "";
+  if (elementSplitName.length > 1) {
+    // handle case where element is a YAML object
+    elementName = elementSplitName.join("_");
+    thisYamlFullFilePath = path.join(
+      workingDirectoryPath,
+      elementDirPath,
+      elementName,
+      "_this.yaml"
+    );
 
-      // handle case where element is a text document
-      elementName = elementSplitName.slice(0, -1).join("_");
-      elementExt = elementSplitName.slice(-1)[0];
-      elementFilename = [elementName, elementExt].join(".");
-      if (lsFullElementDirPath.includes(elementFilename)) {
-        const fullElementFilePath = path.join(
-          workingDirectoryPath,
-          elementDirPath,
-          elementFilename
-        );
-        return fullElementFilePath;
-      }
-    } else {
-      // handle case where element filename doesn't have underscores
-      elementName = elementSplitName.join("");
+    // handle case where element is a text document
+    elementName = elementSplitName.slice(0, -1).join("_");
+    let elementExt = elementSplitName.slice(-1)[0];
+    aTextDocFullFilePath = path.join(
+      workingDirectoryPath,
+      elementDirPath,
+      [elementName, elementExt].join(".")
+    );
+  } else {
+    // handle case where element filename doesn't have underscores
+    elementName = elementSplitName.join("");
 
-      // handle case where element is a YAML file
-      elementExt = "yaml";
-      elementFilename = [elementName, elementExt].join(".");
-      if (lsFullElementDirPath.includes(elementFilename)) {
-        const fullElementFilePath = path.join(
-          workingDirectoryPath,
-          elementDirPath,
-          elementFilename
-        );
-        return fullElementFilePath;
-      }
+    // handle case where element is a YAML object
+    thisYamlFullFilePath = path.join(
+      workingDirectoryPath,
+      elementDirPath,
+      elementName,
+      "_this.yaml"
+    );
 
-      // handle case where element is a text document
-      elementFilename = elementName;
-      if (lsFullElementDirPath.includes(elementFilename)) {
-        const fullElementFilePath = path.join(
-          workingDirectoryPath,
-          elementDirPath,
-          elementFilename
-        );
-        return fullElementFilePath;
-      }
-    }
+    // handle case where element is a text document
+    aTextDocFullFilePath = path.join(
+      workingDirectoryPath,
+      elementDirPath,
+      elementName
+    );
   }
-  const thisYamlFullFilePath = path.join(
-    workingDirectoryPath,
-    elementPath,
-    "_this.yaml"
-  );
+  // handle case where element is a YAML list
   const aYamlListFullFilePath = path.join(
     workingDirectoryPath,
-    [elementPath, "yaml"].join(".")
+    elementDirPath,
+    [elementName, "yaml"].join(".")
   );
-  const aTextDocFullFilePath = path.join(
-    workingDirectoryPath,
-    elementPath.replace("_", ".")
-  );
+
   if (fs.existsSync(thisYamlFullFilePath)) {
-    // handle case where element is a YAML object
     return thisYamlFullFilePath;
   } else if (fs.existsSync(aYamlListFullFilePath)) {
-    // handle case where element is a YAML list
     return aYamlListFullFilePath;
-  } else if (fs.existsSync(aTextDocFullFilePath)) {
-    // handle case where element is a Text document
+  } else {
     return aTextDocFullFilePath;
   }
-  return "";
 }
 
 /**
