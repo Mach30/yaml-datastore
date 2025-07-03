@@ -22,18 +22,18 @@ function runBasicLoadTest(specCaseName: string) {
 
 // TODO test invalid working directory path
 // TODO test invalid element path
-describe("Test load function", () => {
+describe("Test basic load function", () => {
   it("should return a LoadResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path", () => {
     const result = load("", "");
     expect(result.success).to.equal(false);
     expect(result.element).to.equal(null);
-    expect(result.message).to.equal(EMPTY_WORKINGDIR_PATH_ERROR); // TODO: make this correct error message string for empty directory path
+    expect(result.message).to.equal(EMPTY_WORKINGDIR_PATH_ERROR);
   });
   it("should return a LoadResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path and a non-empty element path", () => {
     const result = load("", "model");
     expect(result.success).to.equal(false);
     expect(result.element).to.equal(null);
-    expect(result.message).to.equal(EMPTY_WORKINGDIR_PATH_ERROR); // TODO: make this correct error message string for empty directory path
+    expect(result.message).to.equal(EMPTY_WORKINGDIR_PATH_ERROR);
   });
   it("should load object with simple data types", () => {
     runBasicLoadTest("1.1_object_with_simple_data_types");
@@ -217,5 +217,95 @@ describe("Test load function", () => {
   });
   it("should load legacy project", () => {
     runBasicLoadTest("3.1_legacy_project");
+  });
+});
+
+describe("Test load function support for elementPath", () => {
+  it("should load object for empty element path", () => {
+    //TODO
+  });
+  it("should return error for non-object at empty element path", () => {
+    //TODO
+  });
+  it("should load object for simple element path to object", () => {
+    //TODO
+  });
+  it("should load list for simple element path to list", () => {
+    //TODO
+  });
+  it("should load complex string for simple element path to complex string", () => {
+    //TODO
+  });
+  it("should load simple value for simple element path to simple value", () => {
+    //TODO
+  });
+  it("should load object for object property element path to object", () => {
+    //TODO
+  });
+  it("should load list for object property element path to list", () => {
+    //TODO
+  });
+  it("should load complex string for object property element path to complex string", () => {
+    //TODO
+  });
+  it("should load simple value for object property element path to simple value", () => {
+    //TODO
+  });
+  it('should return error for object property element path when "_this.yaml" in object directory does not exist', () => {
+    //TODO
+  });
+  it("should load object for list item of an object property element path to object", () => {
+    //TODO
+  });
+  it("should load list for list item of an object property element path to list", () => {
+    //TODO
+  });
+  it("should load complex string for list item of an object property element path to complex string", () => {
+    //TODO
+  });
+  it("should load simple value for list item of an object property element path to simple value", () => {
+    //TODO
+  });
+  it("should load object for list item element path to object", () => {
+    //TODO
+  });
+  it("should load list for list item element path to list", () => {
+    //TODO
+  });
+  it("should load complex string for list item element path to complex string", () => {
+    //TODO
+  });
+  it("should load simple value for list item element path to simple value", () => {
+    //TODO
+  });
+  it("should return error for object property of a list item element path when the list item is not an object", () => {
+    //TODO
+  });
+  it("should load object for object property of a list item element path to object", () => {
+    //TODO
+  });
+  it("should load list for object property of a list item element path to list", () => {
+    //TODO
+  });
+  it("should load complex string for object property of a list item element path to complex string", () => {
+    //TODO
+  });
+  it("should load simple value for object property of a list item element path to simple value", () => {
+    //TODO
+  });
+  it("should return error for list item of a list item element path when the list item is not a list", () => {
+    //TODO
+  });
+  it("should load object for list item of a list item element path to object", () => {
+    //TODO
+  });
+  it("should load list for list item of a list item element path to list", () => {
+    //TODO
+  });
+  it("should load complex string for list item of a list item element path to complex string", () => {
+    //TODO
+  });
+  it("should load simple value for list item of a list item element path to simple value", () => {
+    //TODO
   });
 });
