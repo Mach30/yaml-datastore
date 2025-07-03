@@ -128,6 +128,9 @@ describe("Test basic load function", () => {
   it("should load list with empty object", () => {
     runBasicLoadTest("2.3.1_list_with_empty_object");
   });
+  const workingDir = "";
+  const elementPath = "";
+
   it("should load list with empty list", () => {
     runBasicLoadTest("2.3.2_list_with_empty_list");
   });
@@ -222,90 +225,148 @@ describe("Test basic load function", () => {
 
 describe("Test load function support for elementPath", () => {
   it("should load object for empty element path", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should return error for non-object at empty element path", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load object for simple element path to object", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load list for simple element path to list", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load complex string for simple element path to complex string", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load simple value for simple element path to simple value", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load object for object property element path to object", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load list for object property element path to list", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load complex string for object property element path to complex string", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load simple value for object property element path to simple value", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it('should return error for object property element path when "_this.yaml" in object directory does not exist', () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load object for list item of an object property element path to object", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load list for list item of an object property element path to list", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load complex string for list item of an object property element path to complex string", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load simple value for list item of an object property element path to simple value", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load object for list item element path to object", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load list for list item element path to list", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load complex string for list item element path to complex string", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load simple value for list item element path to simple value", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should return error for object property of a list item element path when the list item is not an object", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load object for object property of a list item element path to object", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load list for object property of a list item element path to list", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load complex string for object property of a list item element path to complex string", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load simple value for object property of a list item element path to simple value", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should return error for list item of a list item element path when the list item is not a list", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load object for list item of a list item element path to object", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load list for list item of a list item element path to list", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load complex string for list item of a list item element path to complex string", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
   it("should load simple value for list item of a list item element path to simple value", () => {
+    const workingDir = "";
+    const elementPath = "";
     //TODO
   });
 });
