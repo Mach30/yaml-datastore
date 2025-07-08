@@ -188,9 +188,20 @@ describe("Test load function support for elementPath", () => {
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load complex string for simple element path to complex string", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
+    const specCasePath = path.join(
+      "test/spec",
+      "1.2.1_object_with_complex_string"
+    );
+    const elementPath = "lyrics_txt";
+    const workingDir = path.join(specCasePath, "model");
+    const expectedElement = fs.readFileSync(
+      path.resolve(workingDir, "lyrics.txt"),
+      "utf8"
+    );
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(result.element).to.equal(expectedElement);
   });
   it("should load simple value for simple element path to simple value", () => {
     const workingDir = "";
