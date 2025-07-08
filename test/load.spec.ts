@@ -1,5 +1,5 @@
 import { load } from "../src/index";
-import { EMPTY_WORKINGDIR_PATH_ERROR } from "../src/load";
+import { EMPTY_WORKINGDIR_PATH_ERROR, INVALID_PATH_ERROR } from "../src/load";
 import { expect } from "chai";
 import fs from "node:fs";
 import path from "path";
@@ -138,14 +138,29 @@ describe("Test basic load function", () => {
 
 describe("Test load function support for elementPath", () => {
   it("should load object for empty element path", () => {
-    const workingDir = "";
+    const specCasePath = path.join(
+      "test/spec",
+      "1.1_object_with_simple_data_types"
+    );
     const elementPath = "";
-    //TODO
+    const workingDir = path.join(specCasePath, "model");
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should return error for non-object at empty element path", () => {
-    const workingDir = "";
+    const workingDir = path.join("test/spec", "2.1_list_of_simple_data_types");
     const elementPath = "";
-    //TODO
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
   });
   it("should load object for simple element path to object", () => {
     const workingDir = "";

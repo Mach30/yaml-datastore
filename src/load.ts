@@ -4,6 +4,8 @@ import yaml from "js-yaml";
 
 export const EMPTY_WORKINGDIR_PATH_ERROR =
   "Error: Cannot load from empty working directory path";
+export const INVALID_PATH_ERROR =
+  "Error: Invalid path to element on filesystem";
 
 // Regular expression used for matching element file paths enclosed between double parentheses
 const doubleParenthesesRegEx = new RegExp(/\(\(.*\)\)/);
@@ -130,6 +132,9 @@ function toFullElementFilePath(
   workingDirectoryPath: string,
   elementPath: string
 ): string {
+  if (elementPath === "") {
+    return path.join(workingDirectoryPath, "_this.yaml");
+  }
   // split elementPath delimitted by "." into array
   const elementPathAsArray = elementPath.split(".");
   // handle case where element filename has underscores for returning file paths with extensions
@@ -231,7 +236,17 @@ export function load(
       elementPath
     );
 
-    let elementContent = fs.readFileSync(fullElementFilePath, "utf8");
+    let elementContent = "";
+
+    if (fs.existsSync(fullElementFilePath)) {
+      elementContent = fs.readFileSync(fullElementFilePath, "utf8");
+    } else {
+      return new LoadResult(
+        false,
+        null,
+        INVALID_PATH_ERROR + " [" + fullElementFilePath + "]"
+      );
+    }
 
     if (fullElementFilePath.slice(-10) === "_this.yaml") {
       // handle case where element content is YAML object
