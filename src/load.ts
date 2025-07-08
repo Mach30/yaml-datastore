@@ -231,7 +231,7 @@ export function load(
     return new LoadResult(false, null, EMPTY_WORKINGDIR_PATH_ERROR);
   } else {
     // extract relative file path, given working directory path and element path
-    const fullElementFilePath = toFullElementFilePath(
+    let fullElementFilePath = toFullElementFilePath(
       workingDirectoryPath,
       elementPath
     );
@@ -241,16 +241,33 @@ export function load(
     if (fs.existsSync(fullElementFilePath)) {
       elementContent = fs.readFileSync(fullElementFilePath, "utf8");
     } else {
-      return new LoadResult(
-        false,
-        null,
-        INVALID_PATH_ERROR + " [" + fullElementFilePath + "]"
+      fullElementFilePath = fullElementFilePath.replace(
+        elementPath,
+        "_this.yaml"
       );
+      if (fs.existsSync(fullElementFilePath)) {
+        elementContent = fs.readFileSync(fullElementFilePath, "utf-8");
+      } else {
+        return new LoadResult(
+          false,
+          null,
+          INVALID_PATH_ERROR + " [" + fullElementFilePath + "]"
+        );
+      }
     }
 
     if (fullElementFilePath.slice(-10) === "_this.yaml") {
       // handle case where element content is YAML object
-      return loadThisYaml(fullElementFilePath, elementPath);
+      let thisYamlResult = loadThisYaml(fullElementFilePath, elementPath);
+      if (elementPath in thisYamlResult.element) {
+        return new LoadResult(
+          true,
+          thisYamlResult.element[elementPath],
+          elementPath
+        );
+      } else {
+        return thisYamlResult;
+      }
     } else if (fullElementFilePath.slice(-5) === ".yaml") {
       // handle case where element content is a YAML list
       const aYamlList = yaml.load(elementContent);
