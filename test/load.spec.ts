@@ -163,14 +163,29 @@ describe("Test load function support for elementPath", () => {
       .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
   });
   it("should load object for simple element path to object", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
+    const workingDir = path.join(
+      "test/spec",
+      "1.1_object_with_simple_data_types"
+    );
+    const elementPath = "model";
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load list for simple element path to list", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
+    const workingDir = path.join("test/spec", "2.1_list_of_simple_data_types");
+    const elementPath = "model";
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load complex string for simple element path to complex string", () => {
     const workingDir = "";
