@@ -93,3 +93,26 @@ temporary list of specs in markdown
 | list item element path                       | model[1]     | `load(load("model.yaml")[1])`              | `load(load("model.yaml")[1])`              | `load(load("model.yaml")[1])`              | `load("model.yaml")[1]`              |                                                           |
 | object property of a list item element path  | model[1].foo | `load(load(load("model.yaml")[1])["foo"])` | `load(load(load("model.yaml")[1])["foo"])` | `load(load(load("model.yaml")[1])["foo"])` | `load(load("model.yaml")[1])["foo"]` | `model[1]` must be an object, error otherwise             |
 | list item of a list item element path        | model[1][5]  | `load(load(load("model.yaml")[1])[5])`     | `load(load(load("model.yaml")[1])[5])`     | `load(load(load("model.yaml")[1])[5])`     | `load(load("model.yaml")[1])[5]`     | `model[1]` must be a list, error otherwise                |
+
+### notes
+
+test/spec/3.1_legacy_project/ | model.assemblySteps[0].summary | load(load(load("model/\_this.yaml")["assemblySteps"])[0])["summary"]
+
+- model/\_this.yaml
+- ["assemblySteps"] -> assemblySteps.yaml
+- [0] -> assemblySteps_E16F4F/\_this.yaml
+
+- get 1st entry of elementPath and load 0-depth load of that elementPath
+- take next piece of elementPath and access its contents at given location
+- if contents accessed requires loading, then perform 0-depth load of that elementPath
+- take next piece of elementPath and access its contents... bc thing (if property) is in contents of last filepath, unless it's an object, list, or file.
+
+ergo...
+
+- when empty elementPath only 1 case, cwd is an object
+- when simple elementPath, 4 conditions to test, (obj, list, complex string/simple value)
+- everything else is one of two cases,
+  - elementPath points to a complex object (i.e., object, list, complex string)
+  - elementPath points at a simple property
+
+observation: latter two cases are either dot separated or bracketed
