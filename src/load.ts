@@ -150,6 +150,49 @@ function loadYaml(filePath: string, elementPath: string): LoadResult {
   return new LoadResult(true, yamlAsJsObj, elementPath);
 }
 
+function getNextElementPath(elementPath: string): string {
+  let elementPathToCheck = elementPath;
+  let firstDotIndex = elementPathToCheck.indexOf(".");
+  let firstBracketIndex = elementPathToCheck.indexOf("[");
+  let firstElementEntry = "";
+
+  if (firstDotIndex === 0) {
+    // ignore dot
+    elementPathToCheck = elementPath.slice(1);
+    firstDotIndex = elementPathToCheck.indexOf(".");
+    firstBracketIndex = elementPathToCheck.indexOf("[");
+  } else if (firstBracketIndex === 0) {
+    // parse string in brackets
+    elementPathToCheck = elementPath.slice(1);
+    let firstClosedBracketIndex = elementPathToCheck.indexOf("]");
+    if (firstClosedBracketIndex !== -1) {
+      firstElementEntry = elementPathToCheck.substring(
+        0,
+        firstClosedBracketIndex
+      );
+    }
+    return firstElementEntry;
+  }
+
+  if (firstDotIndex === -1 && firstBracketIndex !== -1) {
+    // brackets only case
+    firstElementEntry = elementPathToCheck.substring(0, firstBracketIndex);
+  } else if (firstBracketIndex === -1 && firstDotIndex !== -1) {
+    // dots only case
+    firstElementEntry = elementPathToCheck.substring(0, firstDotIndex);
+  } else if (firstBracketIndex !== -1 && firstDotIndex !== -1) {
+    // brackets and dots case
+    firstElementEntry = elementPathToCheck.substring(
+      0,
+      Math.min(firstBracketIndex, firstDotIndex)
+    );
+  } else {
+    // no brackets or dots
+    firstElementEntry = elementPathToCheck;
+  }
+  return firstElementEntry;
+}
+
 function convertElementPathToFilePath(
   workingDirectoryPath: string,
   elementPath: string
@@ -206,9 +249,42 @@ function convertElementPathToFilePath(
       return new ElementPathResult(ElementPathType.invalid, null);
     }
   } else {
-    // complex path case
+    // complex path case containing "." or "[" or "]"
+    const firstElementEntry = getNextElementPath(elementPath);
+    const firstElementFilePath = convertElementPathToFilePath(
+      workingDirectoryPath,
+      firstElementEntry
+    );
+    if (firstElementFilePath.type !== ElementPathType.invalid) {
+      const firstElementContent = fs.readFileSync(
+        firstElementFilePath.data,
+        "utf-8"
+      );
+      const firstElementAsJsObj = yaml.load(firstElementContent);
+      let remainingElementPath = elementPath.replace(firstElementEntry, "");
+      let remainingElementEntries: string[] = [];
+      do {
+        const nextElementPath = getNextElementPath(remainingElementPath);
+        remainingElementEntries.push(nextElementPath);
+        if (remainingElementPath[0] === ".") {
+          remainingElementPath = remainingElementPath.replace(
+            "." + nextElementPath,
+            ""
+          );
+        } else if (remainingElementPath[0] === "[") {
+          remainingElementPath = remainingElementPath.replace(
+            "[" + nextElementPath + "]",
+            ""
+          );
+        } else {
+          remainingElementPath = remainingElementPath.replace(
+            nextElementPath,
+            ""
+          );
+        }
+      } while (remainingElementPath !== "");
+    }
   }
-
   return new ElementPathResult(ElementPathType.invalid, null);
 }
 
