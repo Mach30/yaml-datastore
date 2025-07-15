@@ -21,7 +21,9 @@ enum ElementPathType {
   simpleToList, // filepath points to a list to be loaded
   simpleToComplexString, // filepath points to a complex string to be loaded
   simpleToSimple, // element is already in memory to be accessed
-  complexToComplex, // filepath points to a complex type (i.e., object, list, complex string) to be loaded
+  complexToObject, // filepath points to a complex type (i.e., object, list, complex string) to be loaded
+  complexToList, // filepath points to a complex type (i.e., object, list, complex string) to be loaded
+  complexToComplexString, // filepath points to a complex type (i.e., object, list, complex string) to be loaded
   complexToSimple, // element is already in memory to be accessed
 }
 
@@ -276,11 +278,6 @@ function convertElementPathToFilePath(
             "[" + nextElementPath + "]",
             ""
           );
-        } else {
-          remainingElementPath = remainingElementPath.replace(
-            nextElementPath,
-            ""
-          );
         }
       } while (remainingElementPath !== "");
     }
@@ -312,16 +309,16 @@ export function load(
       case ElementPathType.empty:
       case ElementPathType.simpleToObject:
       case ElementPathType.simpleToList:
+      case ElementPathType.complexToObject:
+      case ElementPathType.complexToList:
         return loadYaml(elementPathObj.data, elementPath);
       case ElementPathType.simpleToSimple:
+      case ElementPathType.complexToSimple:
         return new LoadResult(true, elementPathObj.data, elementPath);
       case ElementPathType.simpleToComplexString:
+      case ElementPathType.complexToComplexString:
         const elementContent = fs.readFileSync(elementPathObj.data, "utf-8");
         return new LoadResult(true, elementContent, elementPath);
-      case ElementPathType.complexToSimple:
-        break;
-      case ElementPathType.complexToComplex:
-        break;
       case ElementPathType.invalid:
         break;
     }
