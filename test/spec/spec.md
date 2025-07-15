@@ -116,3 +116,10 @@ ergo...
   - elementPath points at a simple property
 
 observation: latter two cases are either dot separated or bracketed
+
+- find first element entry path, e.g., model
+- find list of remaining entry path elements, e.g., myList = ["assemblySteps", 0, "summary"]
+- temp = model
+- temp = temp[myList[0]]
+- temp = temp[myList[1]]
+- temp = temp[myList[2]]
