@@ -99,65 +99,41 @@ function trimDoubleParentheses(aString: string): string {
   return aString.slice(2, -2);
 }
 
-// local function used for converting filePath to elementPath
+// local function used for converting YAML filePath to elementPath
 function convertYamlFilePathToElementPath(filePath: string): string {
   if (filePath.slice(-10) === "_this.yaml") {
     // handle case where filePath is a YAML object
     const elementPath = filePath.split("/").slice(0, -1).join(".");
     return elementPath;
-  } else if (filePath.slice(-5) === ".yaml") {
+  } else {
     // handle case where filePath is a YAML list
     const elementPath = filePath.slice(0, -5).replace("/", ".");
     return elementPath;
-  } else {
-    // handle case where filePath is a text document
-    return filePath.replace(".", "_");
   }
 }
 
-// local function used for loading _this.yaml
-function loadThisYaml(filePath: string, elementPath: string): LoadResult {
+// local function used for loading YAML file
+function loadYaml(filePath: string, elementPath: string): LoadResult {
   const thisYamlContent = fs.readFileSync(filePath, "utf8");
-  const thisYaml = yaml.load(thisYamlContent);
-  // iterate through elements of thisYaml and replace ((filepath)) with its loaded complex data type
-  Object.entries(thisYaml as any).forEach(([key, value]) => {
-    if (typeof value == "string") {
-      if (doubleParenthesesRegEx.test(value)) {
-        // parse filepath from ((filepath))
-        const dirPath = filePath.slice(0, -10);
-        const aComplexDataTypeFilePath = trimDoubleParentheses(value);
-        const newElementPath = convertYamlFilePathToElementPath(
-          aComplexDataTypeFilePath
-        );
-        (thisYaml as any)[key] = load(dirPath, newElementPath).element;
-      }
-    }
-  });
-  return new LoadResult(true, thisYaml, elementPath);
-}
-
-// local function used for loading a YAML list
-function loadYamlList(filePath: string, elementPath: string): LoadResult {
-  const aYamlListContent = fs.readFileSync(filePath, "utf-8");
-  let aYamlListAsJsObject = yaml.load(aYamlListContent);
-  // iterate through elements of list and replace ((filepath)) with its loaded complex data type
-  for (let i = 0; i < (aYamlListAsJsObject as any).length; i++) {
-    if (typeof (aYamlListAsJsObject as any)[i] == "string") {
-      if (doubleParenthesesRegEx.test((aYamlListAsJsObject as any)[i])) {
+  let yamlAsJsObj = yaml.load(thisYamlContent);
+  // iterate through elements of yamlAsJsObj and replace ((filepath)) with its loaded complex data type
+  const keys = Object.keys(yamlAsJsObj as any);
+  keys.forEach((key) => {
+    if (typeof (yamlAsJsObj as any)[key] == "string") {
+      if (doubleParenthesesRegEx.test((yamlAsJsObj as any)[key])) {
         // parse filepath from ((filepath))
         const dirPath = filePath.split("/").slice(0, -1).join("/");
         const aComplexDataTypeFilePath = trimDoubleParentheses(
-          (aYamlListAsJsObject as any)[i]
+          (yamlAsJsObj as any)[key]
         );
         if (aComplexDataTypeFilePath.slice(-5) === ".yaml") {
+          // recursively load if file path is a YAML object or list
           const newElementPath = convertYamlFilePathToElementPath(
             aComplexDataTypeFilePath
           );
-          (aYamlListAsJsObject as any)[i] = load(
-            dirPath,
-            newElementPath
-          ).element;
+          (yamlAsJsObj as any)[key] = load(dirPath, newElementPath).element;
         } else {
+          // read contents if file path is not a YAML object or list
           const newFilePathToLoad = path.join(
             dirPath,
             aComplexDataTypeFilePath
@@ -166,12 +142,12 @@ function loadYamlList(filePath: string, elementPath: string): LoadResult {
             newFilePathToLoad,
             "utf-8"
           );
-          (aYamlListAsJsObject as any)[i] = aComplexDataTypeContent;
+          (yamlAsJsObj as any)[key] = aComplexDataTypeContent;
         }
       }
     }
-  }
-  return new LoadResult(true, aYamlListAsJsObject, elementPath);
+  });
+  return new LoadResult(true, yamlAsJsObj, elementPath);
 }
 
 function convertElementPathToFilePath(
@@ -207,8 +183,8 @@ function convertElementPathToFilePath(
     if (fs.existsSync(filePath)) {
       // complex type path or property case
       const thisYamlContent = fs.readFileSync(filePath, "utf-8");
-      const thisYaml = yaml.load(thisYamlContent);
-      const rawData = (thisYaml as any)[elementPath];
+      const yamlAsJsObj = yaml.load(thisYamlContent);
+      const rawData = (yamlAsJsObj as any)[elementPath];
       if (typeof rawData === "string") {
         if (doubleParenthesesRegEx.test(rawData)) {
           // complex string path case
@@ -259,11 +235,10 @@ export function load(
     switch (elementPathObj.type) {
       case ElementPathType.empty:
       case ElementPathType.simpleToObject:
-        return loadThisYaml(elementPathObj.data, elementPath);
+      case ElementPathType.simpleToList:
+        return loadYaml(elementPathObj.data, elementPath);
       case ElementPathType.simpleToSimple:
         return new LoadResult(true, elementPathObj.data, elementPath);
-      case ElementPathType.simpleToList:
-        return loadYamlList(elementPathObj.data, elementPath);
       case ElementPathType.simpleToComplexString:
         const elementContent = fs.readFileSync(elementPathObj.data, "utf-8");
         return new LoadResult(true, elementContent, elementPath);
@@ -283,51 +258,6 @@ export function load(
         " | " +
         elementPath +
         "]"
-    ); // // extract relative file path, given working directory path and element path
-    // let filePath = tofilePath(
-    //   workingDirectoryPath,
-    //   elementPath
-    // );
-
-    // let elementContent = "";
-
-    // if (fs.existsSync(filePath)) {
-    //   elementContent = fs.readFileSync(filePath, "utf8");
-    // } else {
-    //   filePath = filePath.replace(
-    //     elementPath,
-    //     "_this.yaml"
-    //   );
-    //   if (fs.existsSync(filePath)) {
-    //     elementContent = fs.readFileSync(filePath, "utf-8");
-    //   } else {
-    //     return new LoadResult(
-    //       false,
-    //       null,
-    //       INVALID_PATH_ERROR + " [" + filePath + "]"
-    //     );
-    //   }
-    // }
-
-    // if (filePath.slice(-10) === "_this.yaml") {
-    //   // handle case where element content is YAML object
-    //   let thisYamlResult = loadThisYaml(filePath, elementPath);
-    //   if (elementPath in thisYamlResult.element) {
-    //     return new LoadResult(
-    //       true,
-    //       thisYamlResult.element[elementPath],
-    //       elementPath
-    //     );
-    //   } else {
-    //     return thisYamlResult;
-    //   }
-    // } else if (filePath.slice(-5) === ".yaml") {
-    //   // handle case where element content is a YAML list
-    //   const aYamlList = yaml.load(elementContent);
-    //   return loadYamlList(filePath, elementPath);
-    // } else {
-    //   // handle case where element content is a text document
-    //   return new LoadResult(true, elementContent, elementPath);
-    // }
+    );
   }
 }
