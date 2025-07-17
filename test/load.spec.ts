@@ -20,7 +20,6 @@ function runBasicLoadTest(specCaseName: string) {
   expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
 }
 
-// TODO test invalid working directory path
 describe("Test basic load function", () => {
   it("should return a LoadResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path", () => {
     const result = load("", "");
@@ -33,6 +32,30 @@ describe("Test basic load function", () => {
     expect(result.success).to.equal(false);
     expect(result.element).to.equal(null);
     expect(result.message).to.equal(EMPTY_WORKINGDIR_PATH_ERROR);
+  });
+  it("should error when working directory does not exist with empty element path", () => {
+    const result = load("test/spec/does_not_exist", "");
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
+  });
+  it("should error when working directory does not exist with simple element path", () => {
+    const result = load("test/spec/does_not_exist", "model");
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
+  });
+  it("should error when working directory does not exist with complex element path", () => {
+    const result = load("test/spec/does_not_exist", "model.address");
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
   });
   it("should load object with simple data types", () => {
     runBasicLoadTest("1.1_object_with_simple_data_types");
