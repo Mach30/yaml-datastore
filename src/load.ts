@@ -285,7 +285,7 @@ function convertElementPathToFilePath(
       let filePath = path.dirname(firstElementFilePath.data);
       for (let i = 0; i < remainingElementEntries.length; i++) {
         const elementPath = remainingElementEntries[i];
-        if (!(elementPath in (currentElementAsJsObj as any))) {
+        if (!(currentElementAsJsObj as any).hasOwnProperty(elementPath)) {
           return new ElementPathResult(ElementPathType.invalid, null);
         }
         const rawData = (currentElementAsJsObj as any)[elementPath];
