@@ -118,8 +118,10 @@ ergo...
 observation: latter two cases are either dot separated or bracketed
 
 - find first element entry path, e.g., model
-- find list of remaining entry path elements, e.g., myList = ["assemblySteps", 0, "summary"]
-- temp = model
-- temp = temp[myList[0]]
-- temp = temp[myList[1]]
-- temp = temp[myList[2]]
+- find list of remaining entry path elements, e.g., myList = ["assemblySteps", "0", "summary"]
+- temp = model | file path: model/\_this.yaml
+- temp = temp[myList[0]] | file path: assemblySteps.yaml
+- temp = temp[myList[1]] | file path: assemblySteps_E16F4F/\_this.yaml
+- temp = temp[myList[2]] | accesses "summary"
+
+model/assemblySteps_E16F4F/\_this.yaml
