@@ -21,7 +21,6 @@ function runBasicLoadTest(specCaseName: string) {
 }
 
 // TODO test invalid working directory path
-// TODO test invalid element path
 // TODO test for unmatched "[" and "]"
 describe("Test basic load function", () => {
   it("should return a LoadResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path", () => {
@@ -399,6 +398,32 @@ describe("Test load function support for elementPath", () => {
     expect(result.success).to.equal(true);
     expect(result.message).to.equal(elementPath);
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
+  });
+  it("should error for missing [ in element path", () => {
+    const workingDir = "test/spec/2.2.2_list_of_objects_of_simple_data_types";
+    const elementPath = "model0]";
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    )[0];
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
+  });
+  it("should error for missing ] in element path", () => {
+    const workingDir = "test/spec/2.2.2_list_of_objects_of_simple_data_types";
+    const elementPath = "model[0";
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    )[0];
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
   });
   it("should load list for list item element path to list", () => {
     const workingDir = "";
