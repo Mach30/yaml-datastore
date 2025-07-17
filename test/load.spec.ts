@@ -163,6 +163,36 @@ describe("Test load function support for elementPath", () => {
       .to.be.a("string")
       .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
   });
+  it("should return error for simple element path when working directory is not an object", () => {
+    const workingDir = path.join("test/spec/2.1_list_of_simple_data_types");
+    const elementPath = "address";
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
+  });
+  it("should return error for complex element path when first element is invalid", () => {
+    const workingDir = path.join("test/spec/1.1_object_with_simple_data_types");
+    const elementPath = "mode.name";
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
+  });
+  it("should return error for complex element path when later element is invalid", () => {
+    const workingDir = path.join("test/spec/1.1_object_with_simple_data_types");
+    const elementPath = "model.nam";
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(false);
+    expect(result.element).to.equal(null);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
+  });
   it("should load object for simple element path to object", () => {
     const workingDir = path.join(
       "test/spec",

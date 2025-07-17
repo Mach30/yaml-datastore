@@ -285,6 +285,9 @@ function convertElementPathToFilePath(
       let filePath = path.dirname(firstElementFilePath.data);
       for (let i = 0; i < remainingElementEntries.length; i++) {
         const elementPath = remainingElementEntries[i];
+        if (!(elementPath in (currentElementAsJsObj as any))) {
+          return new ElementPathResult(ElementPathType.invalid, null);
+        }
         const rawData = (currentElementAsJsObj as any)[elementPath];
         if (typeof rawData === "string") {
           if (doubleParenthesesRegEx.test(rawData)) {
@@ -319,6 +322,8 @@ function convertElementPathToFilePath(
         // got a simple value
         return new ElementPathResult(ElementPathType.complexToSimple, rawData);
       }
+    } else {
+      return new ElementPathResult(ElementPathType.invalid, null);
     }
   }
   return new ElementPathResult(ElementPathType.invalid, null);
