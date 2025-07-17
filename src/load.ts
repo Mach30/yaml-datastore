@@ -280,6 +280,45 @@ function convertElementPathToFilePath(
           );
         }
       } while (remainingElementPath !== "");
+
+      let currentElementAsJsObj = firstElementAsJsObj;
+      let filePath = path.dirname(firstElementFilePath.data);
+      for (let i = 0; i < remainingElementEntries.length; i++) {
+        const elementPath = remainingElementEntries[i];
+        const rawData = (currentElementAsJsObj as any)[elementPath];
+        if (typeof rawData === "string") {
+          if (doubleParenthesesRegEx.test(rawData)) {
+            // got a file path
+            filePath = path.join(filePath, trimDoubleParentheses(rawData));
+            const currentElementContent = fs.readFileSync(filePath, "utf-8");
+            currentElementAsJsObj = yaml.load(currentElementContent);
+            if (i === remainingElementEntries.length - 1) {
+              if (filePath.slice(-10) === "_this.yaml") {
+                // got a YAML object
+                return new ElementPathResult(
+                  ElementPathType.complexToObject,
+                  filePath
+                );
+              } else if (filePath.slice(-5) === ".yaml") {
+                // got a YAML list
+                return new ElementPathResult(
+                  ElementPathType.complexToObject,
+                  filePath
+                );
+              } else {
+                // got a complex string
+                return new ElementPathResult(
+                  ElementPathType.complexToComplexString,
+                  filePath
+                );
+              }
+            }
+            continue;
+          }
+        }
+        // got a simple value
+        return new ElementPathResult(ElementPathType.complexToSimple, rawData);
+      }
     }
   }
   return new ElementPathResult(ElementPathType.invalid, null);
