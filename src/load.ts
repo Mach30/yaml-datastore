@@ -253,6 +253,14 @@ function convertElementPathToFilePath(
   } else {
     // complex path case containing "." or "[" or "]"
     const firstElementEntry = getNextElementPath(elementPath);
+    if (
+      firstElementEntry === "" ||
+      firstElementEntry.includes(".") ||
+      firstElementEntry.includes("[") ||
+      firstElementEntry.includes("]")
+    ) {
+      return new ElementPathResult(ElementPathType.invalid, null);
+    }
     const firstElementFilePath = convertElementPathToFilePath(
       workingDirectoryPath,
       firstElementEntry
@@ -267,6 +275,14 @@ function convertElementPathToFilePath(
       let remainingElementEntries: string[] = [];
       do {
         const nextElementPath = getNextElementPath(remainingElementPath);
+        if (
+          nextElementPath === "" ||
+          nextElementPath.includes(".") ||
+          nextElementPath.includes("[") ||
+          nextElementPath.includes("]")
+        ) {
+          return new ElementPathResult(ElementPathType.invalid, null);
+        }
         remainingElementEntries.push(nextElementPath);
         if (remainingElementPath[0] === ".") {
           remainingElementPath = remainingElementPath.replace(

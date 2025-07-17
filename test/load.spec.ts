@@ -21,7 +21,6 @@ function runBasicLoadTest(specCaseName: string) {
 }
 
 // TODO test invalid working directory path
-// TODO test for unmatched "[" and "]"
 describe("Test basic load function", () => {
   it("should return a LoadResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path", () => {
     const result = load("", "");
