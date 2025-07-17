@@ -288,31 +288,31 @@ describe("Test load function support for elementPath", () => {
       "1.1_object_with_simple_data_types"
     );
     const elementPaths = [
-      "model.name",
-      "model.age",
-      "model.attending",
-      "model.plusOne",
-      "model.state",
-      "model.notes",
+      "name",
+      "age",
+      "attending",
+      "plusOne",
+      "state",
+      "notes",
     ];
     const workingDir = specCasePath;
     for (const elementPath of elementPaths) {
       const expectedElement = JSON.parse(
         fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
       )[elementPath];
-      const result = load(workingDir, elementPath);
+      const result = load(workingDir, "model." + elementPath);
       expect(result.success).to.equal(true);
-      expect(result.message).to.equal(elementPath);
+      expect(result.message).to.equal("model." + elementPath);
       expect(result.element).to.equal(expectedElement);
     }
-    const elementPathsToEmptyComplex = ["model.degrees", "model.aliases"];
+    const elementPathsToEmptyComplex = ["degrees", "aliases"];
     for (const elementPath of elementPathsToEmptyComplex) {
       const expectedElement = JSON.parse(
         fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
       )[elementPath];
-      const result = load(workingDir, elementPath);
+      const result = load(workingDir, "model." + elementPath);
       expect(result.success).to.equal(true);
-      expect(result.message).to.equal(elementPath);
+      expect(result.message).to.equal("model." + elementPath);
       expect(toJsonString(result.element)).to.equal(
         toJsonString(expectedElement)
       );
