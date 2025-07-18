@@ -576,9 +576,18 @@ describe("Test load function support for elementPath", () => {
     //TODO
   });
   it("should load object for list item of a list item element path to object", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
+    const workingDir =
+      "test/spec/2.2.7.1_list_of_list_of_objects_of_simple_data_types";
+    const elementPath = "model[1][1]";
+    const expectedElement = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    )[1][1];
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(
+      toJsonString(expectedElement)
+    );
   });
   it("should load list for list item of a list item element path to list", () => {
     const workingDir = "";
