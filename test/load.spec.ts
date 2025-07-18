@@ -399,9 +399,18 @@ describe("Test load function support for elementPath", () => {
     );
   });
   it("should load list for list item of an object property element path to list", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
+    const workingDir =
+      "test/spec/1.2.7.2_object_with_list_of_list_of_simple_data_type";
+    const elementPath = "model.matrix[1]";
+    const expectedElement = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    )["matrix"][1];
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(
+      toJsonString(expectedElement)
+    );
   });
   it("should load complex string for list item of an object property element path to complex string", () => {
     const workingDir = "";
