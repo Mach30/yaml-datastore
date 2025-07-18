@@ -501,9 +501,17 @@ describe("Test load function support for elementPath", () => {
     );
   });
   it("should load simple value for list item element path to simple value", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
+    const workingDir = "test/spec/2.1_list_of_simple_data_types";
+    const elementPath = "model[1]";
+    const expectedElement = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    )[1];
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(
+      toJsonString(expectedElement)
+    );
   });
   it("should return error for object property of a list item element path when the list item is not an object", () => {
     const workingDir = "";
