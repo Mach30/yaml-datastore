@@ -545,9 +545,17 @@ describe("Test load function support for elementPath", () => {
     );
   });
   it("should load complex string for object property of a list item element path to complex string", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
+    const workingDir = "test/spec/2.2.3_list_of_objects_of_complex_data_types";
+    const elementPath = "model[1].lyrics_txt";
+    const expectedElement = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    )[1]["lyrics_txt"];
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(
+      toJsonString(expectedElement)
+    );
   });
   it("should load simple value for object property of a list item element path to simple value", () => {
     const workingDir = "";
