@@ -308,7 +308,14 @@ function convertElementPathToFilePath(
         if (typeof rawData === "string") {
           if (doubleParenthesesRegEx.test(rawData)) {
             // got a file path
-            filePath = path.join(filePath, trimDoubleParentheses(rawData));
+            if (filePath.slice(-5) === ".yaml") {
+              filePath = path.join(
+                filePath.split("/").slice(0, -1).join("/"),
+                trimDoubleParentheses(rawData)
+              );
+            } else {
+              filePath = path.join(filePath, trimDoubleParentheses(rawData));
+            }
             const currentElementContent = fs.readFileSync(filePath, "utf-8");
             currentElementAsJsObj = yaml.load(currentElementContent);
             if (i === remainingElementEntries.length - 1) {
