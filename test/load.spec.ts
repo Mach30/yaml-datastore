@@ -379,11 +379,6 @@ describe("Test load function support for elementPath", () => {
       );
     }
   });
-  it('should return error for object property element path when "_this.yaml" in object directory does not exist', () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
-  });
   it("should load object for list item of an object property element path to object", () => {
     const workingDir =
       "test/spec/1.2.7.1_object_with_list_of_objects_of_simple_data_types";
@@ -513,11 +508,6 @@ describe("Test load function support for elementPath", () => {
       toJsonString(expectedElement)
     );
   });
-  it("should return error for object property of a list item element path when the list item is not an object", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
-  });
   it("should load object for object property of a list item element path to object", () => {
     const workingDir = "test/spec/2.2.3_list_of_objects_of_complex_data_types";
     const elementPath = "model[1].personInfo";
@@ -569,11 +559,6 @@ describe("Test load function support for elementPath", () => {
     expect(toJsonString(result.element)).to.equal(
       toJsonString(expectedElement)
     );
-  });
-  it("should return error for list item of a list item element path when the list item is not a list", () => {
-    const workingDir = "";
-    const elementPath = "";
-    //TODO
   });
   it("should load object for list item of a list item element path to object", () => {
     const workingDir =
