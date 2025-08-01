@@ -620,21 +620,49 @@ describe("Test load function support for depth", () => {
   it("should load for depth = 0", () => {
     const workingDir = "test/spec/3.1_legacy_project";
     const elementPath = "model";
-    //TODO
+    const depth = 0;
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model_depth_0.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath, depth);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load for depth = 1", () => {
     const workingDir = "test/spec/3.1_legacy_project";
     const elementPath = "model";
-    //TODO
+    const depth = 1;
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model_depth_1.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath, depth);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load for depth = 2", () => {
     const workingDir = "test/spec/3.1_legacy_project";
     const elementPath = "model";
-    //TODO
+    const depth = 2;
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model_depth_2.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath, depth);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load for depth = 3", () => {
     const workingDir = "test/spec/3.1_legacy_project";
     const elementPath = "model";
-    //TODO
+    const depth = 3;
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath, depth);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
 });
