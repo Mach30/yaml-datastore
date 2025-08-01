@@ -615,3 +615,26 @@ describe("Test load function support for elementPath", () => {
     );
   });
 });
+
+describe("Test load function support for depth", () => {
+  it("should load for depth = 0", () => {
+    const workingDir = "test/spec/3.1_legacy_project";
+    const elementPath = "model";
+    //TODO
+  });
+  it("should load for depth = 1", () => {
+    const workingDir = "test/spec/3.1_legacy_project";
+    const elementPath = "model";
+    //TODO
+  });
+  it("should load for depth = 2", () => {
+    const workingDir = "test/spec/3.1_legacy_project";
+    const elementPath = "model";
+    //TODO
+  });
+  it("should load for depth = 3", () => {
+    const workingDir = "test/spec/3.1_legacy_project";
+    const elementPath = "model";
+    //TODO
+  });
+});
