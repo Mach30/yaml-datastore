@@ -8,7 +8,7 @@
 
 > **load**(`workingDirectoryPath`, `elementPath`, `depth`): [`LoadResult`](../classes/LoadResult.md)
 
-Defined in: [load.ts:52](https://github.com/Mach30/yaml-datastore/blob/89fdca848a70e744e3dc591eccee1ffc52a5f89e/src/load.ts#L52)
+Defined in: [load.ts:376](https://github.com/Mach30/yaml-datastore/blob/65dbd111e9866fc3c2803ef00a07ee8b23c440eb/src/load.ts#L376)
 
 Returns a in-memory representation of the element in working directory specified by element path
 
@@ -30,7 +30,7 @@ object path (dot separated, with support for bracketed indexing for list element
 
 `number` = `-1`
 
-integer from -1 to depth of element indicating how deep into element's hierachy to read into memory (-1 = read full depth. Defaults to -1)
+integer from -1 to depth of element indicating how deep into element's hierachy to read into memory (-1 = read full depth. Defaults to -1), will not throw error if depth exceeds actual maximum depth of element
 
 ## Returns
 
