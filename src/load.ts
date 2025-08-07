@@ -370,7 +370,7 @@ function convertElementPathToFilePath(
  *
  * @param workingDirectoryPath relative or absolute path to working directory containing yaml-datastore serialized content
  * @param elementPath object path (dot separated, with support for bracketed indexing for list elements or key-value pairs in objects) from working directory to element to be read into memory (e.g., top-element.sub-element.property[3])
- * @param depth integer from -1 to depth of element indicating how deep into element's hierachy to read into memory (-1 = read full depth. Defaults to -1)
+ * @param depth integer from -1 to depth of element indicating how deep into element's hierachy to read into memory (-1 = read full depth. Defaults to -1), will not throw error if depth exceeds actual maximum depth of element
  * @returns a LoadResult containing the status and content of the load function
  */
 export function load(
