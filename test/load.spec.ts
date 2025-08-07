@@ -666,7 +666,16 @@ describe("Test load function support for depth", () => {
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load full object without error for depth > object's greatest depth", () => {
-    // TODO
+    const workingDir = "test/spec/3.1_legacy_project";
+    const elementPath = "model";
+    const depth = 10;
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath, depth);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load list for depth = 0", () => {
     // TODO
