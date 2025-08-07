@@ -13,20 +13,64 @@ const doubleParenthesesRegEx = new RegExp(/\(\(.*\)\)/);
 // Regular expression used for matching 6-character uppercase alphanumeric string
 const idRegex = new RegExp(/^[A-Z0-9]{6}$/);
 
-// TODO: need to typedoc elementPathType
+/**
+ * Describes the nature of an element path + filepath combination.
+ */
 enum ElementPathType {
-  invalid, // element is null
-  empty, // filepath points to an object to be loaded
-  simpleToObject, // filepath points to an object to be loaded
-  simpleToList, // filepath points to a list to be loaded
-  simpleToComplexString, // filepath points to a complex string to be loaded
-  simpleToSimple, // element is already in memory to be accessed
-  complexToObject, // filepath points to a complex type (i.e., object, list, complex string) to be loaded
-  complexToList, // filepath points to a complex type (i.e., object, list, complex string) to be loaded
-  complexToComplexString, // filepath points to a complex type (i.e., object, list, complex string) to be loaded
-  complexToSimple, // element is already in memory to be accessed
+  /**
+   * the combined element Path and filepath do not point at a valid element, returned element will be null
+   */
+  invalid,
+
+  /**
+   * element path is empty, therefore filepath points to an object to be loaded
+   */
+  empty,
+
+  /**
+   * element path contains no heirarchy and filepath points to a directory containing an object to be loaded
+   */
+  simpleToObject,
+
+  /**
+   * element path contains no heirarchy and filepath points to a directory containing a list to be loaded
+   */
+  simpleToList,
+
+  /**
+   * element path contains no heirarchy and filepath points to an object containing a complex string to be loaded
+   */
+  simpleToComplexString,
+
+  /**
+   * element path contains no heirarchy and element is already in memory to be accessed
+   */
+  simpleToSimple,
+
+  /**
+   * element path contains heirarchy, therefore filepath points to a directory containing an object or list containing an object to be loaded
+   */
+  complexToObject,
+
+  /**
+   * element path contains heirarchy, therefore filepath points to a directory containing an object or list containing a list to be loaded
+   */
+  complexToList,
+
+  /**
+   * element path contains heirarchy, therefore filepath points to a directory containing an object or list containing a complex string to be loaded
+   */
+  complexToComplexString,
+
+  /**
+   * element path contains heirarchy and element is already in memory to be accessed
+   */
+  complexToSimple,
 }
 
+/**
+ * Data required to continue loading data from filesystem
+ */
 class ElementPathResult {
   private _type: ElementPathType;
   private _data: any;
