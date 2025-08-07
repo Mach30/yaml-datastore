@@ -726,7 +726,41 @@ describe("Test load function support for depth", () => {
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("load simple value for depth = 0", () => {
-    // TODO
+    const specCasePath = path.join(
+      "test/spec",
+      "1.1_object_with_simple_data_types"
+    );
+    const elementPaths = [
+      "name",
+      "age",
+      "attending",
+      "plusOne",
+      "state",
+      "notes",
+    ];
+    const depth = 0;
+    const workingDir = path.join(specCasePath, "model");
+    for (const elementPath of elementPaths) {
+      const expectedElement = JSON.parse(
+        fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
+      )[elementPath];
+      const result = load(workingDir, elementPath, depth);
+      expect(result.success).to.equal(true);
+      expect(result.message).to.equal(elementPath);
+      expect(result.element).to.equal(expectedElement);
+    }
+    const elementPathsToEmptyComplex = ["degrees", "aliases"];
+    for (const elementPath of elementPathsToEmptyComplex) {
+      const expectedElement = JSON.parse(
+        fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
+      )[elementPath];
+      const result = load(workingDir, elementPath, depth);
+      expect(result.success).to.equal(true);
+      expect(result.message).to.equal(elementPath);
+      expect(toJsonString(result.element)).to.equal(
+        toJsonString(expectedElement)
+      );
+    }
   });
   it("load simple value for depth = 1", () => {
     // TODO
