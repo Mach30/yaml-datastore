@@ -617,7 +617,7 @@ describe("Test load function support for elementPath", () => {
 });
 
 describe("Test load function support for depth", () => {
-  it("should load for depth = 0", () => {
+  it("should load object for depth = 0", () => {
     const workingDir = "test/spec/3.1_legacy_project";
     const elementPath = "model";
     const depth = 0;
@@ -629,7 +629,7 @@ describe("Test load function support for depth", () => {
     expect(result.message).to.equal(elementPath);
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
-  it("should load for depth = 1", () => {
+  it("should load object for depth = 1", () => {
     const workingDir = "test/spec/3.1_legacy_project";
     const elementPath = "model";
     const depth = 1;
@@ -641,7 +641,7 @@ describe("Test load function support for depth", () => {
     expect(result.message).to.equal(elementPath);
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
-  it("should load for depth = 2", () => {
+  it("should load object for depth = 2", () => {
     const workingDir = "test/spec/3.1_legacy_project";
     const elementPath = "model";
     const depth = 2;
@@ -653,7 +653,7 @@ describe("Test load function support for depth", () => {
     expect(result.message).to.equal(elementPath);
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
-  it("should load for depth = 3", () => {
+  it("should load object for depth = 3", () => {
     const workingDir = "test/spec/3.1_legacy_project";
     const elementPath = "model";
     const depth = 3;
@@ -664,5 +664,29 @@ describe("Test load function support for depth", () => {
     expect(result.success).to.equal(true);
     expect(result.message).to.equal(elementPath);
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
+  });
+  it("should load full object without error for depth > object's greatest depth", () => {
+    // TODO
+  });
+  it("should load list for depth = 0", () => {
+    // TODO
+  });
+  it("should load list for depth = 1", () => {
+    // TODO
+  });
+  it("should load list for depth = 2", () => {
+    // TODO
+  });
+  it("should load list for depth = 0", () => {
+    // TODO
+  });
+  it("should load full list without error for depth > list's greatest depth", () => {
+    // TODO
+  });
+  it("load simple value for depth = 0", () => {
+    // TODO
+  });
+  it("load simple value for depth = 1", () => {
+    // TODO
   });
 });
