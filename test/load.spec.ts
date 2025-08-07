@@ -315,6 +315,20 @@ describe("Test load function support for elementPath", () => {
     expect(result.message).to.equal(elementPath);
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
+  it("should load object for object property element path using [] notation to object", () => {
+    const workingDir = path.join(
+      "test/spec",
+      "1.2.2_object_with_object_of_simple_data_types"
+    );
+    const elementPath = "model[address]";
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(workingDir, "model.json"), "utf8")
+    )["address"];
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
+  });
   it("should load list for object property element path to list", () => {
     const workingDir = path.join(
       "test/spec",
