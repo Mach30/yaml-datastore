@@ -67,7 +67,16 @@ if (parser.values.format) {
   format = parser.values.format;
 }
 
-const element = load(workingDirPath, elementPath, depth).element;
+const loadResult = load(workingDirPath, elementPath, depth);
+
+let element = "";
+if (loadResult.success) {
+  element = loadResult.element;
+} else {
+  console.error(loadResult.message);
+  process.exit(-1);
+}
+
 if (format === "yaml") {
   const elementAsYaml = yaml.dump(element);
   console.log(elementAsYaml);
