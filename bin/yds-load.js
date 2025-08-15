@@ -78,7 +78,7 @@ if (loadResult.success) {
 }
 
 if (format === "yaml") {
-  const elementAsYaml = yaml.dump(element);
+  const elementAsYaml = yaml.dump(element).trimEnd();
   console.log(elementAsYaml);
 } else if (format === "json") {
   console.log(element);
