@@ -84,4 +84,5 @@ if (format === "yaml") {
   console.log(element);
 } else {
   console.error(INVALID_FORMAT_ERROR);
+  process.exit(-2);
 }
