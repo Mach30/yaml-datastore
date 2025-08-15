@@ -74,7 +74,7 @@ if (loadResult.success) {
   element = loadResult.element;
 } else {
   console.error(loadResult.message);
-  process.exit(-1);
+  process.exit(1);
 }
 
 if (format === "yaml") {
@@ -84,5 +84,5 @@ if (format === "yaml") {
   console.log(element);
 } else {
   console.error(INVALID_FORMAT_ERROR);
-  process.exit(-2);
+  process.exit(2);
 }
