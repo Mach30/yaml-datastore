@@ -4,6 +4,11 @@
 
 # yaml-datastore
 
+## Classes
+
+- [LoadResult](classes/LoadResult.md)
+
 ## Functions
 
 - [generateIDs](functions/generateIDs.md)
+- [load](functions/load.md)

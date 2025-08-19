@@ -1,0 +1,24 @@
+{
+  "name": "trrs-wssm-jig",
+  "version": "1.0.0",
+  "description": "TRRS Wheel Speed Sensor Module Jig",
+  "license": "(CERN-OHL-1.2 AND Unlicense AND CC-BY-SA-3.0)",
+  "author": "Model B Rev 2, LLC (http://modelb.biz)",
+  "dependencies": {},
+  "components": {
+    "_3d-printer-generic": "((_3d-printer-generic/_this.yaml))",
+    "pc-generic": "((pc-generic/_this.yaml))",
+    "pla-filament-generic": "((pla-filament-generic/_this.yaml))",
+    "slicer-software-generic": "((slicer-software-generic/_this.yaml))"
+  },
+  "parts": {
+    "filament": "((filament/_this.yaml))"
+  },
+  "tools": {
+    "pc": "((pc/_this.yaml))",
+    "slicer": "((slicer/_this.yaml))",
+    "_3d-printer": "((_3d-printer/_this.yaml))"
+  },
+  "precautions": [],
+  "assemblySteps": ["((assemblySteps_E16F4F/_this.yaml))"]
+}
