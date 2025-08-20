@@ -1,9 +1,12 @@
 import { store } from "../src/index";
+import {
+  INVALID_PATH_ERROR,
+  NONEMPTY_WORKINGDIR_PATH_ERROR,
+} from "../src/store";
 import { expect } from "chai";
 import fs from "node:fs";
 import path from "path";
 
-//TODO write test for bad working directory (e.g., DNE, non-empty)
 //TODO write test for bad elementName (not conformant to rules for javascript variable name)
 //TODO run checksum for contents written to disk
 /*
@@ -14,3 +17,25 @@ import path from "path";
 5. load contents in directory in /tmp/
 6. compare model.json from case against in-memory model loaded from /tmp/
 */
+describe("Test basic store function", () => {
+  it("should error when working directory path does not exist", () => {
+    const element = {};
+    const workingDir = "test/spec/does_not_exist";
+    const elementName = "model";
+    const result = store(element, workingDir, elementName);
+    expect(result.success).to.equal(false);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_PATH_ERROR));
+  });
+  it("should error when working directory path exists, but non-empty", () => {
+    const element = {};
+    const workingDir = "test/spec/1.1_object_with_simple_data_types";
+    const elementName = "model";
+    const result = store(element, workingDir, elementName);
+    expect(result.success).to.equal(false);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(NONEMPTY_WORKINGDIR_PATH_ERROR));
+  });
+});
