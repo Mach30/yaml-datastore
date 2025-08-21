@@ -8,7 +8,7 @@
 
 > **generateIDs**(`numIDs`, `numSkip`): `string`[]
 
-Defined in: [idgen.ts:53](https://github.com/Mach30/yaml-datastore/blob/935b97cfb86aec0dade51acc5d9aca535478bd83/src/idgen.ts#L53)
+Defined in: [idgen.ts:53](https://github.com/Mach30/yaml-datastore/blob/8440e6d2c59b5d61cb853a5d5890cdbc1607181a/src/idgen.ts#L53)
 
 Returns a list of short ID's
 
