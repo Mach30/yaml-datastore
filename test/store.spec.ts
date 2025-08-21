@@ -1,5 +1,6 @@
 import { store } from "../src/index";
 import {
+  INVALID_ELEMENT_NAME,
   INVALID_PATH_ERROR,
   NONEMPTY_WORKINGDIR_PATH_ERROR,
 } from "../src/store";
@@ -7,7 +8,6 @@ import { expect } from "chai";
 import fs from "node:fs";
 import path from "path";
 
-//TODO write test for bad elementName (not conformant to rules for javascript variable name)
 //TODO run checksum for contents written to disk
 /*
 1. select spec case
@@ -37,5 +37,29 @@ describe("Test basic store function", () => {
     expect(result.message)
       .to.be.a("string")
       .and.satisfy((msg) => msg.startsWith(NONEMPTY_WORKINGDIR_PATH_ERROR));
+  });
+  it("should error when element name starts with a digit", () => {
+    const workingDir = "/tmp/myproject";
+    fs.mkdirSync(workingDir);
+    const element = {};
+    const elementName = "1model";
+    const result = store(element, workingDir, elementName);
+    expect(result.success).to.equal(false);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_ELEMENT_NAME));
+    fs.rmdirSync(workingDir);
+  });
+  it("should error when element name contains a special character (except for underscores and dollar signs)", () => {
+    const workingDir = "/tmp/myproject";
+    fs.mkdirSync(workingDir);
+    const element = {};
+    const elementName = "model!";
+    const result = store(element, workingDir, elementName);
+    expect(result.success).to.equal(false);
+    expect(result.message)
+      .to.be.a("string")
+      .and.satisfy((msg) => msg.startsWith(INVALID_ELEMENT_NAME));
+    fs.rmdirSync(workingDir);
   });
 });

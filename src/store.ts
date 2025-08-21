@@ -2,6 +2,7 @@ import path from "path";
 import fs from "node:fs";
 import yaml from "js-yaml";
 
+export const INVALID_ELEMENT_NAME = "Error: Invalid element name";
 export const INVALID_PATH_ERROR = "Error: Invalid path";
 export const NONEMPTY_WORKINGDIR_PATH_ERROR =
   "Error: Working directory path is non-empty";
@@ -34,6 +35,12 @@ export class StoreResult {
   }
 }
 
+// validate element name to be conformant to rules for javascript variable name
+function validateElementName(elementName: string): boolean {
+  const javascriptVariableNameRegEx = new RegExp(/^[A-Za-z_$][A-Za-z0-9_$]*$/);
+  return javascriptVariableNameRegEx.test(elementName);
+}
+
 /**
  * Dumps in-memory representation of contents to on-disk representation
  *
@@ -54,7 +61,14 @@ export function store(
         NONEMPTY_WORKINGDIR_PATH_ERROR + " [" + workingDirectoryPath + "]"
       );
     } else {
-      //TODO
+      if (validateElementName(elementName)) {
+        //TODO
+      } else {
+        return new StoreResult(
+          false,
+          INVALID_ELEMENT_NAME + " [" + elementName + "]"
+        );
+      }
     }
   }
   return new StoreResult(
