@@ -6,3 +6,4 @@ tmp/
 node_modules
 **.DS_Store
 *.tsbuildinfo
+.model_tree.txt
