@@ -62,4 +62,7 @@ describe("Test basic store function", () => {
       .and.satisfy((msg) => msg.startsWith(INVALID_ELEMENT_NAME));
     fs.rmdirSync(workingDir);
   });
+  it("should error when element name is a reserved keyword in javascript", () => {
+    //TODO
+  });
 });
