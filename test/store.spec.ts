@@ -18,10 +18,21 @@ import path from "path";
 5. load contents in directory in /tmp/
 6. compare model.json from case against in-memory model loaded from /tmp/
 */
+
+const TMP_WORKING_DIR_PATH = "/tmp/my-project";
+let workingDir = "";
+
 describe("Test basic store function", () => {
+  beforeEach(function () {
+    workingDir = TMP_WORKING_DIR_PATH;
+    fs.mkdirSync(workingDir);
+  });
+  afterEach(function () {
+    fs.rmSync(TMP_WORKING_DIR_PATH, { recursive: true, force: true });
+  });
   it("should error when working directory path does not exist", () => {
     const element = {};
-    const workingDir = "test/spec/does_not_exist";
+    workingDir = "test/spec/does_not_exist";
     const elementName = "model";
     const result = store(element, workingDir, elementName);
     expect(result.success).to.equal(false);
@@ -31,7 +42,7 @@ describe("Test basic store function", () => {
   });
   it("should error when working directory path exists, but non-empty", () => {
     const element = {};
-    const workingDir = "test/spec/1.1_object_with_simple_data_types";
+    workingDir = "test/spec/1.1_object_with_simple_data_types";
     const elementName = "model";
     const result = store(element, workingDir, elementName);
     expect(result.success).to.equal(false);
@@ -40,8 +51,6 @@ describe("Test basic store function", () => {
       .and.satisfy((msg) => msg.startsWith(NONEMPTY_WORKINGDIR_PATH_ERROR));
   });
   it("should error when element name starts with a digit", () => {
-    const workingDir = "/tmp/myproject";
-    fs.mkdirSync(workingDir);
     const element = {};
     const elementName = "1model";
     const result = store(element, workingDir, elementName);
@@ -49,11 +58,8 @@ describe("Test basic store function", () => {
     expect(result.message)
       .to.be.a("string")
       .and.satisfy((msg) => msg.startsWith(INVALID_ELEMENT_NAME));
-    fs.rmdirSync(workingDir);
   });
   it("should error when element name contains a special character (except for underscores and dollar signs)", () => {
-    const workingDir = "/tmp/myproject";
-    fs.mkdirSync(workingDir);
     const element = {};
     const elementName = "model!";
     const result = store(element, workingDir, elementName);
@@ -61,19 +67,15 @@ describe("Test basic store function", () => {
     expect(result.message)
       .to.be.a("string")
       .and.satisfy((msg) => msg.startsWith(INVALID_ELEMENT_NAME));
-    fs.rmdirSync(workingDir);
   });
   it("should error when element name is a reserved keyword in javascript", () => {
     for (const elementName of reserved_keywords) {
-      const workingDir = "/tmp/myproject";
-      fs.mkdirSync(workingDir);
       const element = {};
       const result = store(element, workingDir, elementName);
       expect(result.success).to.equal(false);
       expect(result.message)
         .to.be.a("string")
         .and.satisfy((msg) => msg.startsWith(INVALID_ELEMENT_NAME));
-      fs.rmdirSync(workingDir);
     }
   });
 });
