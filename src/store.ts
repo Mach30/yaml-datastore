@@ -6,6 +6,75 @@ export const INVALID_ELEMENT_NAME = "Error: Invalid element name";
 export const INVALID_PATH_ERROR = "Error: Invalid path";
 export const NONEMPTY_WORKINGDIR_PATH_ERROR =
   "Error: Working directory path is non-empty";
+export const reserved_keywords = [
+  "abstract",
+  "arguments",
+  "async",
+  "await",
+  "boolean",
+  "break",
+  "byte",
+  "case",
+  "catch",
+  "char",
+  "class",
+  "const",
+  "continue",
+  "debugger",
+  "default",
+  "delete",
+  "do",
+  "double",
+  "else",
+  "enum",
+  "eval",
+  "export",
+  "extends",
+  "false",
+  "final",
+  "finally",
+  "float",
+  "for",
+  "function",
+  "goto",
+  "if",
+  "implements",
+  "function",
+  "import",
+  "in",
+  "instanceof",
+  "int",
+  "interface",
+  "let",
+  "long",
+  "native",
+  "new",
+  "null",
+  "package",
+  "private",
+  "protected",
+  "public",
+  "return",
+  "short",
+  "static",
+  "super",
+  "switch",
+  "synchronized",
+  "this",
+  "throw",
+  "throws",
+  "transient",
+  "true",
+  "try",
+  "typeof",
+  "using",
+  "var",
+  "void",
+  "volatile",
+  "while",
+  "with",
+  "yield",
+];
 
 /**
  * Represents results of a call to the store function
@@ -61,7 +130,10 @@ export function store(
         NONEMPTY_WORKINGDIR_PATH_ERROR + " [" + workingDirectoryPath + "]"
       );
     } else {
-      if (validateElementName(elementName)) {
+      if (
+        validateElementName(elementName) &&
+        !reserved_keywords.includes(elementName)
+      ) {
         //TODO
       } else {
         return new StoreResult(

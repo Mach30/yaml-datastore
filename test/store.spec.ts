@@ -3,6 +3,7 @@ import {
   INVALID_ELEMENT_NAME,
   INVALID_PATH_ERROR,
   NONEMPTY_WORKINGDIR_PATH_ERROR,
+  reserved_keywords,
 } from "../src/store";
 import { expect } from "chai";
 import fs from "node:fs";
@@ -63,6 +64,16 @@ describe("Test basic store function", () => {
     fs.rmdirSync(workingDir);
   });
   it("should error when element name is a reserved keyword in javascript", () => {
-    //TODO
+    for (const elementName of reserved_keywords) {
+      const workingDir = "/tmp/myproject";
+      fs.mkdirSync(workingDir);
+      const element = {};
+      const result = store(element, workingDir, elementName);
+      expect(result.success).to.equal(false);
+      expect(result.message)
+        .to.be.a("string")
+        .and.satisfy((msg) => msg.startsWith(INVALID_ELEMENT_NAME));
+      fs.rmdirSync(workingDir);
+    }
   });
 });
