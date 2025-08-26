@@ -116,18 +116,8 @@ function formatYaml(yamlContent: string): string {
   return result;
 }
 
-// store directly owned contents of list as YAML list
-function storeYamlList(
-  element: any,
-  workingDirectoryPath: string,
-  elementName: string
-): StoreResult {
-  //TODO
-  return new StoreResult(true, "");
-}
-
-// store directly owned contents of object as YAML object
-function storeYamlObject(
+// serialize element as YAML object or list
+function storeYaml(
   element: any,
   workingDirectoryPath: string,
   elementName: string
@@ -144,11 +134,21 @@ function storeYamlObject(
       jsObjToSerialize[key] = value;
     }
   });
-  const yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
-  const dirPath = path.join(workingDirectoryPath, elementName);
-  const filePath = path.join(dirPath, "_this.yaml");
-
-  fs.mkdirSync(dirPath);
+  let yamlContentToSerialize = "";
+  let dirPath = "";
+  let filename = "";
+  if (Array.isArray(element)) {
+    jsObjToSerialize = Object.values(jsObjToSerialize);
+    yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
+    dirPath = workingDirectoryPath;
+    filename = elementName + ".yaml";
+  } else {
+    yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
+    dirPath = path.join(workingDirectoryPath, elementName);
+    fs.mkdirSync(dirPath);
+    filename = "_this.yaml";
+  }
+  const filePath = path.join(dirPath, filename);
 
   fs.writeFileSync(filePath, yamlContentToSerialize, "ascii");
 
@@ -179,10 +179,7 @@ export function store(
         validateElementName(elementName) &&
         !reserved_keywords.includes(elementName)
       ) {
-        if (Array.isArray(element)) {
-          return storeYamlList(element, workingDirectoryPath, elementName);
-        } else
-          return storeYamlObject(element, workingDirectoryPath, elementName);
+        return storeYaml(element, workingDirectoryPath, elementName);
       } else {
         return new StoreResult(
           false,
