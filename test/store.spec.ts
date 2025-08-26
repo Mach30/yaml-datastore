@@ -32,8 +32,14 @@ function runBasicStoreTest(specCaseName: string) {
     fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
   );
   const elementName = "model";
+  const expectedFilePath = path.join(TMP_WORKING_DIR_PATH, elementName, "_this.yaml")
   const result = store(element, workingDir, elementName);
   expect(result.success).to.equal(true);
+  expect(result.message).to.equal(expectedFilePath);
+  const resultContents = fs.readFileSync(path.resolve(result.message), "utf-8")
+  const specCaseFilePath = path.join(specCasePath, elementName, "_this.yaml")
+  const expectedResultContents = fs.readFileSync(path.resolve(specCaseFilePath), "utf-8")
+  expect(resultContents).to.equal(expectedResultContents)
 }
 
 describe("Test basic store function", () => {

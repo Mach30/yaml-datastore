@@ -98,7 +98,7 @@ export class StoreResult {
   public get success() {
     return this._success;
   }
-  /** @returns (TBD) on success or an explanation of the failure. */
+  /** @returns file path to root element serialized to disk on success or an explanation of the failure. */
   public get message() {
     return this._message;
   }
@@ -108,6 +108,51 @@ export class StoreResult {
 function validateElementName(elementName: string): boolean {
   const javascriptVariableNameRegEx = new RegExp(/^[A-Za-z_$][A-Za-z0-9_$]*$/);
   return javascriptVariableNameRegEx.test(elementName);
+}
+
+// format YAML content to be serialized
+function formatYaml(yamlContent: string): string {
+  let result = yamlContent.replace("''", '""');
+  return result;
+}
+
+// store directly owned contents of list as YAML list
+function storeYamlList(
+  element: any,
+  workingDirectoryPath: string,
+  elementName: string
+): StoreResult {
+  //TODO
+  return new StoreResult(true, "");
+}
+
+// store directly owned contents of object as YAML object
+function storeYamlObject(
+  element: any,
+  workingDirectoryPath: string,
+  elementName: string
+): StoreResult {
+  let jsObjToSerialize: { [index: string]: any } = {};
+  const keys = Object.keys(element);
+  keys.forEach((key) => {
+    const value = element[key];
+    if (
+      value === null ||
+      typeof value !== "object" ||
+      Object.keys(value).length === 0
+    ) {
+      jsObjToSerialize[key] = value;
+    }
+  });
+  const yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
+  const dirPath = path.join(workingDirectoryPath, elementName);
+  const filePath = path.join(dirPath, "_this.yaml");
+
+  fs.mkdirSync(dirPath);
+
+  fs.writeFileSync(filePath, yamlContentToSerialize, "ascii");
+
+  return new StoreResult(true, filePath.toString());
 }
 
 /**
@@ -134,7 +179,10 @@ export function store(
         validateElementName(elementName) &&
         !reserved_keywords.includes(elementName)
       ) {
-        //TODO
+        if (Array.isArray(element)) {
+          return storeYamlList(element, workingDirectoryPath, elementName);
+        } else
+          return storeYamlObject(element, workingDirectoryPath, elementName);
       } else {
         return new StoreResult(
           false,
