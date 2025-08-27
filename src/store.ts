@@ -116,17 +116,58 @@ function formatYaml(yamlContent: string): string {
   return result;
 }
 
+// format file path string to be enclosed in double parentheses
+function encloseInDoubleParentheses(filePath: string): string {
+  return "((" + filePath + "))";
+}
+
 // serialize element as YAML object or list
 function storeYaml(
   element: any,
   workingDirectoryPath: string,
   elementName: string
 ): StoreResult {
+  // determine directory and filename to be serialized
+  let dirPath = "";
+  let filename = "";
+  let complexStringFilePath = "";
+  if (Array.isArray(element)) {
+    dirPath = workingDirectoryPath;
+    filename = elementName + ".yaml";
+  } else {
+    dirPath = path.join(workingDirectoryPath, elementName);
+    fs.mkdirSync(dirPath);
+    filename = "_this.yaml";
+  }
+
+  // iterate through items of object or list and replace complex data types with appropriate string-formatted file path
   let jsObjToSerialize: { [index: string]: any } = {};
   const keys = Object.keys(element);
   keys.forEach((key) => {
     const value = element[key];
-    if (
+    if (typeof value === "string") {
+      const stringValue: string = value;
+      if (stringValue.includes("\n")) {
+        // handle complex string case
+        let complexStringFilename = "";
+        if (Array.isArray(element)) {
+          //TODO
+        } else {
+          // create complex string file path from key
+          const keyAsList = key.split("_");
+          complexStringFilename = keyAsList.join(".");
+        }
+        complexStringFilePath = path.join(dirPath, complexStringFilename);
+        jsObjToSerialize[key] = encloseInDoubleParentheses(
+          complexStringFilename
+        );
+
+        fs.writeFileSync(complexStringFilePath, value);
+      } else {
+        jsObjToSerialize[key] = value;
+      }
+    } else if (
+      // handle simple data type case
       value === null ||
       typeof value !== "object" ||
       Object.keys(value).length === 0
@@ -134,20 +175,13 @@ function storeYaml(
       jsObjToSerialize[key] = value;
     }
   });
-  let yamlContentToSerialize = "";
-  let dirPath = "";
-  let filename = "";
+
+  // if list, strip keys
   if (Array.isArray(element)) {
     jsObjToSerialize = Object.values(jsObjToSerialize);
-    yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
-    dirPath = workingDirectoryPath;
-    filename = elementName + ".yaml";
-  } else {
-    yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
-    dirPath = path.join(workingDirectoryPath, elementName);
-    fs.mkdirSync(dirPath);
-    filename = "_this.yaml";
   }
+
+  const yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
   const filePath = path.join(dirPath, filename);
 
   fs.writeFileSync(filePath, yamlContentToSerialize, "ascii");
