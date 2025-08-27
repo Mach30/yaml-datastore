@@ -9,16 +9,6 @@ import { expect } from "chai";
 import fs from "node:fs";
 import path from "path";
 
-//TODO run checksum for contents written to disk
-/*
-1. select spec case
-2. load model.json from spec case into memory
-3. store to directory in /tmp/
-4. compare checksums stored version from spec case and written version in /tmp/ and assert checksums are the same
-5. load contents in directory in /tmp/
-6. compare model.json from case against in-memory model loaded from /tmp/
-*/
-
 const TMP_WORKING_DIR_PATH = "/tmp/my-project";
 let workingDir = "";
 
@@ -27,7 +17,10 @@ function toJsonString(o: Object): string {
 }
 
 function runBasicStoreTest(specCaseName: string) {
+  // 1. select spec case
   const specCasePath = path.join("test/spec", specCaseName);
+
+  // 2. load model.json from spec case into memory
   const element = JSON.parse(
     fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
   );
@@ -50,11 +43,21 @@ function runBasicStoreTest(specCaseName: string) {
     path.resolve(specCaseFilePath),
     "utf-8"
   );
+
+  // 3. store to directory in /tmp/
   const result = store(element, workingDir, elementName);
+
   expect(result.success).to.equal(true);
   expect(result.message).to.equal(expectedFilePath);
   const resultContents = fs.readFileSync(path.resolve(result.message), "utf-8");
   expect(resultContents).to.equal(expectedResultContents);
+
+  //TODO run checksum for contents written to disk
+  /*
+  4. compare checksums stored version from spec case and written version in /tmp/ and assert checksums are the same
+  5. load contents in directory in /tmp/
+  6. compare model.json from case against in-memory model loaded from /tmp/
+  */
 }
 
 describe("Test basic store function", () => {
