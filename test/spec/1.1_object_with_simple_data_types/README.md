@@ -28,6 +28,7 @@ model
 
 #### Generated Files
 
+##### `model/_this.yaml`
 <!-- include (model/_this.yaml lang=yaml) -->
 ```yaml
 name: John Smith
