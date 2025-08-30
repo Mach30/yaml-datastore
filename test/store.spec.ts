@@ -1,5 +1,5 @@
 import { store } from "../src/index";
-import { load } from "../src/index";
+import { toJsonString, toSpecCasePath, runBasicLoadTest } from "./load.spec";
 import {
   INVALID_ELEMENT_NAME,
   INVALID_PATH_ERROR,
@@ -13,25 +13,6 @@ import { hashElement } from "folder-hash";
 
 const TMP_WORKING_DIR_PATH = "/tmp/my-project";
 let workingDir = "";
-
-function toJsonString(o: Object): string {
-  return JSON.stringify(o, null, 2);
-}
-
-function runBasicLoadTest(
-  specCaseName: string,
-  workingDir: string,
-  elementPath: string = "model"
-) {
-  const specCasePath = path.join("test/spec", specCaseName);
-  const expectedModel = JSON.parse(
-    fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
-  );
-  const result = load(workingDir, elementPath);
-  expect(result.success).to.equal(true);
-  expect(result.message).to.equal(elementPath);
-  expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
-}
 
 class StoreTestResult {
   private _specCasePath: string;
@@ -60,7 +41,7 @@ class StoreTestResult {
 
 function runBasicStoreTest(specCaseName: string): StoreTestResult {
   // 1. select spec case
-  const specCasePath = path.join("test/spec", specCaseName);
+  const specCasePath = toSpecCasePath(specCaseName);
 
   // 2. load model.json from spec case into memory
   const element = JSON.parse(
