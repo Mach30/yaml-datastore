@@ -1,4 +1,5 @@
 import { store } from "../src/index";
+import { load } from "../src/index";
 import {
   INVALID_ELEMENT_NAME,
   INVALID_PATH_ERROR,
@@ -15,6 +16,21 @@ let workingDir = "";
 
 function toJsonString(o: Object): string {
   return JSON.stringify(o, null, 2);
+}
+
+function runBasicLoadTest(
+  specCaseName: string,
+  workingDir: string,
+  elementPath: string = "model"
+) {
+  const specCasePath = path.join("test/spec", specCaseName);
+  const expectedModel = JSON.parse(
+    fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
+  );
+  const result = load(workingDir, elementPath);
+  expect(result.success).to.equal(true);
+  expect(result.message).to.equal(elementPath);
+  expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
 }
 
 class StoreTestResult {
@@ -78,11 +94,9 @@ function runBasicStoreTest(specCaseName: string): StoreTestResult {
   const resultContents = fs.readFileSync(path.resolve(result.message), "utf-8");
   expect(resultContents).to.equal(expectedResultContents);
 
-  //TODO
-  /*
-  4. load contents from TMP_WORKING_DIR_PATH
-  5. compare model.json from case against in-memory model loaded from TMP_WORKING_DIR_PATH
-  */
+  // 4. run basic load test with TMP_WORKING_DIR_PATH (i.e., path containing serialized content from store() function) as working directory path
+  runBasicLoadTest(specCaseName, workingDir);
+
   return new StoreTestResult(specCasePath, TMP_WORKING_DIR_PATH);
 }
 
