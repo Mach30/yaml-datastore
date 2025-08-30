@@ -8,6 +8,7 @@ import {
 import { expect } from "chai";
 import fs from "node:fs";
 import path from "path";
+import { hashElement } from "folder-hash";
 
 const TMP_WORKING_DIR_PATH = "/tmp/my-project";
 let workingDir = "";
@@ -16,7 +17,32 @@ function toJsonString(o: Object): string {
   return JSON.stringify(o, null, 2);
 }
 
-function runBasicStoreTest(specCaseName: string) {
+class StoreTestResult {
+  private _specCasePath: string;
+  private _storePath: string;
+
+  /**
+   * Default constructor for StoreTestResult
+   *
+   * @param specCasePath directory path containing spec case.
+   * @param storePath directory path containing serialized content.
+   */
+  constructor(specCasePath: string, storePath: string) {
+    this._specCasePath = specCasePath;
+    this._storePath = storePath;
+  }
+
+  /** @returns directory path containing spec case. */
+  public get specCasePath() {
+    return this._specCasePath;
+  }
+  /** @returns directory path containing serialized content. */
+  public get storePath() {
+    return this._storePath;
+  }
+}
+
+function runBasicStoreTest(specCaseName: string): StoreTestResult {
   // 1. select spec case
   const specCasePath = path.join("test/spec", specCaseName);
 
@@ -44,7 +70,7 @@ function runBasicStoreTest(specCaseName: string) {
     "utf-8"
   );
 
-  // 3. store to directory in /tmp/
+  // 3. store element in working directory
   const result = store(element, workingDir, elementName);
 
   expect(result.success).to.equal(true);
@@ -52,12 +78,12 @@ function runBasicStoreTest(specCaseName: string) {
   const resultContents = fs.readFileSync(path.resolve(result.message), "utf-8");
   expect(resultContents).to.equal(expectedResultContents);
 
-  //TODO run checksum for contents written to disk
+  //TODO
   /*
-  4. compare checksums stored version from spec case and written version in /tmp/ and assert checksums are the same
-  5. load contents in directory in /tmp/
-  6. compare model.json from case against in-memory model loaded from /tmp/
+  4. load contents from TMP_WORKING_DIR_PATH
+  5. compare model.json from case against in-memory model loaded from TMP_WORKING_DIR_PATH
   */
+  return new StoreTestResult(specCasePath, TMP_WORKING_DIR_PATH);
 }
 
 describe("Test basic store function", () => {
@@ -116,103 +142,579 @@ describe("Test basic store function", () => {
         .and.satisfy((msg) => msg.startsWith(INVALID_ELEMENT_NAME));
     }
   });
-  it("should store object with simple data types", () => {
-    runBasicStoreTest("1.1_object_with_simple_data_types");
+  it("should store object with simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.1_object_with_simple_data_types"
+    );
+
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with complex string", () => {
-    runBasicStoreTest("1.2.1_object_with_complex_string");
+  it("should store object with complex string", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.2.1_object_with_complex_string"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with object of simple data types", () => {
-    runBasicStoreTest("1.2.2_object_with_object_of_simple_data_types");
+  it("should store object with object of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.2.2_object_with_object_of_simple_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with object of complex data types", () => {
-    runBasicStoreTest("1.2.3_object_with_object_of_complex_data_types");
+  it("should store object with object of complex data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.2.3_object_with_object_of_complex_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with list of simple data type", () => {
-    runBasicStoreTest("1.2.4_object_with_list_of_simple_data_type");
+  it("should store object with list of simple data type", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.2.4_object_with_list_of_simple_data_type"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with list of simple data types", () => {
-    runBasicStoreTest("1.2.5_object_with_list_of_simple_data_types");
+  it("should store object with list of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.2.5_object_with_list_of_simple_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with list of complex strings", () => {
-    runBasicStoreTest("1.2.6_object_with_list_of_complex_strings");
+  it("should store object with list of complex strings", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.2.6_object_with_list_of_complex_strings"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with list of objects of simple data types", () => {
-    runBasicStoreTest(
+  it("should store object with list of objects of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
       "1.2.7.1_object_with_list_of_objects_of_simple_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
     );
   });
   it("should store object with list of list of simple data type", () => {
     runBasicStoreTest("1.2.7.2_object_with_list_of_list_of_simple_data_type");
   });
-  it("should store object with two complex strings", () => {
-    runBasicStoreTest("1.3.1_object_with_two_complex_strings");
+  it("should store object with two complex strings", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.3.1_object_with_two_complex_strings"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with two objects of simple data types", () => {
-    runBasicStoreTest("1.3.2_object_with_two_objects_of_simple_data_types");
+  it("should store object with two objects of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.3.2_object_with_two_objects_of_simple_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with two objects of complex data types", () => {
-    runBasicStoreTest("1.3.3_object_with_two_objects_of_complex_data_types");
+  it("should store object with two objects of complex data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.3.3_object_with_two_objects_of_complex_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with two lists of simple data type", () => {
-    runBasicStoreTest("1.3.4_object_with_two_lists_of_simple_data_type");
+  it("should store object with two lists of simple data type", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.3.4_object_with_two_lists_of_simple_data_type"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with two lists of simple data types", () => {
-    runBasicStoreTest("1.3.5_object_with_two_lists_of_simple_data_types");
+  it("should store object with two lists of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.3.5_object_with_two_lists_of_simple_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with two lists of complex strings", () => {
-    runBasicStoreTest("1.3.6_object_with_two_lists_of_complex_strings");
+  it("should store object with two lists of complex strings", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.3.6_object_with_two_lists_of_complex_strings"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store object with two lists of objects of simple data types", () => {
-    runBasicStoreTest(
+  it("should store object with two lists of objects of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
       "1.3.7.1_object_with_two_lists_of_objects_of_simple_data_types"
     );
-  });
-  it("should store object with two lists of list of simple data type", () => {
-    runBasicStoreTest(
-      "1.3.7.2_object_with_two_lists_of_list_of_simple_data_type"
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
     );
   });
-  it("should store object with empty object", () => {
-    runBasicStoreTest("1.4.1_object_with_empty_object");
+  it("should store object with two lists of list of simple data type", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "1.3.7.2_object_with_two_lists_of_list_of_simple_data_type"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
+  });
+  it("should store object with empty object", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest("1.4.1_object_with_empty_object");
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
   it("should store object with empty list", () => {
     runBasicStoreTest("1.4.2_object_with_empty_list");
   });
-  it("should store list of simple data types", () => {
-    runBasicStoreTest("2.1_list_of_simple_data_types");
+  it("should store list of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest("2.1_list_of_simple_data_types");
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list of complex string", () => {
-    runBasicStoreTest("2.2.1_list_of_complex_string");
+  it("should store list of complex string", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest("2.2.1_list_of_complex_string");
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list of objects of simple data types", () => {
-    runBasicStoreTest("2.2.2_list_of_objects_of_simple_data_types");
+  it("should store list of objects of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "2.2.2_list_of_objects_of_simple_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list of objects of complex data types", () => {
-    runBasicStoreTest("2.2.3_list_of_objects_of_complex_data_types");
+  it("should store list of objects of complex data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "2.2.3_list_of_objects_of_complex_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list of list of simple data type", () => {
-    runBasicStoreTest("2.2.4_list_of_list_of_simple_data_type");
+  it("should store list of list of simple data type", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "2.2.4_list_of_list_of_simple_data_type"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list of list of simple data types", () => {
-    runBasicStoreTest("2.2.5_list_of_list_of_simple_data_types");
+  it("should store list of list of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "2.2.5_list_of_list_of_simple_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list of list of complex strings", () => {
-    runBasicStoreTest("2.2.6_list_of_list_of_complex_strings");
+  it("should store list of list of complex strings", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "2.2.6_list_of_list_of_complex_strings"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list of list of objects of simple data types", () => {
-    runBasicStoreTest("2.2.7.1_list_of_list_of_objects_of_simple_data_types");
+  it("should store list of list of objects of simple data types", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "2.2.7.1_list_of_list_of_objects_of_simple_data_types"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list of list of of list simple data type", () => {
-    runBasicStoreTest("2.2.7.2_list_of_list_of_list_of_simple_data_type");
+  it("should store list of list of of list simple data type", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest(
+      "2.2.7.2_list_of_list_of_list_of_simple_data_type"
+    );
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list with empty object", () => {
-    runBasicStoreTest("2.3.1_list_with_empty_object");
+  it("should store list with empty object", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest("2.3.1_list_with_empty_object");
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store list with empty list", () => {
-    runBasicStoreTest("2.3.2_list_with_empty_list");
+  it("should store list with empty list", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest("2.3.2_list_with_empty_list");
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
-  it("should store legacy project", () => {
-    runBasicStoreTest("3.1_legacy_project");
+  it("should store legacy project", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const storeTestResult = runBasicStoreTest("3.1_legacy_project");
+    const specCasePathHash = await hashElement(
+      storeTestResult.specCasePath,
+      options
+    );
+
+    const storePathHash = await hashElement(storeTestResult.storePath);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(specCasePathHash["children"])).to.equal(
+      toJsonString(storePathHash["children"])
+    );
   });
 });
