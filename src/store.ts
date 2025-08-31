@@ -121,15 +121,20 @@ function encloseInDoubleParentheses(filePath: string): string {
   return "((" + filePath + "))";
 }
 
-// convert element to on-disk YAML representation
-function convertElementToYamlRepresentation(
-  element: { [index: string]: any },
-  dirPath: string
-): string {
+// serialize element as YAML object or list
+function storeYaml(
+  element: any,
+  workingDirectoryPath: string,
+  elementName: string
+): StoreResult {
+  // convert element to on-disk YAML representation
   let jsObjToSerialize: { [index: string]: any } = {};
+  let dirPath = "";
+  let filename = "";
   const keys = Object.keys(element);
-
   if (Array.isArray(element as { [index: string]: any })) {
+    dirPath = workingDirectoryPath;
+    filename = elementName + ".yaml";
     // iterate through items of list and replace complex data types with appropriate string-formatted file path
     keys.forEach((key) => {
       const value = element[key];
@@ -155,6 +160,9 @@ function convertElementToYamlRepresentation(
 
     jsObjToSerialize = Object.values(jsObjToSerialize);
   } else {
+    dirPath = path.join(workingDirectoryPath, elementName);
+    fs.mkdirSync(dirPath);
+    filename = "_this.yaml";
     // iterate through items of object and replace complex data types with appropriate string-formatted file path
     keys.forEach((key) => {
       const value = element[key];
@@ -196,36 +204,8 @@ function convertElementToYamlRepresentation(
       }
     });
   }
-
-  const yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
-
-  return yamlContentToSerialize;
-}
-
-// serialize element as YAML object or list
-function storeYaml(
-  element: any,
-  workingDirectoryPath: string,
-  elementName: string
-): StoreResult {
-  // determine directory and filename to be serialized
-  let dirPath = "";
-  let filename = "";
-  if (Array.isArray(element)) {
-    dirPath = workingDirectoryPath;
-    filename = elementName + ".yaml";
-  } else {
-    dirPath = path.join(workingDirectoryPath, elementName);
-    fs.mkdirSync(dirPath);
-    filename = "_this.yaml";
-  }
   const filePath = path.join(dirPath, filename);
-
-  // convert element to on-disk YAML representation
-  const yamlContentToSerialize = convertElementToYamlRepresentation(
-    element,
-    dirPath
-  );
+  const yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
 
   // write YAML content do disk
   fs.writeFileSync(filePath, yamlContentToSerialize, "utf-8");
