@@ -184,7 +184,15 @@ function convertElementToYamlRepresentation(
         // handle simple data type case
         jsObjToSerialize[key] = value;
       } else {
-        // TODO: handle object of list-or-object case
+        // handle list or object case
+        if (Array.isArray(value)) {
+          jsObjToSerialize[key] = encloseInDoubleParentheses(key + ".yaml");
+        } else if (typeof value === "object") {
+          jsObjToSerialize[key] = encloseInDoubleParentheses(
+            key + "/_this.yaml"
+          );
+        }
+        store(value, dirPath, key);
       }
     });
   }
