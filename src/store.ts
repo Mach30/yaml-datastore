@@ -162,12 +162,11 @@ function convertElementToYamlRepresentation(
         const stringValue: string = value;
         if (stringValue.includes("\n")) {
           // handle complex string case
-          let complexStringFilename = "";
-          let complexStringFilePath = "";
-          // create complex string file path from key
-          const keyAsList = key.split("_");
-          complexStringFilename = keyAsList.join(".");
-          complexStringFilePath = path.join(dirPath, complexStringFilename);
+          const complexStringFilename = key.split("_").join(".");
+          const complexStringFilePath = path.join(
+            dirPath,
+            complexStringFilename
+          );
           jsObjToSerialize[key] = encloseInDoubleParentheses(
             complexStringFilename
           );
