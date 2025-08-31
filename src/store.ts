@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "node:fs";
 import yaml from "js-yaml";
+import { generateIDs } from "./index.js";
 
 export const INVALID_ELEMENT_NAME = "Error: Invalid element name";
 export const INVALID_PATH_ERROR = "Error: Invalid path";
@@ -136,12 +137,33 @@ function storeYaml(
     dirPath = workingDirectoryPath;
     filename = elementName + ".yaml";
     // iterate through items of list and replace complex data types with appropriate string-formatted file path
+    const ids = generateIDs(keys.length, 0).reverse();
     keys.forEach((key) => {
       const value = element[key];
       if (typeof value === "string") {
         const stringValue: string = value;
         if (stringValue.includes("\n")) {
-          // TODO: handle list to complex string case
+          let complexStringFilename = "";
+          if (elementName.includes("_")) {
+            const splitElementName = elementName.split("_");
+            complexStringFilename =
+              splitElementName.slice(0, -1).join("_") +
+              "_" +
+              ids.pop() +
+              "." +
+              splitElementName.slice(-1);
+          } else {
+            complexStringFilename = elementName + "_" + ids.pop();
+          }
+          const complexStringFilePath = path.join(
+            dirPath,
+            complexStringFilename
+          );
+          jsObjToSerialize[key] = encloseInDoubleParentheses(
+            complexStringFilename
+          );
+
+          fs.writeFileSync(complexStringFilePath, value);
         } else {
           // handle simple string case
           jsObjToSerialize[key] = value;
