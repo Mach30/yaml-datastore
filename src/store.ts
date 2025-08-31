@@ -222,7 +222,7 @@ function storeYaml(
             key + "/_this.yaml"
           );
         }
-        store(value, dirPath, key);
+        storeYaml(value, dirPath, key);
       }
     });
   }
