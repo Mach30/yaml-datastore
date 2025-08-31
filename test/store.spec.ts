@@ -154,8 +154,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with complex string", async () => {
@@ -174,8 +174,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with object of simple data types", async () => {
@@ -194,8 +194,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with object of complex data types", async () => {
@@ -214,8 +214,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with list of simple data type", async () => {
@@ -234,8 +234,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with list of simple data types", async () => {
@@ -254,8 +254,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with list of complex strings", async () => {
@@ -274,8 +274,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with list of objects of simple data types", async () => {
@@ -294,8 +294,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with list of list of simple data type", () => {
@@ -317,8 +317,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with two objects of simple data types", async () => {
@@ -337,8 +337,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with two objects of complex data types", async () => {
@@ -357,8 +357,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with two lists of simple data type", async () => {
@@ -377,8 +377,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with two lists of simple data types", async () => {
@@ -397,8 +397,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with two lists of complex strings", async () => {
@@ -417,8 +417,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with two lists of objects of simple data types", async () => {
@@ -437,8 +437,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with two lists of list of simple data type", async () => {
@@ -457,8 +457,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with empty object", async () => {
@@ -475,8 +475,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store object with empty list", () => {
@@ -496,8 +496,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list of complex string", async () => {
@@ -514,8 +514,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list of objects of simple data types", async () => {
@@ -534,8 +534,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list of objects of complex data types", async () => {
@@ -554,8 +554,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list of list of simple data type", async () => {
@@ -574,8 +574,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list of list of simple data types", async () => {
@@ -594,8 +594,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list of list of complex strings", async () => {
@@ -614,8 +614,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list of list of objects of simple data types", async () => {
@@ -634,8 +634,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list of list of of list simple data type", async () => {
@@ -654,8 +654,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list with empty object", async () => {
@@ -672,8 +672,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store list with empty list", async () => {
@@ -690,8 +690,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
   it("should store legacy project", async () => {
@@ -708,8 +708,8 @@ describe("Test basic store function", () => {
     const storePathHash = await hashElement(storeTestResult.storePath);
 
     // verify that checksums of on-disk representation from spec case versus serialized content are identical
-    expect(toJsonString(specCasePathHash["children"])).to.equal(
-      toJsonString(storePathHash["children"])
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
     );
   });
 });
