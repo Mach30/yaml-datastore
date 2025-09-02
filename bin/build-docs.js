@@ -42,3 +42,6 @@ console.log("Generating TypeDoc README");
 sh.cmd("npm", "exec", "typedoc");
 
 // 2.2. generate project README.md that includes everything
+console.log("Generating Project README");
+sh.cd(path.join(projectDirPath));
+sh.cmd("markedpp", ".readme.md").to("./docs/README.md");
