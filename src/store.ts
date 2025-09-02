@@ -111,12 +111,6 @@ function validateElementName(elementName: string): boolean {
   return javascriptVariableNameRegEx.test(elementName);
 }
 
-// format YAML content to be serialized
-function formatYaml(yamlContent: string): string {
-  let result = yamlContent.replace("''", '""');
-  return result;
-}
-
 // format file path string to be enclosed in double parentheses
 function encloseInDoubleParentheses(filePath: string): string {
   return "((" + filePath + "))";
@@ -227,7 +221,7 @@ function storeYaml(
     });
   }
   const filePath = path.join(dirPath, filename);
-  const yamlContentToSerialize = formatYaml(yaml.dump(jsObjToSerialize));
+  const yamlContentToSerialize = yaml.dump(jsObjToSerialize);
 
   // write YAML content do disk
   fs.writeFileSync(filePath, yamlContentToSerialize, "utf-8");
