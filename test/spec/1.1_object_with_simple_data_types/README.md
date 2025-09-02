@@ -1,7 +1,5 @@
 ### Object with Simple Data Types
-
 #### The Model to Store
-
 <!-- include (model.json lang=json) -->
 ```json
 {
@@ -16,18 +14,14 @@
 }
 ```
 <!-- /include -->
-
 #### Generated Directory Structure
-
 <!-- include (.model_tree.txt lang=txt) -->
 ```txt
 model
 └── _this.yaml
 ```
 <!-- /include -->
-
 #### Generated Files
-
 ##### `model/_this.yaml`
 <!-- include (model/_this.yaml lang=yaml) -->
 ```yaml
@@ -41,4 +35,3 @@ aliases: []
 notes: ""
 ```
 <!-- /include -->
-

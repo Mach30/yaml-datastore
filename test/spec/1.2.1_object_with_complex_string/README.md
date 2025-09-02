@@ -1,7 +1,5 @@
 ### Object with Complex String
-
 #### The Model to Store
-
 <!-- include (model.json lang=json) -->
 ```json
 {
@@ -12,9 +10,7 @@
 }
 ```
 <!-- /include -->
-
 #### Generated Directory Structure
-
 <!-- include (.model_tree.txt lang=txt) -->
 ```txt
 model
@@ -22,9 +18,7 @@ model
 └── _this.yaml
 ```
 <!-- /include -->
-
 #### Generated Files
-
 ##### `model/_this.yaml`
 <!-- include (model/_this.yaml lang=yaml) -->
 ```yaml
@@ -34,13 +28,12 @@ track: 17
 lyrics_txt: ((lyrics.txt))
 ```
 <!-- /include -->
-
 ##### `model/lyrics.txt`
 <!-- include (model/lyrics.txt lang=txt) -->
 ```txt
 Mary had a little lamb,
 It's fleece was white as snow;
 And everywhere that Mary went
-The lamb was sure to go.```
+The lamb was sure to go.
+```
 <!-- /include -->
-

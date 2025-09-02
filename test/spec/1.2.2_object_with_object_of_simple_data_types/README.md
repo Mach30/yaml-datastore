@@ -1,7 +1,5 @@
 ### Object with Object of Simple Data Types
-
 #### The Model to Store
-
 <!-- include (model.json lang=json) -->
 ```json
 {
@@ -17,9 +15,7 @@
 }
 ```
 <!-- /include -->
-
 #### Generated Directory Structure
-
 <!-- include (.model_tree.txt lang=txt) -->
 ```txt
 model
@@ -28,9 +24,7 @@ model
 └── _this.yaml
 ```
 <!-- /include -->
-
 #### Generated Files
-
 ##### `model/_this.yaml`
 <!-- include (model/_this.yaml lang=yaml) -->
 ```yaml
@@ -40,7 +34,6 @@ age: 48
 address: ((address/_this.yaml))
 ```
 <!-- /include -->
-
 ##### `model/address/_this.yaml`
 <!-- include (model/address/_this.yaml lang=txt) -->
 ```txt
@@ -50,4 +43,3 @@ state: CA
 postalCode: '90265'
 ```
 <!-- /include -->
-
