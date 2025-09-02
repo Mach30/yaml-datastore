@@ -16,9 +16,13 @@ function generateModelTreeFile(specDirPath) {
 }
 
 function generateReadmeFile(specDirPath) {
+  const sedArgument = "s/```/\\n```/g";
   sh.cd(specDirPath);
   if (sh.ls("-A").stdout.includes(".readme.md")) {
-    sh.cmd("markedpp", ".readme.md").to("README.md");
+    sh.cmd("markedpp", ".readme.md")
+      .cmd("sed", sedArgument)
+      .cmd("tr", "-s", "\n")
+      .to("README.md");
   }
 }
 
@@ -29,7 +33,6 @@ specDirs.pop(); // remove last entry since it is `spec.md`
 const projectDirPath = sh.pwd().toString();
 
 specDirs.forEach((specDirPath) => {
-  ", " > ", ";
   // 1.1. generate all of the spec dir tree files
   generateModelTreeFile(path.join(projectDirPath, SPEC_DIR, specDirPath));
   // 1.2. generate all of the spec dir README.md files
