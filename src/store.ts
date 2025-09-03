@@ -77,6 +77,9 @@ export const reserved_keywords = [
   "yield",
 ];
 
+// Regular expression used for matching 6-character uppercase alphanumeric string
+const idRegex = new RegExp(/^[A-Z0-9]{6}$/);
+
 /**
  * Represents results of a call to the store function
  */
@@ -140,12 +143,16 @@ function storeYaml(
           let complexStringFilename = "";
           if (elementName.includes("_")) {
             const splitElementName = elementName.split("_");
-            complexStringFilename =
-              splitElementName.slice(0, -1).join("_") +
-              "_" +
-              ids.pop() +
-              "." +
-              splitElementName.slice(-1);
+            if (idRegex.test(splitElementName.slice(-1).toString())) {
+              complexStringFilename = elementName + "_" + ids.pop();
+            } else {
+              complexStringFilename =
+                splitElementName.slice(0, -1).join("_") +
+                "_" +
+                ids.pop() +
+                "." +
+                splitElementName.slice(-1);
+            }
           } else {
             complexStringFilename = elementName + "_" + ids.pop();
           }

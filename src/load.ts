@@ -10,9 +10,6 @@ export const INVALID_PATH_ERROR =
 // Regular expression used for matching element file paths enclosed between double parentheses
 const doubleParenthesesRegEx = new RegExp(/\(\(.*\)\)/);
 
-// Regular expression used for matching 6-character uppercase alphanumeric string
-const idRegex = new RegExp(/^[A-Z0-9]{6}$/);
-
 /**
  * Describes the nature of an element path + filepath combination.
  */
