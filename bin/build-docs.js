@@ -41,7 +41,24 @@ specDirs.forEach((specDirPath) => {
 console.log("Generating TypeDoc README");
 sh.cmd("npm", "exec", "typedoc");
 
+// manually remove breadcrumbs from typedoc generated files
+// for some reason the hideBreadcrumbs option is not working
+let mdFilesToFix = sh.cmd(
+  "find",
+  path.join(projectDirPath, "docs"),
+  "-name",
+  "*.md"
+);
+
+mdFilesToFix
+  .toString()
+  .split("\n")
+  .forEach((mdFile) => {
+    let sedChange = "1,4d";
+    sh.cmd("sed", "-i", sedChange, mdFile);
+  });
+
 // 2.2. generate project README.md that includes everything
 console.log("Generating Project README");
-sh.cd(path.join(projectDirPath));
+sh.cd(projectDirPath);
 sh.cmd("markedpp", ".readme.md").to("./docs/README.md");
