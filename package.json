@@ -17,7 +17,8 @@
   },
   "bin": {
     "yds-ids": "./bin/yds-ids.js",
-    "yds-load": "./bin/yds-load.js"
+    "yds-load": "./bin/yds-load.js",
+    "yds-store": "./bin/yds-store.js"
   },
   "repository": {
     "type": "git",
