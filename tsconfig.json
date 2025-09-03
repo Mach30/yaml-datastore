@@ -18,6 +18,12 @@
   "typedocOptions": {
     "entryPoints": ["./src"],
     "plugin": ["typedoc-plugin-markdown"],
-    "out": "./docs"
+    "out": "./docs",
+    "includeVersion": true,
+    "pageTitleTemplates": {
+      "index": "API {version}"
+    },
+    "useCodeBlocks": true,
+    "expandParameters": true
   }
 }
