@@ -131,7 +131,7 @@ function storeYaml(
     dirPath = workingDirectoryPath;
     filename = elementName + ".yaml";
     // iterate through items of list and replace complex data types with appropriate string-formatted file path
-    const ids = generateIDs(keys.length, 0).reverse();
+    let ids = generateIDs(keys.length, 0).reverse();
     keys.forEach((key) => {
       const value = element[key];
       if (typeof value === "string") {
@@ -170,7 +170,18 @@ function storeYaml(
         // handle simple data type case
         jsObjToSerialize[key] = value;
       } else {
-        // TODO: handle list of list-or-object case
+        // handle list-or-object case
+        const id = ids.pop();
+        if (Array.isArray(value)) {
+          jsObjToSerialize[key] = encloseInDoubleParentheses(
+            elementName + "_" + id + ".yaml"
+          );
+        } else if (typeof value === "object") {
+          jsObjToSerialize[key] = encloseInDoubleParentheses(
+            elementName + "_" + id + "/_this.yaml"
+          );
+        }
+        storeYaml(value, dirPath, elementName + "_" + id);
       }
     });
 
