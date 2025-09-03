@@ -5,6 +5,7 @@ import path from "path";
 
 const TREE_FILE_NAME = ".model_tree.txt";
 const SPEC_DIR = "test/spec";
+const sedFixIncludes = "s/```/\\n```/g";
 
 function generateModelTreeFile(specDirPath) {
   sh.cd(specDirPath);
@@ -12,11 +13,10 @@ function generateModelTreeFile(specDirPath) {
 }
 
 function generateReadmeFile(specDirPath) {
-  const sedArgument = "s/```/\\n```/g";
   sh.cd(specDirPath);
   if (sh.ls("-A").stdout.includes(".readme.md")) {
     sh.cmd("markedpp", ".readme.md")
-      .cmd("sed", sedArgument)
+      .cmd("sed", sedFixIncludes)
       .cmd("tr", "-s", "\n")
       .to("README.md");
   }
@@ -61,4 +61,7 @@ mdFilesToFix
 // 2.2. generate project README.md that includes everything
 console.log("Generating Project README");
 sh.cd(projectDirPath);
-sh.cmd("markedpp", ".readme.md").to("./docs/README.md");
+sh.cmd("markedpp", ".readme.md")
+  .cmd("sed", sedFixIncludes)
+  .cmd("tr", "-s", "\n")
+  .to("./docs/README.md");
