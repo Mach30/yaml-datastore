@@ -1,14 +1,15 @@
-[**yaml-datastore**](../README.md)
-
-***
-
 [yaml-datastore](../README.md) / load
 
 # Function: load()
 
-> **load**(`workingDirectoryPath`, `elementPath`, `depth`): [`LoadResult`](../classes/LoadResult.md)
+```ts
+function load(
+   workingDirectoryPath: string, 
+   elementPath: string, 
+   depth: number): LoadResult;
+```
 
-Defined in: [load.ts:420](https://github.com/Mach30/yaml-datastore/blob/bf7efc38a18e9ed74c617929a202ddd5dfb75f96/src/load.ts#L420)
+Defined in: [load.ts:420](https://github.com/Mach30/yaml-datastore/blob/3781e678ae34884c0ab90cfd5d3502bb35f9d5df/src/load.ts#L420)
 
 Returns a in-memory representation of the element in working directory specified by element path
 

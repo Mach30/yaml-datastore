@@ -1,14 +1,12 @@
-[**yaml-datastore**](../README.md)
-
-***
-
 [yaml-datastore](../README.md) / generateIDs
 
 # Function: generateIDs()
 
-> **generateIDs**(`numIDs`, `numSkip`): `string`[]
+```ts
+function generateIDs(numIDs: number, numSkip: number): string[];
+```
 
-Defined in: [idgen.ts:53](https://github.com/Mach30/yaml-datastore/blob/bf7efc38a18e9ed74c617929a202ddd5dfb75f96/src/idgen.ts#L53)
+Defined in: [idgen.ts:53](https://github.com/Mach30/yaml-datastore/blob/3781e678ae34884c0ab90cfd5d3502bb35f9d5df/src/idgen.ts#L53)
 
 Returns a list of short ID's
 

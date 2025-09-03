@@ -1,12 +1,8 @@
-[**yaml-datastore**](../README.md)
-
-***
-
 [yaml-datastore](../README.md) / LoadResult
 
 # Class: LoadResult
 
-Defined in: [load.ts:107](https://github.com/Mach30/yaml-datastore/blob/bf7efc38a18e9ed74c617929a202ddd5dfb75f96/src/load.ts#L107)
+Defined in: [load.ts:107](https://github.com/Mach30/yaml-datastore/blob/3781e678ae34884c0ab90cfd5d3502bb35f9d5df/src/load.ts#L107)
 
 Represents results of a call to the load function
 
@@ -14,9 +10,14 @@ Represents results of a call to the load function
 
 ### Constructor
 
-> **new LoadResult**(`success`, `element`, `message`): `LoadResult`
+```ts
+new LoadResult(
+   success: boolean, 
+   element: any, 
+   message: string): LoadResult;
+```
 
-Defined in: [load.ts:120](https://github.com/Mach30/yaml-datastore/blob/bf7efc38a18e9ed74c617929a202ddd5dfb75f96/src/load.ts#L120)
+Defined in: [load.ts:120](https://github.com/Mach30/yaml-datastore/blob/3781e678ae34884c0ab90cfd5d3502bb35f9d5df/src/load.ts#L120)
 
 Default constructor for LoadResult
 
@@ -52,9 +53,11 @@ new LoadResult object
 
 #### Get Signature
 
-> **get** **element**(): `any`
+```ts
+get element(): any;
+```
 
-Defined in: [load.ts:134](https://github.com/Mach30/yaml-datastore/blob/bf7efc38a18e9ed74c617929a202ddd5dfb75f96/src/load.ts#L134)
+Defined in: [load.ts:134](https://github.com/Mach30/yaml-datastore/blob/3781e678ae34884c0ab90cfd5d3502bb35f9d5df/src/load.ts#L134)
 
 ##### Returns
 
@@ -68,9 +71,11 @@ element read into memory on success or null on failure.
 
 #### Get Signature
 
-> **get** **message**(): `string`
+```ts
+get message(): string;
+```
 
-Defined in: [load.ts:138](https://github.com/Mach30/yaml-datastore/blob/bf7efc38a18e9ed74c617929a202ddd5dfb75f96/src/load.ts#L138)
+Defined in: [load.ts:138](https://github.com/Mach30/yaml-datastore/blob/3781e678ae34884c0ab90cfd5d3502bb35f9d5df/src/load.ts#L138)
 
 ##### Returns
 
@@ -84,9 +89,11 @@ element path on success or an explanation of the failure.
 
 #### Get Signature
 
-> **get** **success**(): `boolean`
+```ts
+get success(): boolean;
+```
 
-Defined in: [load.ts:130](https://github.com/Mach30/yaml-datastore/blob/bf7efc38a18e9ed74c617929a202ddd5dfb75f96/src/load.ts#L130)
+Defined in: [load.ts:130](https://github.com/Mach30/yaml-datastore/blob/3781e678ae34884c0ab90cfd5d3502bb35f9d5df/src/load.ts#L130)
 
 ##### Returns
 
