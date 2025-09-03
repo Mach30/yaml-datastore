@@ -4,6 +4,7 @@ import { parseArgs } from "node:util";
 import { store } from "../dist/index.js";
 import path from "path";
 import fs from "node:fs";
+import yaml from "js-yaml";
 
 const INVALID_FORMAT_ERROR = "Error: Invalid format";
 
@@ -44,7 +45,12 @@ const parser = parseArgs({ options, allowPositionals: true, args: args });
 
 const elementFilePath = path.resolve(parser.positionals[0]);
 const elementContents = fs.readFileSync(elementFilePath, "utf-8");
-const element = JSON.parse(elementContents);
+let element = "";
+if (path.extname(elementFilePath) === ".json") {
+  element = JSON.parse(elementContents);
+} else if (path.extname(elementFilePath) === ".yaml") {
+  element = yaml.load(elementContents);
+}
 
 let workingDirPath = "";
 if (parser.values.workingDirPath) {
