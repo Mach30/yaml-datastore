@@ -124,7 +124,7 @@ function encloseInDoubleParentheses(filePath: string): string {
 
 // serialize element as YAML object or list
 function storeYaml(
-  element: any,
+  element: { [index: string]: any }, // should expect jsObject as element type. Iteration approach requires this typing
   workingDirectoryPath: string,
   elementName: string
 ): StoreResult {
