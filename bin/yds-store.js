@@ -43,12 +43,15 @@ const options = {
 
 const parser = parseArgs({ options, allowPositionals: true, args: args });
 
-const elementFilePath = path.resolve(parser.positionals[0]);
-const elementContents = fs.readFileSync(elementFilePath, "utf-8");
+const elementFilePath = path.parse(parser.positionals[0]);
+const elementContents = fs.readFileSync(
+  path.join(elementFilePath.dir, elementFilePath.base),
+  "utf-8"
+);
 let element = "";
-if (path.extname(elementFilePath) === ".json") {
+if (elementFilePath.ext === ".json") {
   element = JSON.parse(elementContents);
-} else if (path.extname(elementFilePath) === ".yaml") {
+} else if (elementFilePath.ext === ".yaml") {
   element = yaml.load(elementContents);
 }
 
@@ -66,7 +69,7 @@ let elementName = "";
 if (parser.values.elementName) {
   elementName = parser.values.elementName;
 } else {
-  elementName = path.basename(elementFilePath, path.extname(elementFilePath));
+  elementName = elementFilePath.name;
 }
 
 const storeResult = store(element, workingDirPath, elementName);
