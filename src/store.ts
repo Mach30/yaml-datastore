@@ -111,7 +111,10 @@ export class StoreResult {
 // validate element name to be conformant to rules for javascript variable name
 function validateElementName(elementName: string): boolean {
   const javascriptVariableNameRegEx = new RegExp(/^[A-Za-z_$][A-Za-z0-9_$]*$/);
-  return javascriptVariableNameRegEx.test(elementName);
+  return (
+    javascriptVariableNameRegEx.test(elementName) &&
+    !reserved_keywords.includes(elementName)
+  );
 }
 
 // format file path string to be enclosed in double parentheses
@@ -267,10 +270,7 @@ export function store(
         NONEMPTY_WORKINGDIR_PATH_ERROR + " [" + workingDirectoryPath + "]"
       );
     } else {
-      if (
-        validateElementName(elementName) &&
-        !reserved_keywords.includes(elementName)
-      ) {
+      if (validateElementName(elementName)) {
         return storeYaml(element, workingDirectoryPath, elementName);
       } else {
         return new StoreResult(
