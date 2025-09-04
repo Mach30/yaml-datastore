@@ -30,8 +30,8 @@ if (numArgs == 0 || args.includes("--help")) {
   console.log("Examples:");
   console.log("  $ yds-store model.json");
   console.log("  $ yds-store model.json -w ./my-project");
-  console.log("  $ yds-store model.json -e model");
-  console.log("  $ yds-store model.json -w ./my-project -e model");
+  console.log("  $ yds-store model.json -e myElement");
+  console.log("  $ yds-store model.json -w ./my-project -e myElement");
   console.log("");
   process.exit(0);
 }
