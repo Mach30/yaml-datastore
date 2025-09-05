@@ -5,5 +5,5 @@ quantityUnits: part
 options: ((options.yaml))
 selectedOption: 0
 notes: Windows, Mac, or Linux
-descriptionLong: "pc: Personal Computer"
-descriptionSelected: "pc: Personal Computer (Personal Computer (generic) v1.0.0)"
+descriptionLong: 'pc: Personal Computer'
+descriptionSelected: 'pc: Personal Computer (Personal Computer (generic) v1.0.0)'

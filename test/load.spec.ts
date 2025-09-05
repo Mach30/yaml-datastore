@@ -4,17 +4,24 @@ import { expect } from "chai";
 import fs from "node:fs";
 import path from "path";
 
-function toJsonString(o: Object): string {
+export function toJsonString(o: Object): string {
   return JSON.stringify(o, null, 2);
 }
 
-function runBasicLoadTest(specCaseName: string) {
-  const specCasePath = path.join("test/spec", specCaseName);
-  const elementPath = "model";
+export function toSpecCasePath(specCaseName: string): string {
+  return path.join("test/spec", specCaseName);
+}
+
+export function runBasicLoadTest(
+  specCaseName: string,
+  workingDir: string = toSpecCasePath(specCaseName),
+  elementPath: string = "model"
+) {
+  const specCasePath = toSpecCasePath(specCaseName);
   const expectedModel = JSON.parse(
     fs.readFileSync(path.resolve(specCasePath, "model.json"), "utf8")
   );
-  const result = load(specCasePath, elementPath);
+  const result = load(workingDir, elementPath);
   expect(result.success).to.equal(true);
   expect(result.message).to.equal(elementPath);
   expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
@@ -160,10 +167,7 @@ describe("Test basic load function", () => {
 
 describe("Test load function support for elementPath", () => {
   it("should load object for empty element path", () => {
-    const specCasePath = path.join(
-      "test/spec",
-      "1.1_object_with_simple_data_types"
-    );
+    const specCasePath = toSpecCasePath("1.1_object_with_simple_data_types");
     const elementPath = "";
     const workingDir = path.join(specCasePath, "model");
     const expectedModel = JSON.parse(
@@ -250,10 +254,7 @@ describe("Test load function support for elementPath", () => {
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load complex string for simple element path to complex string", () => {
-    const specCasePath = path.join(
-      "test/spec",
-      "1.2.1_object_with_complex_string"
-    );
+    const specCasePath = toSpecCasePath("1.2.1_object_with_complex_string");
     const elementPath = "lyrics_txt";
     const workingDir = path.join(specCasePath, "model");
     const expectedElement = fs.readFileSync(
@@ -266,10 +267,7 @@ describe("Test load function support for elementPath", () => {
     expect(result.element).to.equal(expectedElement);
   });
   it("should load simple value for simple element path to simple value", () => {
-    const specCasePath = path.join(
-      "test/spec",
-      "1.1_object_with_simple_data_types"
-    );
+    const specCasePath = toSpecCasePath("1.1_object_with_simple_data_types");
     const elementPaths = [
       "name",
       "age",
@@ -358,10 +356,7 @@ describe("Test load function support for elementPath", () => {
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("should load simple value for object property element path to simple value", () => {
-    const specCasePath = path.join(
-      "test/spec",
-      "1.1_object_with_simple_data_types"
-    );
+    const specCasePath = toSpecCasePath("1.1_object_with_simple_data_types");
     const elementPaths = [
       "name",
       "age",
@@ -740,10 +735,7 @@ describe("Test load function support for depth", () => {
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
   it("load simple value for depth = 0", () => {
-    const specCasePath = path.join(
-      "test/spec",
-      "1.1_object_with_simple_data_types"
-    );
+    const specCasePath = toSpecCasePath("1.1_object_with_simple_data_types");
     const elementPaths = [
       "name",
       "age",
@@ -777,10 +769,7 @@ describe("Test load function support for depth", () => {
     }
   });
   it("load simple value for depth = 1", () => {
-    const specCasePath = path.join(
-      "test/spec",
-      "1.1_object_with_simple_data_types"
-    );
+    const specCasePath = toSpecCasePath("1.1_object_with_simple_data_types");
     const elementPaths = [
       "name",
       "age",

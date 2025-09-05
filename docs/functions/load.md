@@ -8,7 +8,7 @@
 
 > **load**(`workingDirectoryPath`, `elementPath`, `depth`): [`LoadResult`](../classes/LoadResult.md)
 
-Defined in: [load.ts:420](https://github.com/Mach30/yaml-datastore/blob/935b97cfb86aec0dade51acc5d9aca535478bd83/src/load.ts#L420)
+Defined in: [load.ts:420](https://github.com/Mach30/yaml-datastore/blob/418c20ab5ac220d9a8c99ddf0be28fa87954df85/src/load.ts#L420)
 
 Returns a in-memory representation of the element in working directory specified by element path
 
