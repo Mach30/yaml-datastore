@@ -5,5 +5,5 @@ quantityUnits: g
 options: ((options.yaml))
 selectedOption: 0
 notes: Thickness to match selected 3D printer specs
-descriptionLong: "filament: Filament"
-descriptionSelected: "filament: Filament (PLA Filament (generic) v1.0.0)"
+descriptionLong: 'filament: Filament'
+descriptionSelected: 'filament: Filament (PLA Filament (generic) v1.0.0)'

@@ -28,6 +28,8 @@ provide summary of the remainder of the document
 # API v0.0.0
 ## Classes
 - [LoadResult](classes/LoadResult.md)
+- [StoreResult](classes/StoreResult.md)
+
 ## Functions
 - [generateIDs](functions/generateIDs.md)
 - [load](functions/load.md)
@@ -148,3 +150,4 @@ state: CA
 postalCode: '90265'
 ```
 <!-- /include -->
+- [store](functions/store.md)
