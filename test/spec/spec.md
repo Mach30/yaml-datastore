@@ -125,3 +125,56 @@ observation: latter two cases are either dot separated or bracketed
 - temp = temp[myList[2]] | accesses "summary"
 
 model/assemblySteps_E16F4F/\_this.yaml
+
+## delete and clear notes
+
+"delete" is removal of the element from the model (e.g., if `model.foo` points to a string, "bar", "delete" operation removes `model.foo` from exists).
+
+"clear" is removal of the element contents from the model, but not element itself (e.g., if `model.foo` points to a string, "bar", "clear" operation "removes" contents of `model.foo`, but `model.foo` itself still exists).
+
+TODO: discuss what it means to "remove" contents.
+
+TODO: discuss "delete" and "clear" will behave differently depending on whether owning element is a list or object.
+
+TODO: discuss what "delete" and "clear" mean for simple strings, objects, lists, complex strings, or other.
+
+TODO: discuss what should be expected behavior for clearing a thing that is already clear
+
+TODO: discuss merge conflict resolution, particularly resolving ID's
+
+NOTE: unlike relational databases that mark an item as "deleted" or "cleared", yaml-datastore will actually delete or clear the element.
+
+### delete cases
+
+- delete object from object:
+  - delete contents from disk: `rm -rf <directory-representing-object on-disk>`
+  - delete object: remove key from owning object on-disk in `_this.yaml`
+- delete list from object:
+  - do a search on each list item
+  - delete all contents containing search result name: `rm -rf <list-item-name>*`
+  - delete list itself, then
+  - delete key from object
+- delete complex string from object:
+  - (e.g., `model.foo` that points a file on disk) deletes file, then delete key from object.
+  - delete contents from disk: `rm <complex-string-filepath>`
+  - set key to empty string, `""`
+- delete simple string from object:
+  - delete key from object
+- delete other (simple data types) from object:
+  - delete key from object
+
+### clear cases
+
+- clear object from object:
+  - delete contents from disk
+  - set key to empty object: `{}` in owning object on-disk in `_this.yaml`
+- clear list from object:
+  - delete contents from disk
+  - set key to empty list, `[]` in owning object on-disk in `_this.yaml`
+- clear complex string from object:
+  - delete contents from disk
+  - set key to empty string, `""`
+- clear simple string from object:
+  - set key to empty string, `""`
+- clear other (simple data types) from object: delete key from object
+  - set key to `null`
