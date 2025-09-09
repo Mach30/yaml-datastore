@@ -3,10 +3,10 @@
 # Function: generateIDs()
 
 ```ts
-function generateIDs(numIDs: number, numSkip: number): string[];
+function generateIDs(numIDs: number, numSkip: number): string[]
 ```
 
-Defined in: [idgen.ts:53](https://github.com/Mach30/yaml-datastore/blob/418c20ab5ac220d9a8c99ddf0be28fa87954df85/src/idgen.ts#L53)
+Defined in: [idgen.ts:53](https://github.com/Mach30/yaml-datastore/blob/a0344ee344b65666ac0f515abb889b7757bd912f/src/idgen.ts#L53)
 
 Returns a list of short ID's
 

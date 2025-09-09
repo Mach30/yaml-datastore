@@ -1,14 +1,15 @@
-[**yaml-datastore**](../README.md)
-
-***
-
 [yaml-datastore](../README.md) / store
 
 # Function: store()
 
-> **store**(`element`, `workingDirectoryPath`, `elementName`): [`StoreResult`](../classes/StoreResult.md)
+```ts
+function store(
+   element: object, 
+   workingDirectoryPath: string, 
+   elementName: string): StoreResult
+```
 
-Defined in: [store.ts:20](https://github.com/Mach30/yaml-datastore/blob/418c20ab5ac220d9a8c99ddf0be28fa87954df85/src/store.ts#L20)
+Defined in: [store.ts:302](https://github.com/Mach30/yaml-datastore/blob/a0344ee344b65666ac0f515abb889b7757bd912f/src/store.ts#L302)
 
 Dumps in-memory representation of contents to on-disk representation
 

@@ -29,10 +29,10 @@ provide summary of the remainder of the document
 ## Classes
 - [LoadResult](classes/LoadResult.md)
 - [StoreResult](classes/StoreResult.md)
-
 ## Functions
 - [generateIDs](functions/generateIDs.md)
 - [load](functions/load.md)
+- [store](functions/store.md)
 <!-- /include -->
 # On Disk Representation
 include brief intro to this section
@@ -71,11 +71,11 @@ model
 name: John Smith
 age: 42
 attending: true
-plusOne:
+plusOne: null
 state: WA
 degrees: {}
 aliases: []
-notes: ""
+notes: ''
 ```
 <!-- /include -->
 <!-- include (test/spec/1.2.1_object_with_complex_string/README.md) -->
@@ -150,4 +150,3 @@ state: CA
 postalCode: '90265'
 ```
 <!-- /include -->
-- [store](functions/store.md)

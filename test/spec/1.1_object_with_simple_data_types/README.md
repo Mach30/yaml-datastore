@@ -28,10 +28,10 @@ model
 name: John Smith
 age: 42
 attending: true
-plusOne:
+plusOne: null
 state: WA
 degrees: {}
 aliases: []
-notes: ""
+notes: ''
 ```
 <!-- /include -->
