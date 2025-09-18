@@ -157,7 +157,7 @@ NOTE: unlike relational databases that mark an item as "deleted" or "cleared", y
 - delete complex string from object:
   - (e.g., `model.foo` that points a file on disk) deletes file, then delete key from object.
   - delete contents from disk: `rm <complex-string-filepath>`
-  - set key to empty string, `""`
+  - delete key from object
 - delete simple string from object:
   - delete key from object
 - delete other (simple data types) from object:
