@@ -128,19 +128,93 @@ model/assemblySteps_E16F4F/\_this.yaml
 
 ## delete and clear notes
 
-"delete" is removal of the element from the model (e.g., if `model.foo` points to a string, "bar", "delete" operation removes `model.foo` from exists).
+"delete" is removal of the element from the model (e.g., if `model.foo` points to a string, "bar", "delete" operation removes `model.foo` from existence).
 
 "clear" is removal of the element contents from the model, but not element itself (e.g., if `model.foo` points to a string, "bar", "clear" operation "removes" contents of `model.foo`, but `model.foo` itself still exists).
 
-TODO: discuss what it means to "remove" contents.
+What it means to remove contents:
 
-TODO: discuss "delete" and "clear" will behave differently depending on whether owning element is a list or object.
+- removing contents is something that only affects complex data types
+- "remove contents" function deletes from disk what is pointed at in `(())` and all of its children
+- e.g., removing filepath `((model/_this.yaml))` is equivalent of `rm -rf model/`
 
-TODO: discuss what "delete" and "clear" mean for simple strings, objects, lists, complex strings, or other.
+WIP: discuss "delete" and "clear" will behave differently depending on whether owning element is a list or object. TODO: handle remaining cases (lists, complex strings, etc.)
 
-TODO: discuss what should be expected behavior for clearing a thing that is already clear
+The subcases of "delete" and "clear" are:
+
+- simple strings
+- objects,
+- lists
+- complex strings
+- other
+
+Expected behavior for clearing a thing that is already clear:
+
+- If a thing is already clear, there is no change on disk and result is `success`.
+- Therefore we need a (internal) function that, given an element, tests whether a value is cleared.
+- Potential implementation: check if element is already cleared. If element is not cleared, then clear element and return results. Else, return `success` with message indicating element is already cleared.
 
 TODO: discuss merge conflict resolution, particularly resolving ID's
+E16F4F
+506E59
+A28836
+4B0D2F
+7A1D77
+B008AA
+058F13
+CE5CEF
+
+lyrics_txt.yaml (initial state):
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_A28836.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+```
+
+Scenario 1: add a new entry at end of list, then delete lyrics_txt[2].
+lyrics_txt.yaml (first transformation):
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_A28836.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+- ((lyrics_B008AA.txt))
+```
+
+lyrics_txt.yaml (second transformation):
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+- ((lyrics_B008AA.txt))
+```
+
+Scenario 2: First delete lyrics_txt[2], then add a new entry at end of list.
+lyrics_txt.yaml (first transformation):
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+```
+
+lyrics_txt.yaml (second transformation):
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+- ((lyrics_B008AA.txt))
+```
 
 NOTE: unlike relational databases that mark an item as "deleted" or "cleared", yaml-datastore will actually delete or clear the element.
 
