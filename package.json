@@ -1,7 +1,7 @@
 {
   "name": "yaml-datastore",
   "version": "0.0.0",
-  "description": " Library for Storing and Manipulating Data Across Multiple YAML Files ",
+  "description": "Library for storing and managing data in a collection of structured plaintext files using YAML syntax",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
