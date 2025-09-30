@@ -2,6 +2,7 @@ import path from "path";
 import fs from "node:fs";
 import yaml from "js-yaml";
 import { generateIDs } from "./index.js";
+import { YdsResult } from "./index.js";
 
 export const INVALID_ELEMENT_NAME = "Error: Invalid element name";
 export const INVALID_PATH_ERROR = "Error: Invalid path";
@@ -94,34 +95,6 @@ enum ContainerType {
   IsObject,
 }
 
-/**
- * Represents results of a call to the store function
- */
-export class StoreResult {
-  private _success: boolean;
-  private _message: string;
-
-  /**
-   * Default constructor for StoreResult
-   *
-   * @param success success status of store() operation
-   * @param message message describing success status of store() operation
-   * @returns new StoreResult object
-   */
-  constructor(success: boolean, message: string) {
-    this._success = success;
-    this._message = message;
-  }
-  /** @returns success status. */
-  public get success() {
-    return this._success;
-  }
-  /** @returns file path to root element serialized to disk on success or an explanation of the failure. */
-  public get message() {
-    return this._message;
-  }
-}
-
 // validate element name to be conformant to rules for javascript variable name
 function validateElementName(elementName: string): boolean {
   const javascriptVariableNameRegEx = new RegExp(/^[A-Za-z_$][A-Za-z0-9_$]*$/);
@@ -194,7 +167,7 @@ function storeYaml(
   element: { [index: string]: any }, // should expect jsObject as element type. Iteration approach requires this typing
   workingDirectoryPath: string,
   elementName: string
-): StoreResult {
+): YdsResult {
   // convert element to on-disk YAML representation
   let jsObjToSerialize: { [index: string]: any } = {};
   let dirPath = "";
@@ -288,7 +261,7 @@ function storeYaml(
   // write YAML content do disk
   fs.writeFileSync(filePath, yamlContentToSerialize, "utf-8");
 
-  return new StoreResult(true, filePath.toString());
+  return new YdsResult(true, element, filePath.toString());
 }
 
 /**
@@ -297,32 +270,35 @@ function storeYaml(
  * @param element object or list to store on-disk
  * @param workingDirectoryPath relative or absolute path to an empty working directory to store element in
  * @param elementName name of element to store
- * @returns a StoreResult containing the status of the call to store function
+ * @returns a YdsResult containing the status of the call to store function
  */
 export function store(
   element: object,
   workingDirectoryPath: string,
   elementName: string
-): StoreResult {
+): YdsResult {
   if (fs.existsSync(workingDirectoryPath)) {
     if (fs.readdirSync(workingDirectoryPath).length > 0) {
-      return new StoreResult(
+      return new YdsResult(
         false,
+        element,
         NONEMPTY_WORKINGDIR_PATH_ERROR + " [" + workingDirectoryPath + "]"
       );
     } else {
       if (validateElementName(elementName)) {
         return storeYaml(element, workingDirectoryPath, elementName);
       } else {
-        return new StoreResult(
+        return new YdsResult(
           false,
+          element,
           INVALID_ELEMENT_NAME + " [" + elementName + "]"
         );
       }
     }
   }
-  return new StoreResult(
+  return new YdsResult(
     false,
+    element,
     INVALID_PATH_ERROR + " [" + workingDirectoryPath + "]"
   );
 }
