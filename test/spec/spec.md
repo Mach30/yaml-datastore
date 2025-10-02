@@ -84,6 +84,8 @@ temporary list of specs in markdown
 
 ## elementPath meanings
 
+yaml-datastore, from an API perspective, "talks" in terms of element path.
+
 | Case name                                    | elementPath  | object interpretation                      | list interpretation                        | complex string interpretation              | simple value interpretation          | comments                                                  |
 | -------------------------------------------- | ------------ | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ | ------------------------------------ | --------------------------------------------------------- |
 | empty element path                           |              | `load("_this.yaml")`                       | N/A                                        | N/A                                        | N/A                                  | should error if no `_this.yaml` exists                    |
@@ -217,6 +219,24 @@ lyrics_txt.yaml (second transformation):
 ```
 
 NOTE: unlike relational databases that mark an item as "deleted" or "cleared", yaml-datastore will actually delete or clear the element.
+
+delete and clear will need a shared helper function that takes a working directory and path to an element returns the elementpath to its parent.
+
+things needed for writing test cases:
+
+- json file representation of "before" state
+- json file representation of "after" state
+- directory structure that represents "after" state
+
+general flow of test case:
+
+- read into memory the "before" json file
+- use store() to store "before" representation on disk
+- perform delete/clear operation
+- will get back "after" state representation
+- load "after" state into memory
+- assert string representations of "after" state
+- assert "after" state directories written to disk match "after" state directories of spec including hash
 
 ### delete cases
 
