@@ -14,7 +14,7 @@ const doubleParenthesesRegEx = new RegExp(/\(\(.*\)\)/);
 /**
  * Describes the nature of an element path + filepath combination.
  */
-enum ElementPathType {
+export enum ElementPathType {
   /**
    * the combined element Path and filepath do not point at a valid element, returned element will be null
    */
@@ -69,7 +69,7 @@ enum ElementPathType {
 /**
  * Data required to continue loading data from filesystem
  */
-class ElementPathResult {
+export class ElementPathResult {
   private _type: ElementPathType;
   private _data: any;
 
@@ -211,7 +211,7 @@ function getNextElementPath(elementPath: string): string {
   return firstElementEntry;
 }
 
-function convertElementPathToFilePath(
+export function convertElementPathToFilePath(
   workingDirectoryPath: string,
   elementPath: string
 ): ElementPathResult {

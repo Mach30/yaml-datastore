@@ -14,7 +14,7 @@ import { hashElement } from "folder-hash";
 const TMP_WORKING_DIR_PATH = "/tmp/my-project";
 let workingDir = "";
 
-class StoreTestResult {
+export class StoreTestResult {
   private _specCasePath: string;
   private _storePath: string;
 
@@ -140,6 +140,7 @@ describe("Test basic store function", () => {
   it("should store object with simple data types", async () => {
     const options = {
       files: { exclude: ["*.json"] },
+      folders: { exclude: ["modelDeleteName"] },
     };
 
     const storeTestResult = runBasicStoreTest(

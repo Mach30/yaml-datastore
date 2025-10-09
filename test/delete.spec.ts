@@ -1,0 +1,102 @@
+import { deleteElement } from "../src/index";
+import { convertElementPathToFilePath } from "../src/load";
+import { toJsonString, toSpecCasePath } from "./load.spec";
+import { StoreTestResult } from "./store.spec";
+import { expect } from "chai";
+import fs from "node:fs";
+import path from "path";
+import { hashElement } from "folder-hash";
+
+const TMP_WORKING_DIR_PATH = "/tmp/my-project";
+let workingDir = "";
+
+/**
+ *
+ * @param specCaseName folder name of spec to test
+ * @param elementPath element path to element to be deleted from working directory of spec case
+ * @param expectedParentElementPath element path to expected parent element after delete operation
+ * @returns StoreTestResult where specCasePath is path to expected parent element after delete operation and storePath is path to parent element contained deleted element
+ */
+function runBasicDeleteTest(
+  specCaseName: string,
+  elementPath: string,
+  expectedParentElementPath: string
+) {
+  // 1. select spec case
+  const specCasePath = toSpecCasePath(specCaseName);
+
+  // 2. copy spec case files into TMP_WORKING_DIR_PATH
+  fs.cpSync(specCasePath, TMP_WORKING_DIR_PATH, { recursive: true });
+
+  // 3. delete element, given working directory path and element path
+  const result = deleteElement(TMP_WORKING_DIR_PATH, elementPath);
+
+  const pathToExpectedParentElement = convertElementPathToFilePath(
+    specCasePath,
+    expectedParentElementPath
+  ).data;
+  const expectedParentElement = JSON.parse(
+    fs.readFileSync(
+      path.resolve(specCasePath, expectedParentElementPath + ".json"),
+      "utf-8"
+    )
+  );
+
+  // 4. verify results of deleteElement operation
+  expect(result.success).to.equal(true);
+  expect(toJsonString(result.element)).to.equal(
+    toJsonString(expectedParentElement)
+  );
+
+  const pathToExpectedParentElementDirectory = path.parse(
+    pathToExpectedParentElement
+  ).dir;
+  const pathToResultParentElementDirectory = path.parse(result.message).dir;
+
+  // 5. return test results
+  return new StoreTestResult(
+    pathToExpectedParentElementDirectory,
+    pathToResultParentElementDirectory
+  );
+}
+
+describe("Test basic delete function", () => {
+  beforeEach(function () {
+    workingDir = TMP_WORKING_DIR_PATH;
+    fs.mkdirSync(workingDir);
+  });
+  afterEach(function () {
+    fs.rmSync(TMP_WORKING_DIR_PATH, { recursive: true, force: true });
+  });
+  it("should delete object from object", () => {
+    // TODO
+  });
+  it("should delete list from object", () => {
+    // TODO
+  });
+  it("should delete complex string from object", () => {
+    // TODO
+  });
+  it("should delete simple string from object", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const result = runBasicDeleteTest(
+      "1.1_object_with_simple_data_types",
+      "model.name",
+      "modelDeleteName"
+    );
+
+    const specCasePathHash = await hashElement(result.specCasePath, options);
+    const storePathHash = await hashElement(result.storePath, options);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
+    );
+  });
+  it("should delete other simple data types from object", () => {
+    // TODO
+  });
+});
