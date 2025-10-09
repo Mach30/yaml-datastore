@@ -2,7 +2,7 @@
 
 # Class: StoreResult
 
-Defined in: [store.ts:100](https://github.com/Mach30/yaml-datastore/blob/6d8452c3266a2e8617d4f6253ddf1d76a8c54a82/src/store.ts#L100)
+Defined in: [store.ts:100](https://github.com/Mach30/yaml-datastore/blob/906a18686962ea0c1e47f8b656b1896a41f78e6e/src/store.ts#L100)
 
 Represents results of a call to the store function
 
@@ -14,7 +14,7 @@ Represents results of a call to the store function
 new StoreResult(success: boolean, message: string): StoreResult;
 ```
 
-Defined in: [store.ts:111](https://github.com/Mach30/yaml-datastore/blob/6d8452c3266a2e8617d4f6253ddf1d76a8c54a82/src/store.ts#L111)
+Defined in: [store.ts:111](https://github.com/Mach30/yaml-datastore/blob/906a18686962ea0c1e47f8b656b1896a41f78e6e/src/store.ts#L111)
 
 Default constructor for StoreResult
 
@@ -48,7 +48,7 @@ new StoreResult object
 get message(): string;
 ```
 
-Defined in: [store.ts:120](https://github.com/Mach30/yaml-datastore/blob/6d8452c3266a2e8617d4f6253ddf1d76a8c54a82/src/store.ts#L120)
+Defined in: [store.ts:120](https://github.com/Mach30/yaml-datastore/blob/906a18686962ea0c1e47f8b656b1896a41f78e6e/src/store.ts#L120)
 
 ##### Returns
 
@@ -66,7 +66,7 @@ file path to root element serialized to disk on success or an explanation of the
 get success(): boolean;
 ```
 
-Defined in: [store.ts:116](https://github.com/Mach30/yaml-datastore/blob/6d8452c3266a2e8617d4f6253ddf1d76a8c54a82/src/store.ts#L116)
+Defined in: [store.ts:116](https://github.com/Mach30/yaml-datastore/blob/906a18686962ea0c1e47f8b656b1896a41f78e6e/src/store.ts#L116)
 
 ##### Returns
 
