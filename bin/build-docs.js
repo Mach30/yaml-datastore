@@ -65,3 +65,6 @@ sh.cmd("markedpp", ".readme.md")
   .cmd("sed", sedFixIncludes)
   .cmd("tr", "-s", "\n")
   .to("./docs/README.md");
+
+// 2.2.1 restore image to docs directory from typedoc cleaning directory
+sh.cp("./bartsimpsonmeme.png", "./docs/");
