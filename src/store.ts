@@ -261,7 +261,7 @@ function storeYaml(
   // write YAML content do disk
   fs.writeFileSync(filePath, yamlContentToSerialize, "utf-8");
 
-  return new YdsResult(true, element, filePath.toString());
+  return new YdsResult(true, element, elementName);
 }
 
 /**

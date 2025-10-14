@@ -71,8 +71,11 @@ function runBasicStoreTest(specCaseName: string): StoreTestResult {
   const result = store(element, workingDir, elementName);
 
   expect(result.success).to.equal(true);
-  expect(result.message).to.equal(expectedFilePath);
-  const resultContents = fs.readFileSync(path.resolve(result.message), "utf-8");
+  expect(result.message).to.equal(elementName);
+  const resultContents = fs.readFileSync(
+    path.resolve(expectedFilePath),
+    "utf-8"
+  );
   expect(resultContents).to.equal(expectedResultContents);
 
   // 4. run basic load test with TMP_WORKING_DIR_PATH (i.e., path containing serialized content from store() function) as working directory path
