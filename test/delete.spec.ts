@@ -75,7 +75,7 @@ describe("Test basic delete function", () => {
   afterEach(function () {
     fs.rmSync(TMP_WORKING_DIR_PATH, { recursive: true, force: true });
   });
-  it("should delete object from object", async () => {
+  it("should delete object of simple data types from object", async () => {
     const result = runBasicDeleteTest(
       "1.2.2_object_with_object_of_simple_data_types",
       "model.address",
