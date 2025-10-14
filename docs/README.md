@@ -42,7 +42,7 @@ Yaml Datastore exists because we don't want to add Git-like features to how we s
 - `yds-ids`: Command-line interface for generating ids
 
 ## Documentation Overview
-The documentation below provides comprehensive details about the On Disk Representation.  
+The documentation below provides comprehensive details about all the Data Types with examples. 
 
 <!-- include (docs/README.md) -->
 # API v0.0.0
