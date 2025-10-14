@@ -26,16 +26,9 @@
 
 ## How it Works
 ### Major Components
-- **Datastore Core:** The `store` and `load` functions manage serialization/deserialization of objects and lists to/from YAML files.
-- **Result Classes:** `LoadResult` and `StoreResult` encapsulate operation outcomes, including status and content.
-- **ID Generation:** The `generateIDs` function helps organize list/object storage with unique identifiers.
-- **Configuration via Parameters:** Paths, element names, and depth are passed directly to functions.
-
-### Data Flow and Interactions
-1. **Initialization:** User invokes `store` or `load`, specifying relevant paths and parameters.
-2. **Loading Data:** `load` reads YAML files recursively, reconstructing in-memory objects/lists.
-3. **Data Operations:** Manipulates data in memory, then re-stores to persist changes.
-4. **Persistence:** `store` writes updated data structures to disk, managing complex types and references across multiple files.
+- **Datastore Core:** The `store` and `load` transform in-memory objects and lists into a collection of YAML files and back.
+- **Result Classes:** `YdsResult` captures operation outcomes, including status and content.
+- **ID Generation:** The `generateIDs` function provides unique identifiers for storing complex list items.
 
 ## Goals
 more detailed explanation of why we wrote this library
@@ -46,23 +39,7 @@ Installation steps
 ### CLI Interactions
 - `yds-store`: Command-line interface for storing data.
 - `yds-load`: Command-line interface for loading data.
-- Options include specifying working directories, element paths, output formats, and depth.
-
-### Workflow Example
-
-1. **Storing Data**
-   - Use `store()` to write an object or list to disk.
-   - Internally, `storeYaml()` handles serialization.
-   - Complex structures are broken into multiple YAML files; strings may be stored separately.
-   - Result is returned as a `StoreResult`.
-
-2. **Loading Data**
-   - Use `load()` to read data from disk.
-   - Internally, `loadYaml()` reconstructs complex structures from files.
-   - Result is returned as a `LoadResult`, with access to loaded content and status.
-
-3. **ID Generation**
-   - Use `generateIDs()` for deterministic short IDs when storing lists or objects.
+- `yds-ids`: Command-line interface for generating ids
 
 ## Documentation Overview
 Summarize rest of the documentation
