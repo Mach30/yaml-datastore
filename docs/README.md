@@ -20,12 +20,87 @@
 ![Bart Simpson in front of chalkboard writing repeatedly "GIT IS NOT A DATABASE"](./bartsimpsonmeme.png)
 </br>
 "Git is not a database."—but what if it was? With YAML datastore, you can make your data Git-friendly. YAML Datastore is a lightweight library that stores and manages data with structured plaintext files and YAML syntax, designed for use with version control systems. This enables you to gain the advantages of Git for your data—track changes at the feature level, store data across multiple systems, and merge data seamlessly. 
-## What is yaml-datastore
-explain the lib, its components, and its general function
-## Motivation
+## How it Works
+- The YAML Datastore library is designed to provide a lightweight, simple, human-readable data storage and retrieval using YAML files.
+- It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
+
+### Major Components
+- **Datastore Core:** The `store` and `load` functions manage serialization/deserialization of objects and lists to/from YAML files.
+- **Result Classes:** `LoadResult` and `StoreResult` encapsulate operation outcomes, including status and content.
+- **ID Generation:** The `generateIDs` function helps organize list/object storage with unique identifiers.
+- **Configuration via Parameters:** Paths, element names, and depth are passed directly to functions.
+
+### Data Flow and Interactions
+1. **Initialization:** User invokes `store` or `load`, specifying relevant paths and parameters.
+2. **Loading Data:** `load` reads YAML files recursively, reconstructing in-memory objects/lists.
+3. **Data Operations:** Manipulates data in memory, then re-stores to persist changes.
+4. **Persistence:** `store` writes updated data structures to disk, managing complex types and references across multiple files.
+
+### Main Classes
+- **LoadResult**  
+  Represents the result of a data load operation.  
+  Key accessors:  
+  - `success` (boolean): Indicates if the load was successful.  
+  - `element` (any): The loaded data structure.  
+  - `message` (string): Path or error message.
+
+- **StoreResult**  
+  Represents the result of a store operation, indicating status and details.
+
+### Main Functions
+- **load(workingDirectoryPath, elementPath, depth)**  
+  Returns an in-memory representation of the element from a given directory and path.  
+  - `workingDirectoryPath`: Directory containing yaml-datastore data.  
+  - `elementPath`: Dot/bracket notation path to element (e.g., `user.profile[0].name`).  
+  - `depth`: How deep to read into the hierarchy (`-1` for full depth).  
+  Returns a `LoadResult` instance.
+
+- **store(element, workingDirectoryPath, elementName)**  
+  Dumps an object or list to disk in YAML format.  
+  - `element`: Data to store (object or array).  
+  - `workingDirectoryPath`: Target directory.  
+  - `elementName`: Name for the top-level element.  
+  Returns a `StoreResult` instance.
+
+- **generateIDs(numIDs, numSkip)**  
+  Generates a list of short IDs for naming elements/files.
+
+### Internal Helper Functions
+- `storeYaml(...)`, `loadYaml(...)`:  
+  Handle serialization/deserialization of complex objects, lists, and strings.
+- `encloseInDoubleParentheses(...)`, `generateObjectOrListFilename(...)`, `elementNameFromFileName(...)`:  
+  Format file paths, names, and string representations.
+
+### Workflow Example
+
+1. **Storing Data**
+   - Use `store()` to write an object or list to disk.
+   - Internally, `storeYaml()` handles serialization.
+   - Complex structures are broken into multiple YAML files; strings may be stored separately.
+   - Result is returned as a `StoreResult`.
+
+2. **Loading Data**
+   - Use `load()` to read data from disk.
+   - Internally, `loadYaml()` reconstructs complex structures from files.
+   - Result is returned as a `LoadResult`, with access to loaded content and status.
+
+3. **ID Generation**
+   - Use `generateIDs()` for deterministic short IDs when storing lists or objects.
+
+### CLI Interactions
+
+- `yds-store`: Command-line interface for storing data.
+- `yds-load`: Command-line interface for loading data.
+- Options include specifying working directories, element paths, output formats, and depth.
+
+## Goals
 more detailed explanation of why we wrote this library
+
+## Getting Started
+Installation steps
+
 ## Documentation Overview
-provide summary of the remainder of the document
+
 <!-- include (docs/README.md) -->
 # API v0.0.0
 ## Classes
