@@ -344,7 +344,7 @@ export function convertElementPathToFilePath(
               } else if (filePath.slice(-5) === ".yaml") {
                 // got a YAML list
                 return new ElementPathResult(
-                  ElementPathType.complexToObject,
+                  ElementPathType.complexToList,
                   filePath
                 );
               } else {
