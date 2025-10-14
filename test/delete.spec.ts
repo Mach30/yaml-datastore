@@ -51,7 +51,9 @@ function runBasicDeleteTest(
   const pathToExpectedParentElementDirectory = path.parse(
     pathToExpectedParentElement
   ).dir;
-  const pathToResultParentElementDirectory = path.parse(result.message).dir;
+  const pathToResultParentElementDirectory = path.parse(
+    convertElementPathToFilePath(TMP_WORKING_DIR_PATH, result.message).data
+  ).dir;
 
   // 5. return test results
   return new StoreTestResult(

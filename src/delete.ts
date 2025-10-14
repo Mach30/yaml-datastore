@@ -96,7 +96,7 @@ export function deleteElement(
         ).element;
         delete parentElement[parentElementInfo.indexOfChild];
         fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
-        return new YdsResult(true, parentElement, parentElementFilePath);
+        return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToComplexString:
       case ElementPathType.complexToComplexString:
         // TODO
