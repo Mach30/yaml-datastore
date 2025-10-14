@@ -98,7 +98,39 @@ describe("Test basic delete function", () => {
       toJsonString(specCasePathHash["children"])
     );
   });
-  it("should delete other simple data types from object", () => {
-    // TODO
+  it("should delete other simple data types from object", async () => {
+    const options = {
+      files: { exclude: ["*.json"] },
+    };
+
+    const elementPaths = [
+      "model.age",
+      "model.attending",
+      "model.plusOne",
+      "model.degrees",
+      "model.aliases",
+    ];
+
+    for (const elementPath of elementPaths) {
+      const elementPathAsSplitString = elementPath.split(".");
+      const expectedParentElementPath =
+        elementPathAsSplitString[0] +
+        "Delete" +
+        elementPathAsSplitString[1].charAt(0).toUpperCase() +
+        elementPathAsSplitString[1].slice(1);
+      const result = runBasicDeleteTest(
+        "1.1_object_with_simple_data_types",
+        elementPath,
+        expectedParentElementPath
+      );
+
+      const specCasePathHash = await hashElement(result.specCasePath, options);
+      const storePathHash = await hashElement(result.storePath, options);
+
+      // verify that checksums of on-disk representation from spec case versus serialized content are identical
+      expect(toJsonString(storePathHash["children"])).to.equal(
+        toJsonString(specCasePathHash["children"])
+      );
+    }
   });
 });

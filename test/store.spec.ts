@@ -143,7 +143,7 @@ describe("Test basic store function", () => {
   it("should store object with simple data types", async () => {
     const options = {
       files: { exclude: ["*.json"] },
-      folders: { exclude: ["modelDeleteName"] },
+      folders: { exclude: ["modelDelete*"] },
     };
 
     const storeTestResult = runBasicStoreTest(
