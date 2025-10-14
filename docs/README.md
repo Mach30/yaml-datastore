@@ -28,10 +28,10 @@
 Yaml Datastore exists because we don't want to add Git-like features to how we store and manage data—we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend did not account properly for structure. YAML Datastore automatically manages the complexity of data stored with easy to understand rules. 
 
 ## How it Works
-### Major Components
-- **Datastore Core:** The `store` and `load` transform in-memory objects and lists into a collection of YAML files and back.
-- **Result Classes:** `YdsResult` captures operation outcomes, including status and content.
-- **ID Generation:** The `generateIDs` function provides unique identifiers for storing complex list items.
+- The `store` and `load` transform in-memory objects and lists into structured YAML files and back.
+- `YdsResult` captures operation outcomes, including status and content.
+- The `generateIDs` function provides unique identifiers for storing complex list items.
+- Unique syntax of enclosing double parentheses "((" and "))" identifies complex data types for handling.
 
 ## Getting Started
 1. Installation Steps
