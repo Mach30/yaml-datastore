@@ -10,6 +10,11 @@ import { hashElement } from "folder-hash";
 const TMP_WORKING_DIR_PATH = "/tmp/my-project";
 let workingDir = "";
 
+// options for files/folders to ignore for hashElement
+const options = {
+  files: { exclude: ["*.json"] },
+};
+
 /**
  *
  * @param specCaseName folder name of spec to test
@@ -80,10 +85,6 @@ describe("Test basic delete function", () => {
     // TODO
   });
   it("should delete simple string from object", async () => {
-    const options = {
-      files: { exclude: ["*.json"] },
-    };
-
     const result = runBasicDeleteTest(
       "1.1_object_with_simple_data_types",
       "model.name",
@@ -99,10 +100,6 @@ describe("Test basic delete function", () => {
     );
   });
   it("should delete other simple data types from object", async () => {
-    const options = {
-      files: { exclude: ["*.json"] },
-    };
-
     const elementPaths = [
       "model.age",
       "model.attending",
