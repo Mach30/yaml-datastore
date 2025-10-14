@@ -90,7 +90,7 @@ describe("Test basic delete function", () => {
       toJsonString(specCasePathHash["children"])
     );
   });
-  it("should delete list from object", () => {
+  it("should delete list of complex strings from object", () => {
     // TODO
   });
   it("should delete complex string from object", async () => {
