@@ -24,17 +24,17 @@
 - The YAML Datastore library is designed to provide a lightweight, simple, human-readable data storage and retrieval using YAML files.
 - It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
 
+## Goals
+Yaml Datastore exists because we don't want to add Git-like features to how we store and manage data—we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend did not account properly for structure. YAML Datastore automatically manages the complexity of data stored with easy to understand rules. 
+
 ## How it Works
 ### Major Components
 - **Datastore Core:** The `store` and `load` transform in-memory objects and lists into a collection of YAML files and back.
 - **Result Classes:** `YdsResult` captures operation outcomes, including status and content.
 - **ID Generation:** The `generateIDs` function provides unique identifiers for storing complex list items.
 
-## Goals
-more detailed explanation of why we wrote this library
-
 ## Getting Started
-Installation steps
+1. Installation Steps
 
 ### CLI Interactions
 - `yds-store`: Command-line interface for storing data.
@@ -42,7 +42,7 @@ Installation steps
 - `yds-ids`: Command-line interface for generating ids
 
 ## Documentation Overview
-Summarize rest of the documentation
+The documentation below provides comprehensive details about the On Disk Representation.  
 
 <!-- include (docs/README.md) -->
 # API v0.0.0
@@ -55,7 +55,7 @@ Summarize rest of the documentation
 - [store](functions/store.md)
 <!-- /include -->
 # On Disk Representation
-This section explains how the YAML Datastore library organizes and stores data on disk. It covers the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout. These details will help you understand your datastore’s files.
+This section explains how the YAML Datastore library organizes and stores data on disk. It covers the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout. 
 
 ## Explanation of the Algorithm
 The datastore uses a set of straightforward rules to map objects and lists into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
@@ -95,7 +95,6 @@ The datastore uses a set of straightforward rules to map objects and lists into 
 - `encloseInDoubleParentheses(...)`, `generateObjectOrListFilename(...)`, `elementNameFromFileName(...)`:  
   Format file paths, names, and string representations.
 
-
 ### What Can Be Stored
 You can store:
 - **Objects**: Any object with key-value pairs, including nested objects.
@@ -103,7 +102,7 @@ You can store:
 - **Nested Structures**: Both objects and lists can be nested to any depth, allowing you to represent complex models.
 
 ### Data Types
-The algorithm supports:
+The algorithm supports **simple** and **complex** data types:
 - **Simple Types**: Strings, numbers, booleans, nulls. These are stored directly in the YAML file.
 - **Complex Types**: Multi-line strings, large objects/lists, and references. 
   - Multi-line strings are stored in separate files, referenced from their parent object.
@@ -115,8 +114,6 @@ When you store data:
 - Simple values (numbers, strings, booleans) are saved inline.
 - Complex values (multi-line strings, nested objects/lists) are saved in separate files. Their parent YAML file contains a special marker referencing the file (e.g., `((filename.yaml))`).
 - Each object or list gets a unique filename or directory structure based on its name and position in the hierarchy.
-
-This approach makes it easy to inspect, back up, or version control your data using standard tools.
 
 ## Examples
 <!-- include (test/spec/1.1_object_with_simple_data_types/README.md) -->
