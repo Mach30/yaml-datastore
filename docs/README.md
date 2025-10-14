@@ -20,10 +20,11 @@
 ![Bart Simpson in front of chalkboard writing repeatedly "GIT IS NOT A DATABASE"](./bartsimpsonmeme.png)
 </br>
 "Git is not a database."—but what if it was? With YAML datastore, you can make your data Git-friendly. YAML Datastore is a lightweight library that stores and manages data with structured plaintext files and YAML syntax, designed for use with version control systems. This enables you to gain the advantages of Git for your data—track changes at the feature level, store data across multiple systems, and merge data seamlessly. 
-## How it Works
+## What is YAML Datastore
 - The YAML Datastore library is designed to provide a lightweight, simple, human-readable data storage and retrieval using YAML files.
 - It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
 
+## How it Works
 ### Major Components
 - **Datastore Core:** The `store` and `load` functions manage serialization/deserialization of objects and lists to/from YAML files.
 - **Result Classes:** `LoadResult` and `StoreResult` encapsulate operation outcomes, including status and content.
