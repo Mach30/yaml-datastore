@@ -36,6 +36,52 @@
 3. **Data Operations:** Manipulates data in memory, then re-stores to persist changes.
 4. **Persistence:** `store` writes updated data structures to disk, managing complex types and references across multiple files.
 
+## Goals
+more detailed explanation of why we wrote this library
+
+## Getting Started
+Installation steps
+
+### CLI Interactions
+- `yds-store`: Command-line interface for storing data.
+- `yds-load`: Command-line interface for loading data.
+- Options include specifying working directories, element paths, output formats, and depth.
+
+### Workflow Example
+
+1. **Storing Data**
+   - Use `store()` to write an object or list to disk.
+   - Internally, `storeYaml()` handles serialization.
+   - Complex structures are broken into multiple YAML files; strings may be stored separately.
+   - Result is returned as a `StoreResult`.
+
+2. **Loading Data**
+   - Use `load()` to read data from disk.
+   - Internally, `loadYaml()` reconstructs complex structures from files.
+   - Result is returned as a `LoadResult`, with access to loaded content and status.
+
+3. **ID Generation**
+   - Use `generateIDs()` for deterministic short IDs when storing lists or objects.
+
+## Documentation Overview
+Summarize rest of the documentation
+
+<!-- include (docs/README.md) -->
+# API v0.0.0
+## Classes
+- [LoadResult](classes/LoadResult.md)
+- [StoreResult](classes/StoreResult.md)
+## Functions
+- [generateIDs](functions/generateIDs.md)
+- [load](functions/load.md)
+- [store](functions/store.md)
+<!-- /include -->
+# On Disk Representation
+This section explains how the YAML Datastore library organizes and stores data on disk. It covers the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout. These details will help you understand your datastore’s files.
+
+## Explanation of the Algorithm
+The datastore uses a set of straightforward rules to map objects and lists into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
+
 ### Main Classes
 - **LoadResult**  
   Represents the result of a data load operation.  
@@ -71,56 +117,29 @@
 - `encloseInDoubleParentheses(...)`, `generateObjectOrListFilename(...)`, `elementNameFromFileName(...)`:  
   Format file paths, names, and string representations.
 
-### Workflow Example
 
-1. **Storing Data**
-   - Use `store()` to write an object or list to disk.
-   - Internally, `storeYaml()` handles serialization.
-   - Complex structures are broken into multiple YAML files; strings may be stored separately.
-   - Result is returned as a `StoreResult`.
-
-2. **Loading Data**
-   - Use `load()` to read data from disk.
-   - Internally, `loadYaml()` reconstructs complex structures from files.
-   - Result is returned as a `LoadResult`, with access to loaded content and status.
-
-3. **ID Generation**
-   - Use `generateIDs()` for deterministic short IDs when storing lists or objects.
-
-### CLI Interactions
-
-- `yds-store`: Command-line interface for storing data.
-- `yds-load`: Command-line interface for loading data.
-- Options include specifying working directories, element paths, output formats, and depth.
-
-## Goals
-more detailed explanation of why we wrote this library
-
-## Getting Started
-Installation steps
-
-## Documentation Overview
-
-<!-- include (docs/README.md) -->
-# API v0.0.0
-## Classes
-- [LoadResult](classes/LoadResult.md)
-- [StoreResult](classes/StoreResult.md)
-## Functions
-- [generateIDs](functions/generateIDs.md)
-- [load](functions/load.md)
-- [store](functions/store.md)
-<!-- /include -->
-# On Disk Representation
-include brief intro to this section
-## Explanation of the Algorithm
-this is where we will explain the basic "rules", with subheadings to structure the conversation
 ### What Can Be Stored
-Objects/Lists and their contents
+You can store:
+- **Objects**: Any object with key-value pairs, including nested objects.
+- **Lists (Arrays)**: Arrays of values, objects, or other lists.
+- **Nested Structures**: Both objects and lists can be nested to any depth, allowing you to represent complex models.
+
 ### Data Types
-Introduce simple and complex types
+The algorithm supports:
+- **Simple Types**: Strings, numbers, booleans, nulls. These are stored directly in the YAML file.
+- **Complex Types**: Multi-line strings, large objects/lists, and references. 
+  - Multi-line strings are stored in separate files, referenced from their parent object.
+  - Nested objects and lists can be split into their own files for modularity and clarity.
+    
 ### Storage Approach
-How we take an object or list and "spread" it out on the disk
+When you store data:
+- The top-level object or list is written to a YAML file in the designated directory.
+- Simple values (numbers, strings, booleans) are saved inline.
+- Complex values (multi-line strings, nested objects/lists) are saved in separate files. Their parent YAML file contains a special marker referencing the file (e.g., `((filename.yaml))`).
+- Each object or list gets a unique filename or directory structure based on its name and position in the hierarchy.
+
+This approach makes it easy to inspect, back up, or version control your data using standard tools.
+
 ## Examples
 <!-- include (test/spec/1.1_object_with_simple_data_types/README.md) -->
 ### Object with Simple Data Types
