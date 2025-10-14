@@ -2,7 +2,7 @@
 
 # Class: LoadResult
 
-Defined in: [load.ts:104](https://github.com/Mach30/yaml-datastore/blob/6ffc76706a7f8d4ff55b674020a237661bb5a121/src/load.ts#L104)
+Defined in: [load.ts:104](https://github.com/Mach30/yaml-datastore/blob/2529ceee1054f5c5fbde4949a71ae54c24547441/src/load.ts#L104)
 
 Represents results of a call to the load function
 
@@ -17,7 +17,7 @@ new LoadResult(
    message: string): LoadResult;
 ```
 
-Defined in: [load.ts:117](https://github.com/Mach30/yaml-datastore/blob/6ffc76706a7f8d4ff55b674020a237661bb5a121/src/load.ts#L117)
+Defined in: [load.ts:117](https://github.com/Mach30/yaml-datastore/blob/2529ceee1054f5c5fbde4949a71ae54c24547441/src/load.ts#L117)
 
 Default constructor for LoadResult
 
@@ -57,7 +57,7 @@ new LoadResult object
 get element(): any;
 ```
 
-Defined in: [load.ts:131](https://github.com/Mach30/yaml-datastore/blob/6ffc76706a7f8d4ff55b674020a237661bb5a121/src/load.ts#L131)
+Defined in: [load.ts:131](https://github.com/Mach30/yaml-datastore/blob/2529ceee1054f5c5fbde4949a71ae54c24547441/src/load.ts#L131)
 
 ##### Returns
 
@@ -75,7 +75,7 @@ element read into memory on success or null on failure.
 get message(): string;
 ```
 
-Defined in: [load.ts:135](https://github.com/Mach30/yaml-datastore/blob/6ffc76706a7f8d4ff55b674020a237661bb5a121/src/load.ts#L135)
+Defined in: [load.ts:135](https://github.com/Mach30/yaml-datastore/blob/2529ceee1054f5c5fbde4949a71ae54c24547441/src/load.ts#L135)
 
 ##### Returns
 
@@ -93,7 +93,7 @@ element path on success or an explanation of the failure.
 get success(): boolean;
 ```
 
-Defined in: [load.ts:127](https://github.com/Mach30/yaml-datastore/blob/6ffc76706a7f8d4ff55b674020a237661bb5a121/src/load.ts#L127)
+Defined in: [load.ts:127](https://github.com/Mach30/yaml-datastore/blob/2529ceee1054f5c5fbde4949a71ae54c24547441/src/load.ts#L127)
 
 ##### Returns
 

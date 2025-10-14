@@ -25,31 +25,6 @@
 </br>
 "Git is not a database."—but what if it was? With YAML datastore, you can make your data Git-friendly. YAML Datastore is a lightweight library that stores and manages data with structured plaintext files and YAML syntax, designed for use with version control systems. This enables you to gain the advantages of Git for your data—track changes at the feature level, store data across multiple systems, and merge data seamlessly. 
 ## What is YAML Datastore
-<<<<<<< HEAD
-- The YAML Datastore library is designed to provide a lightweight, simple, human-readable data storage and retrieval using YAML files.
-- It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
-
-## Goals
-Yaml Datastore exists because we don't want to add Git-like features to how we store and manage data—we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend did not account properly for structure. YAML Datastore automatically manages the complexity of data stored with easy to understand rules. 
-
-## How it Works
-- The `store` and `load` transform in-memory objects and lists into structured YAML files and back.
-- `YdsResult` captures operation outcomes, including status and content.
-- The `generateIDs` function provides unique identifiers for storing complex list items.
-- Unique syntax of enclosing double parentheses "((" and "))" identifies complex data types for handling.
-
-## Getting Started
-1. Installation Steps
-
-### CLI Interactions
-- `yds-store`: Command-line interface for storing data.
-- `yds-load`: Command-line interface for loading data.
-- `yds-ids`: Command-line interface for generating ids
-
-## Documentation Overview
-The documentation below provides comprehensive details about all the Data Types with examples. 
-
-=======
 - The YAML Datastore library is a Typescript library (can be used with Typescript and Javascript projects) designed to provide a lightweight, simple, human-readable data storage and retrieval using YAML files.
 - It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
 ### Components
@@ -62,14 +37,13 @@ The documentation below provides comprehensive details about all the Data Types 
 ### Helper Classes
 - Results class captures operation outcomes, including status and content.
 ## Goals
-Yaml Datastore exists because we don't want to add Git-like features to how we store and manage data—we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend did not account properly for structure. YAML Datastore automatically manages the complexity of data stored with easy to understand rules. 
+YAML Datastore exists because we don't want to add Git-like features to how we store and manage data—we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend did not account properly for structure. YAML Datastore automatically manages the complexity of data stored with easy to understand rules. 
 ## Getting Started
 1. Installation Steps
 ## Documentation Overview
 The documentation below provides comprehensive details about all the Data Types with examples. typedoc generated documentation
 Deep dive into the algorithm, rationale for how it works
 then a series of examples demonstrating the algorithm and use cases (Cover top level) section on API, section on examples
->>>>>>> 83c1edf (Drafting Introduction)
 <!-- include (docs/README.md) -->
 # API v0.0.0
 ## Classes
@@ -82,59 +56,13 @@ then a series of examples demonstrating the algorithm and use cases (Cover top l
 <!-- /include -->
 # On Disk Representation
 This section explains how the YAML Datastore library organizes and stores data on disk. It covers the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout. 
-<<<<<<< HEAD
-
-## Explanation of the Algorithm
-The datastore uses a set of straightforward rules to map objects and lists into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
-
-### Main Classes
-- **LoadResult**  
-  Represents the result of a data load operation.  
-  Key accessors:  
-  - `success` (boolean): Indicates if the load was successful.  
-  - `element` (any): The loaded data structure.  
-  - `message` (string): Path or error message.
-
-- **StoreResult**  
-  Represents the result of a store operation, indicating status and details.
-
-### Main Functions
-- **load(workingDirectoryPath, elementPath, depth)**  
-  Returns an in-memory representation of the element from a given directory and path.  
-  - `workingDirectoryPath`: Directory containing yaml-datastore data.  
-  - `elementPath`: Dot/bracket notation path to element (e.g., `user.profile[0].name`).  
-  - `depth`: How deep to read into the hierarchy (`-1` for full depth).  
-  Returns a `LoadResult` instance.
-
-- **store(element, workingDirectoryPath, elementName)**  
-  Dumps an object or list to disk in YAML format.  
-  - `element`: Data to store (object or array).  
-  - `workingDirectoryPath`: Target directory.  
-  - `elementName`: Name for the top-level element.  
-  Returns a `StoreResult` instance.
-
-- **generateIDs(numIDs, numSkip)**  
-  Generates a list of short IDs for naming elements/files.
-
-### Internal Helper Functions
-- `storeYaml(...)`, `loadYaml(...)`:  
-  Handle serialization/deserialization of complex objects, lists, and strings.
-- `encloseInDoubleParentheses(...)`, `generateObjectOrListFilename(...)`, `elementNameFromFileName(...)`:  
-  Format file paths, names, and string representations.
-
-=======
 ## Explanation of the Algorithm
 The datastore uses a set of straightforward rules to map the data into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
->>>>>>> 83c1edf (Drafting Introduction)
 ### What Can Be Stored
 You can store:
 - **Objects**: Any object with key-value pairs, including nested objects.
 - **Lists (Arrays)**: Arrays of values, objects, or other lists.
 - **Nested Structures**: Both objects and lists can be nested to any depth, allowing you to represent complex models.
-<<<<<<< HEAD
-
-=======
->>>>>>> 83c1edf (Drafting Introduction)
 ### Data Types
 The algorithm supports **simple** and **complex** data types:
 - **Simple Types**: Strings, numbers, booleans, nulls. These are stored directly in the YAML file.
@@ -148,12 +76,7 @@ When you store data:
 - Simple values (numbers, strings, booleans) are saved inline.
 - Complex values (multi-line strings, nested objects/lists) are saved in separate files. Their parent YAML file contains a special marker referencing the file (e.g., `((filename.yaml))`).
 - Each object or list gets a unique filename or directory structure based on its name and position in the hierarchy.
-<<<<<<< HEAD
-
-## Examples
-=======
 ## Data Types and their On Disk Representations
->>>>>>> 83c1edf (Drafting Introduction)
 <!-- include (test/spec/1.1_object_with_simple_data_types/README.md) -->
 ### Object with Simple Data Types
 #### The Model to Store
