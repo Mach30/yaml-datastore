@@ -86,8 +86,12 @@ export function deleteElement(
     switch (elementPathObj.type) {
       case ElementPathType.empty:
       case ElementPathType.simpleToObject:
-      case ElementPathType.simpleToList:
       case ElementPathType.complexToObject:
+        fs.rmSync(path.parse(elementPathObj.data).dir, { recursive: true });
+        delete parentElement[parentElementInfo.indexOfChild];
+        fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
+        return new YdsResult(true, parentElement, parentElementPath);
+      case ElementPathType.simpleToList:
       case ElementPathType.complexToList:
         // TODO
         break;

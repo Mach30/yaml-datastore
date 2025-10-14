@@ -75,8 +75,20 @@ describe("Test basic delete function", () => {
   afterEach(function () {
     fs.rmSync(TMP_WORKING_DIR_PATH, { recursive: true, force: true });
   });
-  it("should delete object from object", () => {
-    // TODO
+  it("should delete object from object", async () => {
+    const result = runBasicDeleteTest(
+      "1.2.2_object_with_object_of_simple_data_types",
+      "model.address",
+      "modelDeleteAddress"
+    );
+
+    const specCasePathHash = await hashElement(result.specCasePath, options);
+    const storePathHash = await hashElement(result.storePath, options);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
+    );
   });
   it("should delete list from object", () => {
     // TODO
