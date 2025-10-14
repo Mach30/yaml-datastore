@@ -1,8 +1,12 @@
 <!-- !toc (numbered) -->
 1\. [Introduction](#introduction) <br>
-1.1\. [What is yaml-datastore](#what-is-yaml-datastore) <br>
-1.2\. [Motivation](#motivation) <br>
-1.3\. [Documentation Overview](#documentation-overview) <br>
+1.1\. [What is YAML Datastore](#what-is-yaml-datastore) <br>
+1.1.1\. [Components](#components) <br>
+1.1.2\. [CLI Tools](#cli-tools) <br>
+1.1.3\. [Helper Classes](#helper-classes) <br>
+1.2\. [Goals](#goals) <br>
+1.3\. [Getting Started](#getting-started) <br>
+1.4\. [Documentation Overview](#documentation-overview) <br>
 2\. [API v0.0.0](#api-v000) <br>
 2.1\. [Classes](#classes) <br>
 2.2\. [Functions](#functions) <br>
@@ -11,7 +15,7 @@
 3.1.1\. [What Can Be Stored](#what-can-be-stored) <br>
 3.1.2\. [Data Types](#data-types) <br>
 3.1.3\. [Storage Approach](#storage-approach) <br>
-3.2\. [Examples](#examples) <br>
+3.2\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
 3.2.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
 3.2.2\. [Object with Complex String](#object-with-complex-string) <br>
 3.2.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
@@ -21,6 +25,7 @@
 </br>
 "Git is not a database."—but what if it was? With YAML datastore, you can make your data Git-friendly. YAML Datastore is a lightweight library that stores and manages data with structured plaintext files and YAML syntax, designed for use with version control systems. This enables you to gain the advantages of Git for your data—track changes at the feature level, store data across multiple systems, and merge data seamlessly. 
 ## What is YAML Datastore
+<<<<<<< HEAD
 - The YAML Datastore library is designed to provide a lightweight, simple, human-readable data storage and retrieval using YAML files.
 - It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
 
@@ -44,6 +49,27 @@ Yaml Datastore exists because we don't want to add Git-like features to how we s
 ## Documentation Overview
 The documentation below provides comprehensive details about all the Data Types with examples. 
 
+=======
+- The YAML Datastore library is a Typescript library (can be used with Typescript and Javascript projects) designed to provide a lightweight, simple, human-readable data storage and retrieval using YAML files.
+- It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
+### Components
+- CRUD Functions
+- - The `store` and `load` transform in-memory objects and lists into structured YAML files and back.
+- ### CLI Tools
+- `yds-store`: Command-line interface for storing data.
+- `yds-load`: Command-line interface for loading data.
+- `yds-ids`: Command-line interface for generating ids
+### Helper Classes
+- Results class captures operation outcomes, including status and content.
+## Goals
+Yaml Datastore exists because we don't want to add Git-like features to how we store and manage data—we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend did not account properly for structure. YAML Datastore automatically manages the complexity of data stored with easy to understand rules. 
+## Getting Started
+1. Installation Steps
+## Documentation Overview
+The documentation below provides comprehensive details about all the Data Types with examples. typedoc generated documentation
+Deep dive into the algorithm, rationale for how it works
+then a series of examples demonstrating the algorithm and use cases (Cover top level) section on API, section on examples
+>>>>>>> 83c1edf (Drafting Introduction)
 <!-- include (docs/README.md) -->
 # API v0.0.0
 ## Classes
@@ -56,6 +82,7 @@ The documentation below provides comprehensive details about all the Data Types 
 <!-- /include -->
 # On Disk Representation
 This section explains how the YAML Datastore library organizes and stores data on disk. It covers the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout. 
+<<<<<<< HEAD
 
 ## Explanation of the Algorithm
 The datastore uses a set of straightforward rules to map objects and lists into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
@@ -95,12 +122,19 @@ The datastore uses a set of straightforward rules to map objects and lists into 
 - `encloseInDoubleParentheses(...)`, `generateObjectOrListFilename(...)`, `elementNameFromFileName(...)`:  
   Format file paths, names, and string representations.
 
+=======
+## Explanation of the Algorithm
+The datastore uses a set of straightforward rules to map the data into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
+>>>>>>> 83c1edf (Drafting Introduction)
 ### What Can Be Stored
 You can store:
 - **Objects**: Any object with key-value pairs, including nested objects.
 - **Lists (Arrays)**: Arrays of values, objects, or other lists.
 - **Nested Structures**: Both objects and lists can be nested to any depth, allowing you to represent complex models.
+<<<<<<< HEAD
 
+=======
+>>>>>>> 83c1edf (Drafting Introduction)
 ### Data Types
 The algorithm supports **simple** and **complex** data types:
 - **Simple Types**: Strings, numbers, booleans, nulls. These are stored directly in the YAML file.
@@ -114,8 +148,12 @@ When you store data:
 - Simple values (numbers, strings, booleans) are saved inline.
 - Complex values (multi-line strings, nested objects/lists) are saved in separate files. Their parent YAML file contains a special marker referencing the file (e.g., `((filename.yaml))`).
 - Each object or list gets a unique filename or directory structure based on its name and position in the hierarchy.
+<<<<<<< HEAD
 
 ## Examples
+=======
+## Data Types and their On Disk Representations
+>>>>>>> 83c1edf (Drafting Introduction)
 <!-- include (test/spec/1.1_object_with_simple_data_types/README.md) -->
 ### Object with Simple Data Types
 #### The Model to Store
