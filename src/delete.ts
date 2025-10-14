@@ -77,6 +77,12 @@ export function deleteElement(
       workingDirectoryPath,
       elementPath
     );
+    const parentElementFilePath = parentElementInfo.parentElementFilePath;
+    let parentElement = load(
+      workingDirectoryPath,
+      parentElementPath,
+      0
+    ).element;
     switch (elementPathObj.type) {
       case ElementPathType.empty:
       case ElementPathType.simpleToObject:
@@ -87,20 +93,15 @@ export function deleteElement(
         break;
       case ElementPathType.simpleToSimple:
       case ElementPathType.complexToSimple:
-        // TODO
-        const parentElementFilePath = parentElementInfo.parentElementFilePath;
-        let parentElement = load(
-          workingDirectoryPath,
-          parentElementPath,
-          0
-        ).element;
         delete parentElement[parentElementInfo.indexOfChild];
         fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
         return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToComplexString:
       case ElementPathType.complexToComplexString:
-        // TODO
-        break;
+        fs.rmSync(elementPathObj.data);
+        delete parentElement[parentElementInfo.indexOfChild];
+        fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
+        return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.invalid:
         break;
     }

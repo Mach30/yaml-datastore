@@ -81,8 +81,20 @@ describe("Test basic delete function", () => {
   it("should delete list from object", () => {
     // TODO
   });
-  it("should delete complex string from object", () => {
-    // TODO
+  it("should delete complex string from object", async () => {
+    const result = runBasicDeleteTest(
+      "1.2.1_object_with_complex_string",
+      "model.lyrics_txt",
+      "modelDeleteLyrics_txt"
+    );
+
+    const specCasePathHash = await hashElement(result.specCasePath, options);
+    const storePathHash = await hashElement(result.storePath, options);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
+    );
   });
   it("should delete simple string from object", async () => {
     const result = runBasicDeleteTest(
