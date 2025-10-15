@@ -8,6 +8,7 @@ import {
   ElementPathType,
   convertElementPathToFilePath,
 } from "./load.js";
+import { idRegex } from "./store.js";
 
 class ParentElementInfo {
   private _parentElementPath: string;
@@ -61,6 +62,26 @@ function getParentElementInfo(
   );
 }
 
+function testListItemFileName(
+  listFilePath: path.ParsedPath,
+  filePathToTest: path.ParsedPath
+): boolean {
+  let listFileName = listFilePath.name;
+  const fileNameToTest = filePathToTest.name;
+  let listItemFileNamePrefix = listFileName;
+  if (listFileName.includes("_")) {
+    listItemFileNamePrefix = listFileName.split("_")[0];
+  }
+  if (
+    fileNameToTest.slice(0, listItemFileNamePrefix.length) ===
+    listItemFileNamePrefix
+  ) {
+    const splitFileNameToTest = fileNameToTest.split("_");
+    return idRegex.test(splitFileNameToTest[1]);
+  }
+  return false;
+}
+
 export function deleteElement(
   workingDirectoryPath: string,
   elementPath: string
@@ -93,8 +114,26 @@ export function deleteElement(
         return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToList:
       case ElementPathType.complexToList:
-        // TODO
-        break;
+        const listFilePath = path.parse(elementPathObj.data);
+        const directoryContents = fs.readdirSync(
+          path.parse(elementPathObj.data).dir
+        );
+        for (const item of directoryContents) {
+          if (
+            testListItemFileName(
+              listFilePath,
+              path.parse(path.join(listFilePath.dir, item))
+            )
+          ) {
+            fs.rmSync(path.join(path.parse(elementPathObj.data).dir, item), {
+              recursive: true,
+            });
+          }
+        }
+        fs.rmSync(elementPathObj.data);
+        delete parentElement[parentElementInfo.indexOfChild];
+        fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
+        return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToSimple:
       case ElementPathType.complexToSimple:
         delete parentElement[parentElementInfo.indexOfChild];

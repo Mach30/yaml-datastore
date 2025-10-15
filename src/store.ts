@@ -79,7 +79,7 @@ export const reserved_keywords = [
 ];
 
 // Regular expression used for matching 6-character uppercase alphanumeric string
-const idRegex = new RegExp(/^[A-Z0-9]{6}$/);
+export const idRegex = new RegExp(/^[A-Z0-9]{6}$/);
 
 /**
  * Describes the nature of a container
