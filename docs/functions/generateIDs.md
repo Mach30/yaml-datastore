@@ -6,7 +6,7 @@
 function generateIDs(numIDs: number, numSkip: number): string[];
 ```
 
-Defined in: [idgen.ts:53](https://github.com/Mach30/yaml-datastore/blob/959b48afa123c2b07f35c45a69cefd517f434227/src/idgen.ts#L53)
+Defined in: [idgen.ts:53](https://github.com/Mach30/yaml-datastore/blob/f05fcf7b4273e626bb56f0448c7f3ab4997bdc23/src/idgen.ts#L53)
 
 Returns a list of short ID's
 
