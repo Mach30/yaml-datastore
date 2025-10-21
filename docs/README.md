@@ -13,10 +13,11 @@
 2.3.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
 2.3.2\. [Object with Complex String](#object-with-complex-string) <br>
 2.3.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
-2.3.4\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
-2.3.5\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
-2.3.6\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
-2.3.7\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
+2.3.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
+2.3.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
+2.3.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
+2.3.7\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
+2.3.8\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
 2.4\. [API Docs](#api-docs) <br>
 3\. [API v0.0.0](#api-v000) <br>
 3.1\. [Classes](#classes) <br>
@@ -174,7 +175,76 @@ state: CA
 postalCode: '90265'
 ```
 <!-- /include -->
-!include (test/spec/1.2.3_object_with_object_of_simple_data_types/README.md)
+<!-- include (test/spec/1.2.3_object_with_object_of_complex_data_types/README.md) -->
+### Object with Object of Complex Data Types
+#### The Model to Store
+```json
+{
+  "myObj": {
+    "lyrics_txt": "Mary had a little lamb,\nIt's fleece was white as snow;\nAnd everywhere that Mary went\nThe lamb was sure to go.",
+    "personInfo": {
+      "name": "John Smith",
+      "age": 42,
+      "attending": true,
+      "plusOne": null,
+      "state": "WA"
+    },
+    "primeNumbers": [
+      2,
+      3,
+      5,
+      7,
+      11
+    ]
+  }
+}
+```
+#### Generated Directory Structure
+```txt
+model
+├── myObj
+│   ├── lyrics.txt
+│   ├── personInfo
+│   │   └── _this.yaml
+│   ├── primeNumbers.yaml
+│   └── _this.yaml
+└── _this.yaml
+```
+#### Generated Files
+##### `model/_this.yaml`
+```yaml
+myObj: ((myObj/_this.yaml))
+```
+##### `model/myObj/_this.yaml`
+```yaml
+lyrics_txt: ((lyrics.txt))
+personInfo: ((personInfo/_this.yaml))
+primeNumbers: ((primeNumbers.yaml))
+```
+##### `model/myObj/lyrics.txt`
+```txt
+Mary had a little lamb,
+It's fleece was white as snow;
+And everywhere that Mary went
+The lamb was sure to go.
+```
+##### `model/myObj/primeNumbers.yaml`
+```yaml
+- 2
+- 3
+- 5
+- 7
+- 11
+```
+##### `model/myObj/personInfo/_this.yaml`
+```yaml
+name: John Smith
+age: 42
+attending: true
+plusOne: null
+state: WA
+```
+<!-- /include -->
 <!-- include (test/spec/1.2.4_object_with_list_of_simple_data_type/README.md) -->
 ### Object with List of Simple Data Type
 #### The Model to Store
@@ -197,11 +267,7 @@ model
 ```
 #### Generated Files
 ##### `model/_this.yaml`
-```yaml
-companyName: ACME, Inc
-employees: ((employees.yaml))
-foundedYear: 1949
-```
+!include (model/_this.yaml lang=yaml)
 ##### `model/employees.yaml`
 ```yaml
 - John
@@ -212,23 +278,9 @@ foundedYear: 1949
 <!-- include (test/spec/1.2.5_object_with_list_of_simple_data_types/README.md) -->
 ### Object with List of Simple Data Types
 #### The Model to Store
-```json
-{
-  "personInfo": [
-    "John Smith",
-    42,
-    true,
-    null,
-    "WA"
-  ]
-}
-```
+!include (model.json lang=json)
 #### Generated Directory Structure
-```txt
-model
-├── personInfo.yaml
-└── _this.yaml
-```
+!include (.model_tree.txt lang=txt)
 #### Generated Files
 ##### `model/_this.yaml`
 !include (model/_this.yaml lang=yaml)
