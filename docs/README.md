@@ -1,34 +1,36 @@
-<!-- !toc (numbered) -->
-1\. [Getting Started](#getting-started) <br>
-2\. [Introduction](#introduction) <br>
-2.1\. [What is YAML Datastore?](#what-is-yaml-datastore) <br>
-2.2\. [Purpose of YAML Datastore](#purpose-of-yaml-datastore) <br>
-3\. [Installation](#installation) <br>
-4\. [YAML Datastore User Guide](#yaml-datastore-user-guide) <br>
-4.0.1\. [How it works](#how-it-works) <br>
-4.0.2\. [Supported Data Types](#supported-data-types) <br>
-4.1\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
-4.1.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
-4.1.2\. [Object with Complex String](#object-with-complex-string) <br>
-4.1.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
-4.1.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
-4.1.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
-4.1.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
-4.1.7\. [Object with List of Complex Strings](#object-with-list-of-complex-strings) <br>
-4.1.8\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
-4.1.9\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
-4.2\. [API Docs](#api-docs) <br>
-5\. [API v0.0.0](#api-v000) <br>
-5.1\. [Classes](#classes) <br>
-5.2\. [Functions](#functions) <br>
-6\. [License](#license) <br>
-7\. [Contributions](#contributions) <br>
-<!-- toc! -->
 # Getting Started
 * New to YAML Data Store? Get [introduced](#introduction)
 * Ready to install? Follow the [installation steps](#installation)
 * Want to learn how YAML Datastore works? Read [our user guide](#yaml-datastore-user-guide)
 * Want to use the API? See [the API documentation](#api-docs)
+# Contents
+<!-- !toc (numbered) -->
+1\. [Getting Started](#getting-started) <br>
+2\. [Contents](#contents) <br>
+3\. [Introduction](#introduction) <br>
+3.1\. [What is YAML Datastore?](#what-is-yaml-datastore) <br>
+3.2\. [Purpose of YAML Datastore](#purpose-of-yaml-datastore) <br>
+4\. [Installation](#installation) <br>
+5\. [YAML Datastore User Guide](#yaml-datastore-user-guide) <br>
+5.0.1\. [How it works](#how-it-works) <br>
+5.0.2\. [Supported Data Types](#supported-data-types) <br>
+5.1\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
+5.1.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
+5.1.2\. [Object with Complex String](#object-with-complex-string) <br>
+5.1.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
+5.1.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
+5.1.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
+5.1.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
+5.1.7\. [Object with List of Complex Strings](#object-with-list-of-complex-strings) <br>
+5.1.8\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
+5.1.9\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
+5.2\. [API Docs](#api-docs) <br>
+6\. [API v0.0.0](#api-v000) <br>
+6.1\. [Classes](#classes) <br>
+6.2\. [Functions](#functions) <br>
+7\. [License](#license) <br>
+8\. [Contributions](#contributions) <br>
+<!-- toc! -->
 # Introduction
 ![Bart Simpson in front of chalkboard writing repeatedly "GIT IS NOT A DATABASE"](./bartsimpsonmeme.png)
 </br>
