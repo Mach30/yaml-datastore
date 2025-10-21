@@ -6,10 +6,10 @@
 function load(
    workingDirectoryPath: string, 
    elementPath: string, 
-   depth: number): LoadResult;
+   depth: number): LoadResult
 ```
 
-Defined in: [load.ts:417](https://github.com/Mach30/yaml-datastore/blob/cef9cb523afffd2a13612e0dc003c6107766ddd5/src/load.ts#L417)
+Defined in: [load.ts:417](https://github.com/Mach30/yaml-datastore/blob/c1c38b7ca884104d253f024d3c7bc3639f2d91c5/src/load.ts#L417)
 
 Returns a in-memory representation of the element in working directory specified by element path
 

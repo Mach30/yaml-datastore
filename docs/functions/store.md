@@ -6,10 +6,10 @@
 function store(
    element: object, 
    workingDirectoryPath: string, 
-   elementName: string): StoreResult;
+   elementName: string): StoreResult
 ```
 
-Defined in: [store.ts:302](https://github.com/Mach30/yaml-datastore/blob/cef9cb523afffd2a13612e0dc003c6107766ddd5/src/store.ts#L302)
+Defined in: [store.ts:302](https://github.com/Mach30/yaml-datastore/blob/c1c38b7ca884104d253f024d3c7bc3639f2d91c5/src/store.ts#L302)
 
 Dumps in-memory representation of contents to on-disk representation
 

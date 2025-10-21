@@ -2,7 +2,7 @@
 
 # Class: LoadResult
 
-Defined in: [load.ts:104](https://github.com/Mach30/yaml-datastore/blob/cef9cb523afffd2a13612e0dc003c6107766ddd5/src/load.ts#L104)
+Defined in: [load.ts:104](https://github.com/Mach30/yaml-datastore/blob/c1c38b7ca884104d253f024d3c7bc3639f2d91c5/src/load.ts#L104)
 
 Represents results of a call to the load function
 
@@ -14,10 +14,10 @@ Represents results of a call to the load function
 new LoadResult(
    success: boolean, 
    element: any, 
-   message: string): LoadResult;
+   message: string): LoadResult
 ```
 
-Defined in: [load.ts:117](https://github.com/Mach30/yaml-datastore/blob/cef9cb523afffd2a13612e0dc003c6107766ddd5/src/load.ts#L117)
+Defined in: [load.ts:117](https://github.com/Mach30/yaml-datastore/blob/c1c38b7ca884104d253f024d3c7bc3639f2d91c5/src/load.ts#L117)
 
 Default constructor for LoadResult
 
@@ -54,10 +54,10 @@ new LoadResult object
 #### Get Signature
 
 ```ts
-get element(): any;
+get element(): any
 ```
 
-Defined in: [load.ts:131](https://github.com/Mach30/yaml-datastore/blob/cef9cb523afffd2a13612e0dc003c6107766ddd5/src/load.ts#L131)
+Defined in: [load.ts:131](https://github.com/Mach30/yaml-datastore/blob/c1c38b7ca884104d253f024d3c7bc3639f2d91c5/src/load.ts#L131)
 
 ##### Returns
 
@@ -72,10 +72,10 @@ element read into memory on success or null on failure.
 #### Get Signature
 
 ```ts
-get message(): string;
+get message(): string
 ```
 
-Defined in: [load.ts:135](https://github.com/Mach30/yaml-datastore/blob/cef9cb523afffd2a13612e0dc003c6107766ddd5/src/load.ts#L135)
+Defined in: [load.ts:135](https://github.com/Mach30/yaml-datastore/blob/c1c38b7ca884104d253f024d3c7bc3639f2d91c5/src/load.ts#L135)
 
 ##### Returns
 
@@ -90,10 +90,10 @@ element path on success or an explanation of the failure.
 #### Get Signature
 
 ```ts
-get success(): boolean;
+get success(): boolean
 ```
 
-Defined in: [load.ts:127](https://github.com/Mach30/yaml-datastore/blob/cef9cb523afffd2a13612e0dc003c6107766ddd5/src/load.ts#L127)
+Defined in: [load.ts:127](https://github.com/Mach30/yaml-datastore/blob/c1c38b7ca884104d253f024d3c7bc3639f2d91c5/src/load.ts#L127)
 
 ##### Returns
 
