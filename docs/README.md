@@ -1,6 +1,6 @@
 ![Bart Simpson in front of chalkboard writing repeatedly "GIT IS NOT A DATABASE"](./bartsimpsonmeme.png)
 <br>
-**"Git is not a database."—but what if it was?** With YAML datastore, you can make your data Git-friendly. 
+**Git is not a database.—but what if it was?** With YAML datastore, you can make your data Git-friendly. 
 
 YAML Datastore is a lightweight library that stores and manages data with structured plaintext files and YAML syntax, designed for use with version control systems. This enables you to gain the advantages of Git for your data—track changes at the feature level, store data across multiple systems, and merge data seamlessly. 
 <br>
@@ -287,11 +287,7 @@ model
 ```
 #### Generated Files
 ##### `model/_this.yaml`
-```yaml
-companyName: ACME, Inc
-employees: ((employees.yaml))
-foundedYear: 1949
-```
+!include (model/_this.yaml lang=yaml)
 ##### `model/employees.yaml`
 ```yaml
 - John
