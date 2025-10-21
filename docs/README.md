@@ -1,42 +1,19 @@
 ![Bart Simpson in front of chalkboard writing repeatedly "GIT IS NOT A DATABASE"](./bartsimpsonmeme.png)
-</br>
+<br>
 **"Git is not a database."—but what if it was?** With YAML datastore, you can make your data Git-friendly. 
+<br><br>
 YAML Datastore is a lightweight library that stores and manages data with structured plaintext files and YAML syntax, designed for use with version control systems. This enables you to gain the advantages of Git for your data—track changes at the feature level, store data across multiple systems, and merge data seamlessly. 
 **Getting Started**
-</br>
+<br>
 * New to YAML Data Store? Get [introduced](#introduction)
 * Ready to install? Follow the [installation steps](#installation)
 * Want to learn how YAML Datastore works? Read [our user guide](#yaml-datastore-user-guide)
 * Want to use the API? See [the API documentation](#api-docs)
-</br>
+<br>
 **Contents**
-</br>
-<!-- !toc (numbered) -->
-1\. [Introduction](#introduction) <br>
-1.1\. [What is YAML Datastore?](#what-is-yaml-datastore) <br>
-1.2\. [Purpose of YAML Datastore](#purpose-of-yaml-datastore) <br>
-2\. [Installation](#installation) <br>
-3\. [YAML Datastore User Guide](#yaml-datastore-user-guide) <br>
-3.0.1\. [How it works](#how-it-works) <br>
-3.0.2\. [Supported Data Types](#supported-data-types) <br>
-3.1\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
-3.1.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
-3.1.2\. [Object with Complex String](#object-with-complex-string) <br>
-3.1.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
-3.1.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
-3.1.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
-3.1.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
-3.1.7\. [Object with List of Complex Strings](#object-with-list-of-complex-strings) <br>
-3.1.8\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
-3.1.9\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
-3.2\. [API Docs](#api-docs) <br>
-4\. [API v0.0.0](#api-v000) <br>
-4.1\. [Classes](#classes) <br>
-4.2\. [Functions](#functions) <br>
-5\. [License](#license) <br>
-6\. [Contributions](#contributions) <br>
-<!-- toc! -->
-</br>
+<br>
+!toc (numbered)
+<br>
 # Introduction
 ## What is YAML Datastore?
 YAML Datastore is a lightweight Typescript library designed for observable, human-readable data storage and retrieval using YAML files. It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
@@ -46,17 +23,6 @@ YAML Datastore exists because we rather than try to add Git-like features to how
 1. Installation Steps
 # YAML Datastore User Guide
 This User Guide provides comprehensive details about how YAML Datastore manages data. Learn how the YAML Datastore library organizes and stores data on disk, about the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout.
-- [Introduction](#introduction)
-  - [What is YAML Datastore?](#what-is-yaml-datastore)
-  - [Purpose of YAML Datastore](#purpose-of-yaml-datastore)
-- [Installation](#installation)
-- [YAML Datastore User Guide](#yaml-datastore-user-guide)
-  - [How it works](#how-it-works)
-  - [Supported Data Types](#supported-data-types)
-    - [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations)
-    - [API Docs](#api-docs)
-- [License](#license)
-- [Contributions](#contributions)
 ### How it works
 YAML datastore uses a set of straightforward rules to map the data into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
 YAML Datastore implements the standard CRUD operations for file-based data:
