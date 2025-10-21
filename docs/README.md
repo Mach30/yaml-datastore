@@ -54,8 +54,11 @@ YAML Datastore is a lightweight Typescript library designed for observable, huma
 YAML Datastore exists because we rather than try to add Git-like features to how we store and manage data, we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend didn't account properly for structure. YAML Datastore automatically manages this structure with easy to understand rules that we explain in the User Guide. 
 
 # Installation
+Install the library in the root directory of your project using npm or yarn.
 
-  `npm install yaml-datastore` at the root of your project repository. 
+  `npm install yaml-datastore` 
+
+  `'yarn add yaml-datastore`
 
 # YAML Datastore User Guide
 
