@@ -10,14 +10,6 @@
 2.2\. [About On Disk Representation](#about-on-disk-representation) <br>
 2.2.1\. [How it works](#how-it-works) <br>
 2.3\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
-2.3.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
-2.3.2\. [Object with Complex String](#object-with-complex-string) <br>
-2.3.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
-2.3.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
-2.3.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
-2.3.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
-2.3.7\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
-2.3.8\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
 2.4\. [API Docs](#api-docs) <br>
 3\. [API v0.0.0](#api-v000) <br>
 3.1\. [Classes](#classes) <br>
@@ -44,9 +36,9 @@ YAML Datastore implements the standard CRUD operations for file-based data.
 # YAML Datastore Documentation
 ## Overview
 The documentation below provides comprehensive details about how YAML Datastore manages data. 
-* About On Disk Representation
-* Data Types and their On Disk Representation
-* API Docs
+* [About On Disk Representation](#about-on-disk-representation)
+* [Data Types and their On Disk Representation](#data-types-and-their-on-disk-representations)
+* [API Docs](api-docs)
 ## About On Disk Representation
 This section explains how the YAML Datastore library organizes and stores data on disk. It covers the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout. 
 ### How it works
@@ -70,298 +62,27 @@ When you store data:
 - Complex values (multi-line strings, nested objects/lists) are saved in separate files. Their parent YAML file contains a special marker referencing the file (e.g., `((filename.yaml))`).
 - Each object or list gets a unique filename or directory structure based on its name and position in the hierarchy.
 ## Data Types and their On Disk Representations
-<!-- include (test/spec/1.1_object_with_simple_data_types/README.md) -->
-### Object with Simple Data Types
-#### The Model to Store
-```json
-{
-  "name": "John Smith",
-  "age": 42,
-  "attending": true,
-  "plusOne": null,
-  "state": "WA",
-  "degrees": {},
-  "aliases": [],
-  "notes": ""
-}
-```
-#### Generated Directory Structure
-```txt
-model
-└── _this.yaml
-```
-#### Generated Files
-##### `model/_this.yaml`
-```yaml
-name: John Smith
-age: 42
-attending: true
-plusOne: null
-state: WA
-degrees: {}
-aliases: []
-notes: ''
-```
-<!-- /include -->
-<!-- include (test/spec/1.2.1_object_with_complex_string/README.md) -->
-### Object with Complex String
-#### The Model to Store
-```json
-{
-  "songTitle": "Mary Had a Little Lamb",
-  "album": "Classic Childrens Songs 2",
-  "track": 17,
-  "lyrics_txt": "Mary had a little lamb,\nIt's fleece was white as snow;\nAnd everywhere that Mary went\nThe lamb was sure to go."
-}
-```
-#### Generated Directory Structure
-```txt
-model
-├── lyrics.txt
-└── _this.yaml
-```
-#### Generated Files
-##### `model/_this.yaml`
-```yaml
-songTitle: Mary Had a Little Lamb
-album: Classic Childrens Songs 2
-track: 17
-lyrics_txt: ((lyrics.txt))
-```
-##### `model/lyrics.txt`
-```txt
-Mary had a little lamb,
-It's fleece was white as snow;
-And everywhere that Mary went
-The lamb was sure to go.
-```
-<!-- /include -->
-<!-- include (test/spec/1.2.2_object_with_object_of_simple_data_types/README.md) -->
-### Object with Object of Simple Data Types
-#### The Model to Store
-```json
-{
-  "firstName": "Tony",
-  "lastName": "Stark",
-  "age": 48,
-  "address": {
-    "streetAddress": "10880 Malibu Point",
-    "city": "Malibu",
-    "state": "CA",
-    "postalCode": "90265"
-  }
-}
-```
-#### Generated Directory Structure
-```txt
-model
-├── address
-│   └── _this.yaml
-└── _this.yaml
-```
-#### Generated Files
-##### `model/_this.yaml`
-```yaml
-firstName: Tony
-lastName: Stark
-age: 48
-address: ((address/_this.yaml))
-```
-##### `model/address/_this.yaml`
-```txt
-streetAddress: 10880 Malibu Point
-city: Malibu
-state: CA
-postalCode: '90265'
-```
-<!-- /include -->
-<!-- include (test/spec/1.2.3_object_with_object_of_complex_data_types/README.md) -->
-### Object with Object of Complex Data Types
-#### The Model to Store
-```json
-{
-  "myObj": {
-    "lyrics_txt": "Mary had a little lamb,\nIt's fleece was white as snow;\nAnd everywhere that Mary went\nThe lamb was sure to go.",
-    "personInfo": {
-      "name": "John Smith",
-      "age": 42,
-      "attending": true,
-      "plusOne": null,
-      "state": "WA"
-    },
-    "primeNumbers": [
-      2,
-      3,
-      5,
-      7,
-      11
-    ]
-  }
-}
-```
-#### Generated Directory Structure
-```txt
-model
-├── myObj
-│   ├── lyrics.txt
-│   ├── personInfo
-│   │   └── _this.yaml
-│   ├── primeNumbers.yaml
-│   └── _this.yaml
-└── _this.yaml
-```
-#### Generated Files
-##### `model/_this.yaml`
-```yaml
-myObj: ((myObj/_this.yaml))
-```
-##### `model/myObj/_this.yaml`
-```yaml
-lyrics_txt: ((lyrics.txt))
-personInfo: ((personInfo/_this.yaml))
-primeNumbers: ((primeNumbers.yaml))
-```
-##### `model/myObj/lyrics.txt`
-```txt
-Mary had a little lamb,
-It's fleece was white as snow;
-And everywhere that Mary went
-The lamb was sure to go.
-```
-##### `model/myObj/primeNumbers.yaml`
-```yaml
-- 2
-- 3
-- 5
-- 7
-- 11
-```
-##### `model/myObj/personInfo/_this.yaml`
-```yaml
-name: John Smith
-age: 42
-attending: true
-plusOne: null
-state: WA
-```
-<!-- /include -->
-<!-- include (test/spec/1.2.4_object_with_list_of_simple_data_type/README.md) -->
-### Object with List of Simple Data Type
-#### The Model to Store
-```json
-{
-  "companyName": "ACME, Inc",
-  "employees": [
-    "John",
-    "Anna",
-    "Peter"
-  ],
-  "foundedYear": 1949
-}
-```
-#### Generated Directory Structure
-```txt
-model
-├── employees.yaml
-└── _this.yaml
-```
-#### Generated Files
-##### `model/_this.yaml`
-!include (model/_this.yaml lang=yaml)
-##### `model/employees.yaml`
-```yaml
-- John
-- Anna
-- Peter
-```
-<!-- /include -->
-<!-- include (test/spec/1.2.5_object_with_list_of_simple_data_types/README.md) -->
-### Object with List of Simple Data Types
-#### The Model to Store
-!include (model.json lang=json)
-#### Generated Directory Structure
-!include (.model_tree.txt lang=txt)
-#### Generated Files
-##### `model/_this.yaml`
-!include (model/_this.yaml lang=yaml)
-##### `model/personInfo.yaml`
-```yaml
-- John Smith
-- 42
-- true
-- null
-- WA
-```
-<!-- /include -->
-!include (test/spec/1.2.6_object_with_list_of_complex_strings/READEME.md)
-<!-- include (test/spec/1.2.7.1_object_with_list_of_objects_of_simple_data_types/README.md) -->
-### Object with List of Objects of Simple Data Types
-#### The Model to Store
-!include (model.json lang=json)
-#### Generated Directory Structure
-!include (.model_tree.txt lang=txt)
-#### Generated Files
-##### `model/_this.yaml`
-!include (model/_this.yaml lang=yaml)
-##### `model/avengers.yaml`
-```yaml
-- ((avengers_E16F4F/_this.yaml))
-- ((avengers_506E59/_this.yaml))
-- ((avengers_A28836/_this.yaml))
-```
-##### `model/avengers_506E59/_this.yaml`
-```yaml
-firstName: Tony
-lastName: Stark
-age: 48
-```
-##### `model/avengers_A28836/_this.yaml`
-```yaml
-firstName: Thor
-lastName: Odinson
-age: 1500
-```
-##### `model/avengers_E16F4F/_this.yaml`
-```yaml
-firstName: Steve
-lastName: Rogers
-age: 94
-```
-<!-- /include -->
-<!-- include (test/spec/1.2.7.2_object_with_list_of_list_of_simple_data_type/README.md) -->
-### Object with List of List of Simple Data Type
-#### The Model to Store
-!include (model.json lang=json)
-#### Generated Directory Structure
-!include (.model_tree.txt lang=txt)
-#### Generated Files
-##### `model/_this.yaml`
-!include (model/_this.yaml lang=yaml)
-##### `model/matrix.yaml`
-```yaml
-- ((matrix_E16F4F.yaml))
-- ((matrix_506E59.yaml))
-- ((matrix_A28836.yaml))
-```
-##### `model/matrix_506E59.yaml`
-```yaml
-- 4
-- 5
-- 6
-```
-##### `model/matrix_A28836.yaml`
-```yaml
-- 7
-- 8
-- 9
-```
-##### `model/matrix_E16F4F.yaml`
-```yaml
-- 1
-- 2
-- 3
-```
-<!-- /include -->
+* [Object with Simple Data Types](#1-1)
+* [Object with Complex String](#1-2-1)
+* [Object with Object of Simple Data Types](#1-2-2)
+<a name="1-1"></a>
+!include(test/spec/1.1_object_with_simple_data_types/README.md)
+<a name="1-2-1"></a>
+!include(test/spec/1.2.1_object_with_complex_string/README.md)
+<a name="1-2-2"></a>
+!include(test/spec/1.2.2_object_with_object_of_simple_data_types/README.md)
+<a name="1-2-3"></a>
+!include(test/spec/1.2.3_object_with_object_of_complex_data_types/README.md)
+<a name="1-2-4"></a>
+!include(test/spec/1.2.4_object_with_list_of_simple_data_type/README.md)
+<a name="1-2-5"></a>
+!include(test/spec/1.2.5_object_with_list_of_simple_data_types/README.md)
+<a name="1-2-6"></a>
+!include(test/spec/1.2.6_object_with_list_of_complex_strings/READEME.md)
+<a name="1-2-7-1"></a>
+!include(test/spec/1.2.7.1_object_with_list_of_objects_of_simple_data_types/README.md)
+<a name="1-2-7-2"></a>
+!include(test/spec/1.2.7.2_object_with_list_of_list_of_simple_data_type/README.md)
 ## API Docs
 <!-- include (docs/README.md) -->
 # API v0.0.0
