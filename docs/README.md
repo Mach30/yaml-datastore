@@ -1,84 +1,70 @@
 <!-- !toc (numbered) -->
 1\. [Getting Started](#getting-started) <br>
 2\. [Introduction](#introduction) <br>
-2.1\. [What is YAML Datastore](#what-is-yaml-datastore) <br>
-2.1.1\. [Components](#components) <br>
-2.1.2\. [CLI Tools](#cli-tools) <br>
-2.1.3\. [Helper Classes](#helper-classes) <br>
-2.2\. [Installation](#installation) <br>
-3\. [YAML Datastore Documentation](#yaml-datastore-documentation) <br>
-3.1\. [Overview](#overview) <br>
-3.2\. [About On Disk Representation](#about-on-disk-representation) <br>
-3.2.1\. [How it works](#how-it-works) <br>
-3.3\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
-3.3.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
-3.3.2\. [Object with Complex String](#object-with-complex-string) <br>
-3.3.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
-3.3.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
-3.3.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
-3.3.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
-3.3.7\. [Object with List of Complex Strings](#object-with-list-of-complex-strings) <br>
-3.3.8\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
-3.3.9\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
-3.4\. [API Docs](#api-docs) <br>
-4\. [API v0.0.0](#api-v000) <br>
-4.1\. [Classes](#classes) <br>
-4.2\. [Functions](#functions) <br>
-5\. [License](#license) <br>
-6\. [Contributions](#contributions) <br>
+2.1\. [What is YAML Datastore?](#what-is-yaml-datastore) <br>
+2.2\. [Purpose of YAML Datastore](#purpose-of-yaml-datastore) <br>
+3\. [Installation](#installation) <br>
+4\. [YAML Datastore User Guide](#yaml-datastore-user-guide) <br>
+4.0.1\. [How it works](#how-it-works) <br>
+4.0.2\. [Supported Data Types](#supported-data-types) <br>
+4.1\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
+4.1.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
+4.1.2\. [Object with Complex String](#object-with-complex-string) <br>
+4.1.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
+4.1.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
+4.1.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
+4.1.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
+4.1.7\. [Object with List of Complex Strings](#object-with-list-of-complex-strings) <br>
+4.1.8\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
+4.1.9\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
+4.2\. [API Docs](#api-docs) <br>
+5\. [API v0.0.0](#api-v000) <br>
+5.1\. [Classes](#classes) <br>
+5.2\. [Functions](#functions) <br>
+6\. [License](#license) <br>
+7\. [Contributions](#contributions) <br>
 <!-- toc! -->
 # Getting Started
 * New to YAML Data Store? Get [introduced](#introduction)
-* Ready to Install? Follow the [installation steps](#installation)
-* Want to learn how YAML Datastore works? Read [our documentation](#yaml-datastore-documentation)
+* Ready to install? Follow the [installation steps](#installation)
+* Want to learn how YAML Datastore works? Read [our user guide](#yaml-datastore-user-guide)
 * Want to use the API? See [the API documentation](#api-docs)
 # Introduction
 ![Bart Simpson in front of chalkboard writing repeatedly "GIT IS NOT A DATABASE"](./bartsimpsonmeme.png)
 </br>
-"Git is not a database."—but what if it was? With YAML datastore, you can make your data Git-friendly. YAML Datastore is a lightweight library that stores and manages data with structured plaintext files and YAML syntax, designed for use with version control systems. This enables you to gain the advantages of Git for your data—track changes at the feature level, store data across multiple systems, and merge data seamlessly. 
-## What is YAML Datastore
+"Git is not a database."—but what if it was? With YAML datastore, you can **make your data Git-friendly**. YAML Datastore is a lightweight library that stores and manages data with structured plaintext files and YAML syntax, designed for use with version control systems. This enables you to gain the advantages of Git for your data—track changes at the feature level, store data across multiple systems, and merge data seamlessly. 
+## What is YAML Datastore?
 YAML Datastore is a lightweight Typescript library designed for observable, human-readable data storage and retrieval using YAML files. It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
-YAML Datastore exists because we rather than try to add Git-like features to how we store and manage data, we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend didn't account properly for structure. YAML Datastore automatically manages this structure with easy to understand rules that we explain later in this documentation. 
-### Components
-YAML Datastore implements the standard CRUD operations for file-based data.
-- The `store` and `load` transform in-memory objects and lists into structured YAML files and back.
-### CLI Tools
+## Purpose of YAML Datastore
+YAML Datastore exists because we rather than try to add Git-like features to how we store and manage data, we want to do data management in a way that fits in Git. We found that existing systems attempting to use Git as a backend didn't account properly for structure. YAML Datastore automatically manages this structure with easy to understand rules that we explain in the User Guide. 
+# Installation
+1. Installation Steps
+# YAML Datastore User Guide
+This User Guide provides comprehensive details about how YAML Datastore manages data. Learn how the YAML Datastore library organizes and stores data on disk, about the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout.
+* [How it works](#how-it-works)
+* [Supported Data Types](#supported-data-types)
+* [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations)
+### How it works
+YAML datastore uses a set of straightforward rules to map the data into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
+YAML Datastore implements the standard CRUD operations for file-based data:
+- The `store` and `load` operations transform in-memory objects and lists into structured YAML files and back.
+- Helper Classes - The results class captures operation outcomes, including status and content.
+YAML Datastore includes Command Line tools:
 - `yds-store`: Command-line interface for storing data.
 - `yds-load`: Command-line interface for loading data.
 - `yds-ids`: Command-line interface for generating ids
-### Helper Classes
-- The results class captures operation outcomes, including status and content.
-## Installation
-1. Installation Steps
-# YAML Datastore Documentation
-## Overview
-The documentation below provides comprehensive details about how YAML Datastore manages data. 
-* [About On Disk Representation](#about-on-disk-representation)
-* [Data Types and their On Disk Representation](#data-types-and-their-on-disk-representations)
-* [API Docs](api-docs)
-## About On Disk Representation
-This section explains how the YAML Datastore library organizes and stores data on disk. It covers the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout. 
-### How it works
-The datastore uses a set of straightforward rules to map the data into YAML files and directories. This approach ensures that data is always human-readable, modular, and easy to reconstruct.
-#### What Can Be Stored
+### Supported Data Types
 You can store:
 - **Objects**: Any object with key-value pairs, including nested objects.
 - **Lists (Arrays)**: Arrays of values, objects, or other lists.
 - **Nested Structures**: Both objects and lists can be nested to any depth, allowing you to represent complex models.
-#### Data Types
 The algorithm supports **simple** and **complex** data types:
 - **Simple Types**: Strings, numbers, booleans, nulls. These are stored directly in the YAML file.
 - **Complex Types**: Multi-line strings, large objects/lists, and references. 
   - Multi-line strings are stored in separate files, referenced from their parent object.
   - Nested objects and lists can be split into their own files for modularity and clarity.
-    
-#### Storage Approach
-When you store data:
-- The top-level object or list is written to a YAML file in the designated directory.
-- Simple values (numbers, strings, booleans) are saved inline.
-- Complex values (multi-line strings, nested objects/lists) are saved in separate files. Their parent YAML file contains a special marker referencing the file (e.g., `((filename.yaml))`).
-- Each object or list gets a unique filename or directory structure based on its name and position in the hierarchy.
 ## Data Types and their On Disk Representations
+This section provides an explanation for each supported datatype with a typedoc generated example.
 <!-- include (test/spec/1.1_object_with_simple_data_types/README.md) -->
 ### Object with Simple Data Types
 #### The Model to Store
