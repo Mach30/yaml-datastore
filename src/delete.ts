@@ -8,13 +8,20 @@ import {
   ElementPathType,
   convertElementPathToFilePath,
 } from "./load.js";
-import { idRegex } from "./store.js";
+import { idRegex, storeYaml } from "./store.js";
 
 class ParentElementInfo {
   private _parentElementPath: string;
   private _parentElementFilePath: string;
   private _indexOfChild: any;
 
+  /**
+   * Default constructor for ParentElementInfo
+   *
+   * @param parentElementPath elementPath of parent
+   * @param parentElementFilePath file path to parent element
+   * @param indexOfChild property in object or index in list
+   */
   constructor(
     parentElementPath: string,
     parentElementFilePath: string,
@@ -25,14 +32,17 @@ class ParentElementInfo {
     this._indexOfChild = indexOfChild;
   }
 
+  /** @returns elementPath of parent */
   public get parentElementPath() {
     return this._parentElementPath;
   }
 
+  /** @returns file path to parent element*/
   public get parentElementFilePath() {
     return this._parentElementFilePath;
   }
 
+  /** @returns property in object or index in list */
   public get indexOfChild() {
     return this._indexOfChild;
   }
@@ -51,10 +61,11 @@ function getParentElementInfo(
     parentElementPath = elementPath.slice(0, elementPath.lastIndexOf("."));
     indexOfChild = elementPath.slice(elementPath.lastIndexOf(".") + 1);
   }
-  const parentElementFilePath = convertElementPathToFilePath(
+  const parentElementPathInfo = convertElementPathToFilePath(
     workingDirectoryPath,
     parentElementPath
-  ).data;
+  );
+  const parentElementFilePath = parentElementPathInfo.data;
   return new ParentElementInfo(
     parentElementPath,
     parentElementFilePath,
@@ -99,11 +110,7 @@ export function deleteElement(
       elementPath
     );
     const parentElementFilePath = parentElementInfo.parentElementFilePath;
-    let parentElement = load(
-      workingDirectoryPath,
-      parentElementPath,
-      0
-    ).element;
+    let parentElement = load(workingDirectoryPath, parentElementPath).element;
     switch (elementPathObj.type) {
       case ElementPathType.empty:
       case ElementPathType.simpleToObject:
@@ -125,14 +132,18 @@ export function deleteElement(
               path.parse(path.join(listFilePath.dir, item))
             )
           ) {
-            fs.rmSync(path.join(path.parse(elementPathObj.data).dir, item), {
+            const fileToDelete = path.join(
+              path.parse(elementPathObj.data).dir,
+              item
+            );
+            fs.rmSync(fileToDelete, {
               recursive: true,
             });
           }
         }
         fs.rmSync(elementPathObj.data);
         delete parentElement[parentElementInfo.indexOfChild];
-        fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
+        storeYaml(parentElement, workingDirectoryPath, parentElementPath);
         return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToSimple:
       case ElementPathType.complexToSimple:

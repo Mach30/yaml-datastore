@@ -163,10 +163,11 @@ function elementNameFromFileName(elementFileName: string): string {
 }
 
 // serialize element as YAML object or list
-function storeYaml(
+export function storeYaml(
   element: { [index: string]: any }, // should expect jsObject as element type. Iteration approach requires this typing
   workingDirectoryPath: string,
-  elementName: string
+  elementName: string,
+  depth: number = -1
 ): YdsResult {
   // convert element to on-disk YAML representation
   let jsObjToSerialize: { [index: string]: any } = {};
@@ -186,7 +187,9 @@ function storeYaml(
     filename = elementName + ".yaml";
   } else {
     dirPath = path.join(workingDirectoryPath, elementName);
-    fs.mkdirSync(dirPath);
+    if (depth !== 0 && !fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath);
+    }
     filename = "_this.yaml";
   }
   // iterate through items of list or object and replace complex data types with appropriate string-formatted file path
@@ -215,7 +218,9 @@ function storeYaml(
         );
 
         // write complex string at file path to disk
-        fs.writeFileSync(complexStringFilePath, value);
+        if (depth !== 0) {
+          fs.writeFileSync(complexStringFilePath, value);
+        }
       } else {
         // element to store is a simple string: save value to be serialized as element in container
         jsObjToSerialize[key] = value;
@@ -246,8 +251,18 @@ function storeYaml(
       // save value to be serialized as string-formatted generated object or list filename
       jsObjToSerialize[key] = encloseInDoubleParentheses(elementFileName);
 
-      // recursively call storeYaml() to serialize list or object
-      storeYaml(value, dirPath, elementNameFromFileName(elementFileName));
+      if (depth !== 0) {
+        if (depth > 0) {
+          depth = depth - 1;
+        }
+        // recursively call storeYaml() to serialize list or object
+        storeYaml(
+          value,
+          dirPath,
+          elementNameFromFileName(elementFileName),
+          depth
+        );
+      }
     }
   });
 

@@ -105,6 +105,36 @@ describe("Test basic delete function", () => {
       toJsonString(specCasePathHash["children"])
     );
   });
+  it("should delete list of object of simple data types from object", async () => {
+    const result = runBasicDeleteTest(
+      "1.3.7.1_object_with_two_lists_of_objects_of_simple_data_types",
+      "model.ncc1701dCommanders",
+      "modelDeleteNcc1701dCommanders"
+    );
+
+    const specCasePathHash = await hashElement(result.specCasePath, options);
+    const storePathHash = await hashElement(result.storePath, options);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
+    );
+  });
+  it("should delete list of list of simple data type from object", async () => {
+    const result = runBasicDeleteTest(
+      "1.3.7.2_object_with_two_lists_of_list_of_simple_data_type",
+      "model.second4Primes",
+      "modelDeleteSecond4Primes"
+    );
+
+    const specCasePathHash = await hashElement(result.specCasePath, options);
+    const storePathHash = await hashElement(result.storePath, options);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
+    );
+  });
   it("should delete complex string from object", async () => {
     const result = runBasicDeleteTest(
       "1.2.1_object_with_complex_string",
