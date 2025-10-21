@@ -7,32 +7,9 @@ YAML Datastore is a lightweight library that stores and manages data with struct
 * Ready to install? Follow the [installation steps](#installation)
 * Want to learn how YAML Datastore works? Read [our user guide](#yaml-datastore-user-guide)
 * Want to use the API? See [the API documentation](#api-docs)
-<!-- !toc (numbered) -->
-1\. [Introduction](#introduction) <br>
-1.1\. [What is YAML Datastore?](#what-is-yaml-datastore) <br>
-1.2\. [Purpose of YAML Datastore](#purpose-of-yaml-datastore) <br>
-2\. [Installation](#installation) <br>
-3\. [YAML Datastore User Guide](#yaml-datastore-user-guide) <br>
-3.0.1\. [How it works](#how-it-works) <br>
-3.0.2\. [Supported Data Types](#supported-data-types) <br>
-3.1\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
-3.1.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
-3.1.2\. [Object with Complex String](#object-with-complex-string) <br>
-3.1.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
-3.1.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
-3.1.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
-3.1.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
-3.1.7\. [Object with List of Complex Strings](#object-with-list-of-complex-strings) <br>
-3.1.8\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
-3.1.9\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
-3.2\. [API Docs](#api-docs) <br>
-4\. [API v0.0.0](#api-v000) <br>
-4.1\. [Classes](#classes) <br>
-4.2\. [Functions](#functions) <br>
-5\. [License](#license) <br>
-6\. [Contributions](#contributions) <br>
-<!-- toc! -->
 # Introduction
+Contents
+!toc (numbered)
 ## What is YAML Datastore?
 YAML Datastore is a lightweight Typescript library designed for observable, human-readable data storage and retrieval using YAML files. It serves as an alternative to traditional databases that do not store data in a version control-friendly way.
 ## Purpose of YAML Datastore
@@ -259,7 +236,11 @@ model
 ```
 #### Generated Files
 ##### `model/_this.yaml`
-!include (model/_this.yaml lang=yaml)
+```yaml
+companyName: ACME, Inc
+employees: ((employees.yaml))
+foundedYear: 1949
+```
 ##### `model/employees.yaml`
 ```yaml
 - John
