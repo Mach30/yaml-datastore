@@ -9,7 +9,7 @@ function store(
    elementName: string): StoreResult;
 ```
 
-Defined in: [store.ts:302](https://github.com/Mach30/yaml-datastore/blob/3dbc3ea4c84a2396d86fc33a713cd35be8b1bdeb/src/store.ts#L302)
+Defined in: [store.ts:302](https://github.com/Mach30/yaml-datastore/blob/887cc3683fe8b8ce8344467fc9e74778a3b6a562/src/store.ts#L302)
 
 Dumps in-memory representation of contents to on-disk representation
 
