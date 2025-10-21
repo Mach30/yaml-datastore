@@ -1,28 +1,37 @@
 <!-- !toc (numbered) -->
-1\. [Introduction](#introduction) <br>
-1.1\. [What is YAML Datastore](#what-is-yaml-datastore) <br>
-1.1.1\. [Components](#components) <br>
-1.1.2\. [CLI Tools](#cli-tools) <br>
-1.1.3\. [Helper Classes](#helper-classes) <br>
-1.2\. [Getting Started](#getting-started) <br>
-2\. [YAML Datastore Documentation](#yaml-datastore-documentation) <br>
-2.1\. [Overview](#overview) <br>
-2.2\. [About On Disk Representation](#about-on-disk-representation) <br>
-2.2.1\. [How it works](#how-it-works) <br>
-2.3\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
-2.3.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
-2.3.2\. [Object with Complex String](#object-with-complex-string) <br>
-2.3.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
-2.3.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
-2.3.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
-2.3.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
-2.3.7\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
-2.3.8\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
-2.4\. [API Docs](#api-docs) <br>
-3\. [API v0.0.0](#api-v000) <br>
-3.1\. [Classes](#classes) <br>
-3.2\. [Functions](#functions) <br>
+1\. [Getting Started](#getting-started) <br>
+2\. [Introduction](#introduction) <br>
+2.1\. [What is YAML Datastore](#what-is-yaml-datastore) <br>
+2.1.1\. [Components](#components) <br>
+2.1.2\. [CLI Tools](#cli-tools) <br>
+2.1.3\. [Helper Classes](#helper-classes) <br>
+2.2\. [Installation](#installation) <br>
+3\. [YAML Datastore Documentation](#yaml-datastore-documentation) <br>
+3.1\. [Overview](#overview) <br>
+3.2\. [About On Disk Representation](#about-on-disk-representation) <br>
+3.2.1\. [How it works](#how-it-works) <br>
+3.3\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
+3.3.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
+3.3.2\. [Object with Complex String](#object-with-complex-string) <br>
+3.3.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
+3.3.4\. [Object with Object of Complex Data Types](#object-with-object-of-complex-data-types) <br>
+3.3.5\. [Object with List of Simple Data Type](#object-with-list-of-simple-data-type) <br>
+3.3.6\. [Object with List of Simple Data Types](#object-with-list-of-simple-data-types) <br>
+3.3.7\. [Object with List of Complex Strings](#object-with-list-of-complex-strings) <br>
+3.3.8\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
+3.3.9\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
+3.4\. [API Docs](#api-docs) <br>
+4\. [API v0.0.0](#api-v000) <br>
+4.1\. [Classes](#classes) <br>
+4.2\. [Functions](#functions) <br>
+5\. [License](#license) <br>
+6\. [Contributions](#contributions) <br>
 <!-- toc! -->
+# Getting Started
+* New to YAML Data Store? Get [introduced](#introduction)
+* Ready to Install? Follow the [installation steps](#installation)
+* Want to learn how YAML Datastore works? Read [our documentation](#yaml-datastore-documentation)
+* Want to use the API? See [the API documentation](#api-docs)
 # Introduction
 ![Bart Simpson in front of chalkboard writing repeatedly "GIT IS NOT A DATABASE"](./bartsimpsonmeme.png)
 </br>
@@ -39,7 +48,7 @@ YAML Datastore implements the standard CRUD operations for file-based data.
 - `yds-ids`: Command-line interface for generating ids
 ### Helper Classes
 - The results class captures operation outcomes, including status and content.
-## Getting Started
+## Installation
 1. Installation Steps
 # YAML Datastore Documentation
 ## Overview
@@ -297,7 +306,44 @@ foundedYear: 1949
 - WA
 ```
 <!-- /include -->
-!include (test/spec/1.2.6_object_with_list_of_complex_strings/READEME.md)
+<!-- include (test/spec/1.2.6_object_with_list_of_complex_strings/README.md) -->
+### Object with List of Complex Strings
+#### The Model to Store
+!include (model.json lang=json)
+#### Generated Directory Structure
+!include (.model_tree.txt lang=txt)
+#### Generated Files
+##### `model/_this.yaml`
+!include (model/_this.yaml lang=yaml)
+##### `model/verses_txt.yaml`
+```yaml
+- ((verses_E16F4F.txt))
+- ((verses_506E59.txt))
+- ((verses_A28836.txt))
+- '"What makes the lamb love Mary so?"'
+```
+##### `model/verses_506E59.txt`
+```txt
+He followed her to school one day
+Which was against the rule;
+It made the children laugh and play,
+To see a lamb at school.
+```
+##### `model/verses_A28836.txt`
+```txt
+And so the teacher turned him out,
+But still he lingered near;
+And waited patiently about
+Till Mary did appear
+```
+##### `model/verses_E16F4F.txt`
+```txt
+Mary had a little lamb,
+It's fleece was white as snow;
+And everywhere that Mary went
+The lamb was sure to go.
+```
+<!-- /include -->
 <!-- include (test/spec/1.2.7.1_object_with_list_of_objects_of_simple_data_types/README.md) -->
 ### Object with List of Objects of Simple Data Types
 #### The Model to Store
@@ -377,3 +423,7 @@ age: 94
 - [load](functions/load.md)
 - [store](functions/store.md)
 <!-- /include -->
+# License
+Mach30/yaml-datastore is licensed under the [Apache 2.0 License](https://github.com/Mach30/yaml-datastore/blob/main/LICENSE).
+# Contributions
+Include information about developer documentation, contribution policy and community chat boards
