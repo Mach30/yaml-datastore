@@ -61,10 +61,7 @@ mdFilesToFix
 // 2.2. generate project README.md that includes everything
 console.log("Generating Project README");
 sh.cd(projectDirPath);
-sh.cmd("markedpp", ".readme.md")
-  .cmd("sed", sedFixIncludes)
-  .cmd("tr", "-s", "\n")
-  .to("./docs/README.md");
+sh.cmd("markedpp", ".readme.md").to("./docs/README.md");
 
 // 2.2.1 restore image to docs directory from typedoc cleaning directory
 sh.cp("./bartsimpsonmeme.png", "./docs/");
