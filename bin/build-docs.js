@@ -6,6 +6,7 @@ import path from "path";
 const TREE_FILE_NAME = ".model_tree.txt";
 const SPEC_DIR = "test/spec";
 const sedFixIncludes = "s/```/\\n```/g";
+const sedDeleteComments = "/<!-- /d";
 
 function generateModelTreeFile(specDirPath) {
   sh.cd(specDirPath);
@@ -18,6 +19,7 @@ function generateReadmeFile(specDirPath) {
     sh.cmd("markedpp", ".readme.md")
       .cmd("sed", sedFixIncludes)
       .cmd("tr", "-s", "\n")
+      .cmd("sed", sedDeleteComments)
       .to("README.md");
   }
 }
