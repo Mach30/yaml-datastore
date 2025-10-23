@@ -10,7 +10,7 @@ YAML Datastore is a lightweight library that stores and manages data with struct
 * New to YAML Data Store? Get [introduced](#introduction)
 * Ready to install? Follow the [installation steps](#installation)
 * Want to learn how YAML Datastore stores information based on data types? Read the [Usage](#usage) section
-* Want to use the API? See [the API documentation](#api-docs)
+* Want to use the API? See [the API documentation](#api-v000)
 
 <br>
 
@@ -36,7 +36,6 @@ YAML Datastore is a lightweight library that stores and manages data with struct
 3.1.7\. [Object with List of Complex Strings](#object-with-list-of-complex-strings) <br>
 3.1.8\. [Object with List of Objects of Simple Data Types](#object-with-list-of-objects-of-simple-data-types) <br>
 3.1.9\. [Object with List of List of Simple Data Type](#object-with-list-of-list-of-simple-data-type) <br>
-3.2\. [API Docs](#api-docs) <br>
 4\. [API v0.0.0](#api-v000) <br>
 4.1\. [Classes](#classes) <br>
 4.2\. [Functions](#functions) <br>
@@ -522,7 +521,6 @@ matrix: ((matrix.yaml))
 ```
 <!-- /include -->
 
-## API Docs
 <!-- include (docs/README.md) -->
 # API v0.0.0
 
