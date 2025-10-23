@@ -26,7 +26,7 @@ YAML Datastore is a lightweight library that stores and manages data with struct
 3\. [Usage](#usage) <br>
 3.0.1\. [How it works](#how-it-works) <br>
 3.0.2\. [Supported Data Types](#supported-data-types) <br>
-3.1\. [Data Types and their On Disk Representations](#data-types-and-their-on-disk-representations) <br>
+3.1\. [On Disk Representation Use Cases](#on-disk-representation-use-cases) <br>
 3.1.1\. [Object with Simple Data Types](#object-with-simple-data-types) <br>
 3.1.2\. [Object with Complex String](#object-with-complex-string) <br>
 3.1.3\. [Object with Object of Simple Data Types](#object-with-object-of-simple-data-types) <br>
@@ -62,25 +62,43 @@ Install the library in the root directory of your project using npm or yarn.
 # Usage
 This section provides comprehensive details about how the YAML Datastore library organizes and stores data on disk, the algorithm used to transform in-memory objects and lists into a collection of YAML files, the data types supported, and the conventions followed for file layout.
 
+TO DO: link to Use Cases
+
 ### How it works
 YAML Datastore implements the standard CRUD operations for transforming in-memory objects and lists into structured YAML files and back.
 
 The results helper class captures operation outcomes, including status and content.
 
 ### Supported Data Types
-YAML Datastore supports simple and complex data types. 
-- **Simple Types**: Strings, numbers, booleans, nulls. These are stored directly in the YAML file.
-- **Complex Types**: Multi-line strings, large objects/lists, and references. 
-  - Multi-line strings are stored in separate files, referenced from their parent object.
-  - Nested objects and lists can be split into their own files for modularity and clarity.
+YAML Datastore supports any data types that are supported in YAML (and JSON). YAML Datastore categorizes these data types as simple or complex. 
 
-## Data Types and their On Disk Representations
+Simple data is data that can be stored in a single line in a YAML file. This includes all scalar types; scalar types in YAML are strings without newlines, numbers, booleans, or nulls. It also includes empty lists and empty objects. 
 
-This section provides an explanation for each supported datatype with a typedoc generated example.
+Complex data is data that requires more than one line to be stored in YAML file. This includes multi-line strings, (non-empty) lists and objects. This is implemented by storing the data in separate files, referenced from their parent list or object. This enables these complex types to be accessed in individual files instead of having to use more complex YAML formatting.
+Nested objects and lists are split into their own files for modularity and clarity.
+
+| Simple Data Types  | Complex Data Types |
+| ------------------ | ------------------ |
+| String w/o Newline ("Hello World")  |  Multi-line String |
+| Number (3.14, 42)  | List |
+| Boolean (true, false) | Object|
+| Null (null) | |
+| Empty List ([]) | |
+| Empty Object ({}) | |
+
+TODO: Explain (( )) file references , explain IDs, explain model/_this.yaml and listname.yaml (references), add empty string to simple data types
+
+## On Disk Representation Use Cases
+
+This section provides an explanation for each identified use case in the YAML Datastore specification. For each use case we provide an example data structure along with its representation on disk and an explanation of why that is the representation. All of these use cases are of a element (an object or a list) named model.
+
+TODO: wordsmith above
 
 <!-- include (test/spec/1.1_object_with_simple_data_types/README.md) -->
 ### Object with Simple Data Types
+This use case demonstrates the simplest pattern in YAML Datastore, an object where all properties are of simple data types. 
 #### The Model to Store
+Note: In this case all the supported simple data types are present in the model. 
 ```json
 {
   "name": "John Smith",
@@ -94,12 +112,14 @@ This section provides an explanation for each supported datatype with a typedoc 
 }
 ```
 #### Generated Directory Structure
+The generated data structure for this example starts with a directory named `model` to represent the object above named model and that directory contains a single file, `_this.yaml` since all of the properties can be stored in a single line.
 ```txt
 model
 └── _this.yaml
 ```
 #### Generated Files
 ##### `model/_this.yaml`
+Since this is all simple data types, the on disk representation in YAML is a direct translation of the JSON representation to YAML representation. 
 ```yaml
 name: John Smith
 age: 42
