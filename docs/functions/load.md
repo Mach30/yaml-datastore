@@ -6,10 +6,14 @@
 function load(
    workingDirectoryPath: string, 
    elementPath: string, 
-   depth: number): LoadResult;
+   depth: number): LoadResult
 ```
 
+<<<<<<< HEAD
 Defined in: [load.ts:417](https://github.com/Mach30/yaml-datastore/blob/e451325fe9bf3598551544bebb589660dd5461b8/src/load.ts#L417)
+=======
+Defined in: [load.ts:417](https://github.com/Mach30/yaml-datastore/blob/c1c38b7ca884104d253f024d3c7bc3639f2d91c5/src/load.ts#L417)
+>>>>>>> refs/remotes/origin/on-disk-representation-docs
 
 Returns a in-memory representation of the element in working directory specified by element path
 
