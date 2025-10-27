@@ -17,7 +17,7 @@ let workingDir = "";
 // options for files/folders to ignore for hashElement
 const options = {
   files: { exclude: ["*.json"] },
-  folders: { exclude: ["modelDelete*"] },
+  folders: { exclude: ["modelDelete*", "modelClear*"] },
 };
 
 export class StoreTestResult {
