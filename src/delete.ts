@@ -73,7 +73,7 @@ export function getParentElementInfo(
   );
 }
 
-function testListItemFileName(
+export function testListItemFileName(
   listFilePath: path.ParsedPath,
   filePathToTest: path.ParsedPath
 ): boolean {

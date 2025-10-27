@@ -8,7 +8,8 @@ import {
   ElementPathType,
   convertElementPathToFilePath,
 } from "./load.js";
-import { getParentElementInfo } from "./delete.js";
+import { getParentElementInfo, testListItemFileName } from "./delete.js";
+import { storeYaml } from "./store.js";
 
 export function clear(
   workingDirectoryPath: string,
@@ -38,8 +39,30 @@ export function clear(
         return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToList:
       case ElementPathType.complexToList:
-        //TODO
-        break;
+        const listFilePath = path.parse(elementPathObj.data);
+        const directoryContents = fs.readdirSync(
+          path.parse(elementPathObj.data).dir
+        );
+        for (const item of directoryContents) {
+          if (
+            testListItemFileName(
+              listFilePath,
+              path.parse(path.join(listFilePath.dir, item))
+            )
+          ) {
+            const fileToDelete = path.join(
+              path.parse(elementPathObj.data).dir,
+              item
+            );
+            fs.rmSync(fileToDelete, {
+              recursive: true,
+            });
+          }
+        }
+        fs.rmSync(elementPathObj.data);
+        parentElement[parentElementInfo.indexOfChild] = [];
+        storeYaml(parentElement, workingDirectoryPath, parentElementPath);
+        return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToSimple:
       case ElementPathType.complexToSimple:
         if (
