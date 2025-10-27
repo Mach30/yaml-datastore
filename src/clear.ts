@@ -39,8 +39,23 @@ export function clear(
         break;
       case ElementPathType.simpleToSimple:
       case ElementPathType.complexToSimple:
-        if (typeof parentElement[parentElementInfo.indexOfChild] === "string") {
+        if (
+          parentElement[parentElementInfo.indexOfChild] === null ||
+          parentElement[parentElementInfo.indexOfChild] === "" ||
+          typeof parentElement[parentElementInfo.indexOfChild] === "object"
+        ) {
+          return new YdsResult(true, parentElement, parentElementPath);
+        } else if (
+          typeof parentElement[parentElementInfo.indexOfChild] === "string"
+        ) {
           parentElement[parentElementInfo.indexOfChild] = "";
+          fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
+          return new YdsResult(true, parentElement, parentElementPath);
+        } else if (
+          typeof parentElement[parentElementInfo.indexOfChild] === "number" ||
+          typeof parentElement[parentElementInfo.indexOfChild] === "boolean"
+        ) {
+          parentElement[parentElementInfo.indexOfChild] = null;
           fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
           return new YdsResult(true, parentElement, parentElementPath);
         }

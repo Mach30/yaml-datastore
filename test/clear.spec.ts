@@ -172,6 +172,7 @@ describe("Test basic clear function", () => {
       "model.plusOne",
       "model.degrees",
       "model.aliases",
+      "model.notes",
     ];
 
     for (const elementPath of elementPaths) {
