@@ -39,8 +39,11 @@ export function clear(
         break;
       case ElementPathType.simpleToSimple:
       case ElementPathType.complexToSimple:
-        //TODO
-        break;
+        if (typeof parentElement[parentElementInfo.indexOfChild] === "string") {
+          parentElement[parentElementInfo.indexOfChild] = "";
+          fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
+          return new YdsResult(true, parentElement, parentElementPath);
+        }
       case ElementPathType.simpleToComplexString:
       case ElementPathType.complexToComplexString:
         fs.rmSync(elementPathObj.data);
