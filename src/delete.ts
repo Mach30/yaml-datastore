@@ -48,7 +48,7 @@ class ParentElementInfo {
   }
 }
 
-function getParentElementInfo(
+export function getParentElementInfo(
   workingDirectoryPath: string,
   elementPath: string
 ): ParentElementInfo {
