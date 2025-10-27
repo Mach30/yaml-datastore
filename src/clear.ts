@@ -1,3 +1,4 @@
+import path from "path";
 import fs from "node:fs";
 import yaml from "js-yaml";
 import { load, YdsResult } from "./index.js";
@@ -31,8 +32,10 @@ export function clear(
       case ElementPathType.empty:
       case ElementPathType.simpleToObject:
       case ElementPathType.complexToObject:
-        //TODO
-        break;
+        fs.rmSync(path.parse(elementPathObj.data).dir, { recursive: true });
+        parentElement[parentElementInfo.indexOfChild] = {};
+        fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
+        return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToList:
       case ElementPathType.complexToList:
         //TODO
