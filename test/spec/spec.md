@@ -156,7 +156,6 @@ Expected behavior for clearing a thing that is already clear:
 - Therefore we need a (internal) function that, given an element, tests whether a value is cleared.
 - Potential implementation: check if element is already cleared. If element is not cleared, then clear element and return results. Else, return `success` with message indicating element is already cleared.
 
-TODO: discuss merge conflict resolution, particularly resolving ID's
 E16F4F
 506E59
 A28836
@@ -218,6 +217,8 @@ lyrics_txt.yaml (second transformation):
 - ((lyrics_B008AA.txt))
 ```
 
+TODO: create scenarios 3 & 4 for order operations, insert content (not at end of list)
+
 NOTE: unlike relational databases that mark an item as "deleted" or "cleared", yaml-datastore will actually delete or clear the element.
 
 delete and clear will need a shared helper function that takes a working directory and path to an element returns the elementpath to its parent.
@@ -237,6 +238,57 @@ general flow of test case:
 - load "after" state into memory
 - assert string representations of "after" state
 - assert "after" state directories written to disk match "after" state directories of spec including hash
+
+### management of list id's
+
+TODO: discuss merge conflict resolution, particularly resolving ID's
+
+#### assumptions
+
+- list of functions impacted by list id's
+  - delete
+  - clear
+  - append (to the end of list)
+  - insert (anywhere in the list)
+  - resolveMergeConflict
+- the selection for an id in an entry for a list should be a one-to-one and onto calculation
+- id's are generated according to generateIDs() function - already possesses one-to-one and onto characteristics
+- the order of operation should not change the result
+  - e.g., adding a 3rd entry to a list should generate the 3rd id regardless of if the 2nd element is deleted before or after the 3rd element is added (see scenarios 1 & 2)
+- project persists in a git repo
+
+#### analysis
+
+- content shall be stored in the filesytem
+- content shall be tracked by git
+  - content shall not rely on an empty directory as a state for tracking list id's
+- results of tracking id's shall enable calculation of the number to skip argument in the generateIDs() function
+
+#### alternative solutions
+
+1. maintain on-disk a per-list counter of number of ids ever generated
+   1. counter can only increase or be deleted
+   2. simple to implement
+   3. fast to calculate
+   4. can this resolve merge conflicts?
+   5. an absense of a list counter represents the state that 0 (zero) id's have been generated
+2. move and clear contents of complex data type into an empty . (dot) file
+   1. more intensive/complicated algorithm than solution no. 1
+   2. value of solution no. 2 would come from it can address problem solution no. 1 can't (e.g., resolve merge conflicts?)
+3. maintain a list of deleted id's on-disk
+   1. would be a more complicated version of solution no. 1
+   2. no reason to persue at present
+
+#### deep dive analysis into solution no. 1
+
+- append (to the end of list)
+  - Q: given a list and a counter, do we have all information needed to append to the list?
+  - scenario no. 1: counter is 5, when calling append operation would skip 5 and increment counter to 6, then delete index no. 2
+  - scenario no. 2: counter is 5, when calling delete operation on index no. 2 (counter is still 5), then calling appending operation would skip 5 and increment to 6
+- insert (anywhere in the list): because append is a specialized insert function, insert operations would yield same result
+- delete: only modifies the counter when entire list is removed (i.e., resets to zero)
+- clear: only modifies the counter when entire list is removed (i.e., resets to zero)
+- resolveMergeConflict
 
 ### delete cases
 
