@@ -217,7 +217,45 @@ lyrics_txt.yaml (second transformation):
 - ((lyrics_B008AA.txt))
 ```
 
-TODO: create scenarios 3 & 4 for order operations, insert content (not at end of list)
+Scenario 3: Delete lyrics_txt[2] and insert at lyrics_txt[2]
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+```
+
+lyrics_txt.yaml (second transformation):
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_B008AA.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+```
+
+Scenario 4: Insert at lyrics_txt[2] and delete lyrics_txt[3]
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_B008AA.txt))
+- ((lyrics_A28836.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+```
+
+lyrics_txt.yaml (second transformation):
+
+```
+- ((lyrics_E16F4F.txt))
+- ((lyrics_506E59.txt))
+- ((lyrics_B008AA.txt))
+- ((lyrics_4B0D2F.txt))
+- ((lyrics_7A1D77.txt))
+```
 
 NOTE: unlike relational databases that mark an item as "deleted" or "cleared", yaml-datastore will actually delete or clear the element.
 
