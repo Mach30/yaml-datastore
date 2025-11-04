@@ -279,8 +279,6 @@ general flow of test case:
 
 ### management of list id's
 
-TODO: discuss merge conflict resolution, particularly resolving ID's
-
 #### assumptions
 
 - list of functions impacted by list id's
@@ -362,3 +360,17 @@ TODO: discuss merge conflict resolution, particularly resolving ID's
   - set key to empty string, `""`
 - clear other (simple data types) from object: delete key from object
   - set key to `null`
+
+### merge conflicts
+
+TODO: discuss merge conflict resolution, particularly resolving ID's
+
+#### current design decisions
+
+see https://github.com/Mach30/demo-yaml-datastore-project
+
+- resolving a merge conflict will hard-reset the ID counter
+- after resolving merge conflict, need to check for unlisted complex data on disk and report any found
+- needs to be an additional command for user to specify what to do w/ each unlisted complex data (e.g., delete or insert at specified index)
+- algorithm needs to preserve unlisted complex data 'til user decides what to do with it
+- investigate in-memory js-object merge libraries
