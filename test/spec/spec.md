@@ -324,7 +324,15 @@ general flow of test case:
 - insert (anywhere in the list): because append is a specialized insert function, insert operations would yield same result
 - delete: only modifies the counter when entire list is removed (i.e., resets to zero)
 - clear: only modifies the counter when entire list is removed (i.e., resets to zero)
-- resolveMergeConflict
+- resolveMergeConflict: always resetting counter to zero will work; see merge conflicts section
+
+#### conclusions
+
+Solution 1 implemented as property, `idCounter`, of type number in a . (dot) file named after yaml list (e.g., `.model.yaml`) that increments. Absense of file means list counter value is 0 (zero)
+
+- file does not exist for an empty list
+- file is deleted if the list is deleted
+- file is deleted if the list is cleared
 
 ### delete cases
 
