@@ -1,7 +1,7 @@
 ### Object with Complex String
 This use case demonstrates storing an object that contains a complex string.
 #### The Model to Store
-Note: In this case, `lyrics_txt` contains a multi-line string. Because the key will reference a text file, the convention `_txt` to represents `.txt`.
+In this case, `lyrics_txt` contains a multi-line string. Because the key will reference a text file, the convention `_txt` to represents `.txt`.
 ```json
 {
   "songTitle": "Mary Had a Little Lamb",

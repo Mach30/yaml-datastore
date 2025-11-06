@@ -1,7 +1,7 @@
 ### Object with Simple Data Types
 This use case demonstrates the simplest pattern in YAML Datastore, an object where all properties are of simple data types. 
 #### The Model to Store
-Note: In this case, all the supported simple data types are present in the model. 
+In this case, all the supported simple data types are present in the model. 
 ```json
 {
   "name": "John Smith",
