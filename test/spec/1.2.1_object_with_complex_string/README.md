@@ -1,5 +1,7 @@
 ### Object with Complex String
+This use case demonstrates storing an object that contains a complex string.
 #### The Model to Store
+Note: In this case, `lyrics_txt` contains a multi-line string. Because the key will reference a text file, the convention `_txt` to represents `.txt`.
 ```json
 {
   "songTitle": "Mary Had a Little Lamb",
@@ -9,6 +11,7 @@
 }
 ```
 #### Generated Directory Structure
+As with all objects, the generated data structure for this example starts with a directory named `model` and the file `_this.yaml`.
 ```txt
 model
 ├── lyrics.txt
@@ -16,6 +19,7 @@ model
 ```
 #### Generated Files
 ##### `model/_this.yaml`
+In this file, we use the convention of the filename enclosed in double parentheses, `((lyrics.txt))` to reference the file storing the data.
 ```yaml
 songTitle: Mary Had a Little Lamb
 album: Classic Childrens Songs 2
@@ -23,6 +27,7 @@ track: 17
 lyrics_txt: ((lyrics.txt))
 ```
 ##### `model/lyrics.txt`
+This text file stores the data for the multi-line string. 
 ```txt
 Mary had a little lamb,
 It's fleece was white as snow;

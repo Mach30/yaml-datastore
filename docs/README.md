@@ -79,12 +79,12 @@ Nested objects and lists are split into their own files for modularity and clari
 
 | Simple Data Types  | Complex Data Types |
 | ------------------ | ------------------ |
-| String w/o Newline ("Hello World")  |  Multi-line String |
-| Number (3.14, 42)  | List |
-| Boolean (true, false) | Object|
-| Null (null) | |
-| Empty List ([]) | |
-| Empty Object ({}) | |
+| String w/o Newline: `"Hello World"`  |  Multi-line String |
+| Number: `3.14`, `42`  | List |
+| Boolean: `true`, `false` | Object|
+| Null: `null` | |
+| Empty List: `[]` | |
+| Empty Object: `{}` | |
 
 TODO: Explain (( )) file references , explain IDs, explain model/_this.yaml and listname.yaml (references), add empty string to simple data types
 
@@ -98,7 +98,7 @@ TODO: wordsmith above
 ### Object with Simple Data Types
 This use case demonstrates the simplest pattern in YAML Datastore, an object where all properties are of simple data types. 
 #### The Model to Store
-Note: In this case all the supported simple data types are present in the model. 
+Note: In this case, all the supported simple data types are present in the model. 
 ```json
 {
   "name": "John Smith",
@@ -112,7 +112,7 @@ Note: In this case all the supported simple data types are present in the model.
 }
 ```
 #### Generated Directory Structure
-The generated data structure for this example starts with a directory named `model` to represent the object above named model and that directory contains a single file, `_this.yaml` since all of the properties can be stored in a single line.
+The generated data structure for this example starts with a directory named `model` to represent the object above named "model". All objects will contain `_this.yaml` file in this directory. For this case, that is the only file present because we can store all of the properties in a single line. 
 ```txt
 model
 └── _this.yaml
@@ -134,7 +134,9 @@ notes: ''
 
 <!-- include (test/spec/1.2.1_object_with_complex_string/README.md) -->
 ### Object with Complex String
+This use case demonstrates storing an object that contains a complex string.
 #### The Model to Store
+Note: In this case, `lyrics_txt` contains a multi-line string. Because the key will reference a text file, the convention `_txt` to represents `.txt`.
 ```json
 {
   "songTitle": "Mary Had a Little Lamb",
@@ -144,6 +146,7 @@ notes: ''
 }
 ```
 #### Generated Directory Structure
+As with all objects, the generated data structure for this example starts with a directory named `model` and the file `_this.yaml`.
 ```txt
 model
 ├── lyrics.txt
@@ -151,6 +154,7 @@ model
 ```
 #### Generated Files
 ##### `model/_this.yaml`
+In this file, we use the convention of the filename enclosed in double parentheses, `((lyrics.txt))` to reference the file storing the data.
 ```yaml
 songTitle: Mary Had a Little Lamb
 album: Classic Childrens Songs 2
@@ -158,6 +162,7 @@ track: 17
 lyrics_txt: ((lyrics.txt))
 ```
 ##### `model/lyrics.txt`
+This text file stores the data for the multi-line string. 
 ```txt
 Mary had a little lamb,
 It's fleece was white as snow;

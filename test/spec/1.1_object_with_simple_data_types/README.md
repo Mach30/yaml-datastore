@@ -1,7 +1,7 @@
 ### Object with Simple Data Types
 This use case demonstrates the simplest pattern in YAML Datastore, an object where all properties are of simple data types. 
 #### The Model to Store
-Note: In this case all the supported simple data types are present in the model. 
+Note: In this case, all the supported simple data types are present in the model. 
 ```json
 {
   "name": "John Smith",
@@ -15,7 +15,7 @@ Note: In this case all the supported simple data types are present in the model.
 }
 ```
 #### Generated Directory Structure
-The generated data structure for this example starts with a directory named `model` to represent the object above named model and that directory contains a single file, `_this.yaml` since all of the properties can be stored in a single line.
+The generated data structure for this example starts with a directory named `model` to represent the object above named "model". All objects will contain `_this.yaml` file in this directory. For this case, that is the only file present because we can store all of the properties in a single line. 
 ```txt
 model
 └── _this.yaml
