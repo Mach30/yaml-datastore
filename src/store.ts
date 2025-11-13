@@ -193,7 +193,8 @@ export function storeYaml(
     filename = "_this.yaml";
   }
   // iterate through items of list or object and replace complex data types with appropriate string-formatted file path
-  let ids = generateIDs(keys.length, 0).reverse();
+  let idCounter = 0;
+  //let ids = generateIDs(idCounter, 0).reverse();
   keys.forEach((key) => {
     const value = element[key];
     if (typeof value === "string") {
@@ -203,9 +204,11 @@ export function storeYaml(
         let complexStringFilename = "";
         // generate complex string file name
         if (container === ContainerType.IsList) {
+          let id = generateIDs(1, idCounter).pop()
+          idCounter++
           complexStringFilename = generateComplexStringFilename(
             elementName,
-            ids.pop()
+            id
           );
         } else {
           complexStringFilename = generateComplexStringFilename(key);
@@ -237,10 +240,12 @@ export function storeYaml(
       let elementFileName = "";
       // generate object or list file name
       if (container === ContainerType.IsList) {
+        let id = generateIDs(1, idCounter).pop()
+        idCounter++
         elementFileName = generateObjectOrListFilename(
           elementName,
           Array.isArray(value),
-          ids.pop()
+          id
         );
       } else {
         elementFileName = generateObjectOrListFilename(
@@ -274,6 +279,12 @@ export function storeYaml(
   const yamlContentToSerialize = yaml.dump(jsObjToSerialize);
 
   // write YAML content do disk
+  if (idCounter > 0) {
+    const listMetadataFilePath = path.join(dirPath, "." + filename)
+    const listMetadata = { "idCounter" : idCounter }
+    const listMetadataAsYaml = yaml.dump(listMetadata)
+    fs.writeFileSync(listMetadataFilePath, listMetadataAsYaml, "utf-8")
+  }
   fs.writeFileSync(filePath, yamlContentToSerialize, "utf-8");
 
   return new YdsResult(true, element, elementName);

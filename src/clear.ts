@@ -60,6 +60,13 @@ export function clear(
           }
         }
         fs.rmSync(elementPathObj.data);
+        const listMetadataFilePath = path.join(
+          listFilePath.dir,
+          "." + listFilePath.base
+        );
+        if (directoryContents.includes("." + listFilePath.base)) {
+          fs.rmSync(listMetadataFilePath);
+        }
         parentElement[parentElementInfo.indexOfChild] = [];
         storeYaml(parentElement, workingDirectoryPath, parentElementPath);
         return new YdsResult(true, parentElement, parentElementPath);
