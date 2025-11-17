@@ -196,4 +196,19 @@ describe("Test basic delete function", () => {
       );
     }
   });
+  it("should delete simple data type list item from object of list", async () => {
+    const result = runBasicDeleteTest(
+      "1.2.4_object_with_list_of_simple_data_type",
+      "model.employees[2]",
+      "modelDeleteEmployee2"
+    );
+
+    const specCasePathHash = await hashElement(result.specCasePath, options);
+    const storePathHash = await hashElement(result.storePath, options);
+
+    // verify that checksums of on-disk representation from spec case versus serialized content are identical
+    expect(toJsonString(storePathHash["children"])).to.equal(
+      toJsonString(specCasePathHash["children"])
+    );
+  });
 });
