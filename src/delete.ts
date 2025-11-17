@@ -6,7 +6,7 @@ import {
   EMPTY_WORKINGDIR_PATH_ERROR,
   INVALID_PATH_ERROR,
   ElementPathType,
-  convertElementPathToFilePath,
+  getElementPathInfo,
 } from "./load.js";
 import { idRegex, storeYaml } from "./store.js";
 
@@ -61,7 +61,7 @@ export function getParentElementInfo(
     parentElementPath = elementPath.slice(0, elementPath.lastIndexOf("."));
     indexOfChild = elementPath.slice(elementPath.lastIndexOf(".") + 1);
   }
-  const parentElementPathInfo = convertElementPathToFilePath(
+  const parentElementPathInfo = getElementPathInfo(
     workingDirectoryPath,
     parentElementPath
   );
@@ -105,7 +105,7 @@ export function deleteElement(
       elementPath
     );
     const parentElementPath = parentElementInfo.parentElementPath;
-    const elementPathObj = convertElementPathToFilePath(
+    const elementPathObj = getElementPathInfo(
       workingDirectoryPath,
       elementPath
     );

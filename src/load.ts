@@ -211,7 +211,7 @@ function getNextElementPath(elementPath: string): string {
   return firstElementEntry;
 }
 
-export function convertElementPathToFilePath(
+export function getElementPathInfo(
   workingDirectoryPath: string,
   elementPath: string
 ): ElementPathResult {
@@ -277,7 +277,7 @@ export function convertElementPathToFilePath(
     ) {
       return new ElementPathResult(ElementPathType.invalid, null);
     }
-    const firstElementFilePath = convertElementPathToFilePath(
+    const firstElementFilePath = getElementPathInfo(
       workingDirectoryPath,
       firstElementEntry
     );
@@ -384,7 +384,7 @@ export function load(
   if (workingDirectoryPath === "") {
     return new YdsResult(false, null, EMPTY_WORKINGDIR_PATH_ERROR);
   } else {
-    let elementPathObj = convertElementPathToFilePath(
+    let elementPathObj = getElementPathInfo(
       workingDirectoryPath,
       elementPath
     );

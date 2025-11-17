@@ -1,5 +1,5 @@
 import { deleteElement } from "../src/index";
-import { convertElementPathToFilePath } from "../src/load";
+import { getElementPathInfo } from "../src/load";
 import { toJsonString, toSpecCasePath } from "./load.spec";
 import { StoreTestResult } from "./store.spec";
 import { expect } from "chai";
@@ -36,7 +36,7 @@ function runBasicDeleteTest(
   // 3. delete element, given working directory path and element path
   const result = deleteElement(TMP_WORKING_DIR_PATH, elementPath);
 
-  const pathToExpectedParentElement = convertElementPathToFilePath(
+  const pathToExpectedParentElement = getElementPathInfo(
     specCasePath,
     expectedParentElementPath
   ).data;
@@ -57,7 +57,7 @@ function runBasicDeleteTest(
     pathToExpectedParentElement
   ).dir;
   const pathToResultParentElementDirectory = path.parse(
-    convertElementPathToFilePath(TMP_WORKING_DIR_PATH, result.message).data
+    getElementPathInfo(TMP_WORKING_DIR_PATH, result.message).data
   ).dir;
 
   // 5. return test results

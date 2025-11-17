@@ -6,7 +6,7 @@ import {
   EMPTY_WORKINGDIR_PATH_ERROR,
   INVALID_PATH_ERROR,
   ElementPathType,
-  convertElementPathToFilePath,
+  getElementPathInfo,
 } from "./load.js";
 import { getParentElementInfo, testListItemFileName } from "./delete.js";
 import { storeYaml } from "./store.js";
@@ -23,7 +23,7 @@ export function clear(
       elementPath
     );
     const parentElementPath = parentElementInfo.parentElementPath;
-    const elementPathObj = convertElementPathToFilePath(
+    const elementPathObj = getElementPathInfo(
       workingDirectoryPath,
       elementPath
     );
