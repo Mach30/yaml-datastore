@@ -1,4 +1,4 @@
-import { deleteElement } from "../src/index";
+import { deleteElement, load } from "../src/index";
 import { getElementPathInfo } from "../src/load";
 import { toJsonString, toSpecCasePath } from "./load.spec";
 import { StoreTestResult } from "./store.spec";
@@ -40,12 +40,11 @@ function runBasicDeleteTest(
     specCasePath,
     expectedParentElementPath
   ).data;
-  const expectedParentElement = JSON.parse(
-    fs.readFileSync(
-      path.resolve(specCasePath, expectedParentElementPath + ".json"),
-      "utf-8"
-    )
-  );
+
+  const expectedParentElement = load(
+    specCasePath,
+    expectedParentElementPath
+  ).element;
 
   // 4. verify results of deleteElement operation
   expect(result.success).to.equal(true);
@@ -196,11 +195,21 @@ describe("Test basic delete function", () => {
       );
     }
   });
+});
+
+describe("Test delete function with nested elements", () => {
+  beforeEach(function () {
+    workingDir = TMP_WORKING_DIR_PATH;
+    fs.mkdirSync(workingDir);
+  });
+  afterEach(function () {
+    fs.rmSync(TMP_WORKING_DIR_PATH, { recursive: true, force: true });
+  });
   it("should delete simple data type list item from object of list", async () => {
     const result = runBasicDeleteTest(
       "1.2.4_object_with_list_of_simple_data_type",
       "model.employees[2]",
-      "modelDeleteEmployee2"
+      "modelDeleteEmployee2.employees"
     );
 
     const specCasePathHash = await hashElement(result.specCasePath, options);

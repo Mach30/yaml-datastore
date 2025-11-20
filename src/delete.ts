@@ -154,7 +154,11 @@ export function deleteElement(
         return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToSimple:
       case ElementPathType.complexToSimple:
-        delete parentElement[parentElementInfo.indexOfChild];
+        if (Array.isArray(parentElement)) {
+          parentElement.splice(parentElementInfo.indexOfChild, 1);
+        } else {
+          delete parentElement[parentElementInfo.indexOfChild];
+        }
         fs.writeFileSync(parentElementFilePath, yaml.dump(parentElement));
         return new YdsResult(true, parentElement, parentElementPath);
       case ElementPathType.simpleToComplexString:
