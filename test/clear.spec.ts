@@ -1,5 +1,5 @@
 import { clear } from "../src/index";
-import { getElementPathInfo } from "../src/load";
+import { getElementPathInfo, load } from "../src/load";
 import { toJsonString, toSpecCasePath } from "./load.spec";
 import { StoreTestResult } from "./store.spec";
 import { expect } from "chai";
@@ -40,12 +40,11 @@ function runBasicClearTest(
     specCasePath,
     expectedParentElementPath
   ).data;
-  const expectedParentElement = JSON.parse(
-    fs.readFileSync(
-      path.resolve(specCasePath, expectedParentElementPath + ".json"),
-      "utf-8"
-    )
-  );
+
+  const expectedParentElement = load(
+    specCasePath,
+    expectedParentElementPath
+  ).element;
 
   // 4. verify results of clear operation
   expect(result.success).to.equal(true);
