@@ -336,24 +336,47 @@ Solution 1 implemented as property, `idCounter`, of type number in a . (dot) fil
 
 ### delete cases
 
-- delete object from object:
-  - delete contents from disk: `rm -rf <directory-representing-object on-disk>`
-  - delete object: remove key from owning object on-disk in `_this.yaml`
-- delete list from object:
-  - do a search on each list item
-  - delete all contents containing search result name: `rm -rf <list-item-name>*`
-  - delete list itself, then
-  - delete key from object
+#### delete from object
+
+- delete simple string from object:
+  - delete key from object.
+- delete other (simple data types) from object:
+  - delete key from object.
 - delete complex string from object:
   - (e.g., `model.foo` that points a file on disk) deletes file, then delete key from object.
   - delete contents from disk: `rm <complex-string-filepath>`
-  - delete key from object
-- delete simple string from object:
-  - delete key from object
-- delete other (simple data types) from object:
-  - delete key from object
+  - delete key from object.
+- delete object from object:
+  - delete contents from disk: `rm -rf <directory-representing-object on-disk>`.
+  - delete object: remove key from owning object on-disk in `_this.yaml`.
+- delete list from object:
+  - do a search on each list item.
+  - delete all contents containing search result name: `rm -rf <list-item-name>*`.
+  - delete list itself, then
+  - delete key from object.
+
+#### delete from list
+
+- delete simple string from list:
+  - delete item at specified index from list.
+- delete other (simple data types) from list:
+  - delete item at specified index from list.
+- delete complex string from list:
+  - (e.g., `model[2]` that points a file on disk) deletes file, then delete item at specified index from list.
+  - delete contents from disk: `rm <complex-string-filepath>`.
+  - delete item at specified index from list.
+- delete object from list:
+  - delete contents from disk: `rm -rf <directory-representing-object on-disk>`.
+  - delete object: delete item at specified index from list.
+- delete list from list:
+  - do a search on each list item.
+  - delete all contents containing search result name: `rm -rf <list-item-name>*` (there could be nested ID's; i.e., the owned list contains complex data that could be recursive).
+  - delete list itself, then
+  - delete delete item at specified index from list.
 
 ### clear cases
+
+#### clear from object
 
 - clear object from object:
   - delete contents from disk
