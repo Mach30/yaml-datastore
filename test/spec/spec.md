@@ -378,19 +378,39 @@ Solution 1 implemented as property, `idCounter`, of type number in a . (dot) fil
 
 #### clear from object
 
+- clear simple string from object:
+  - set key to empty string, `""`
+- clear other (simple data types) from object:
+  - set key to `null`
+- clear complex string from object:
+  - delete contents from disk
+  - set key to empty string, `""`
 - clear object from object:
   - delete contents from disk
   - set key to empty object: `{}` in owning object on-disk in `_this.yaml`
 - clear list from object:
-  - delete contents from disk
+  - do a search on each list item.
+  - delete all contents containing search result name: `rm -rf <list-item-name>*`.
+  - delete list itself, then
   - set key to empty list, `[]` in owning object on-disk in `_this.yaml`
-- clear complex string from object:
+
+#### clear from list
+
+- clear simple string from list:
+  - set item at specified index to empty string, `""`
+- clear other (simple data types) from list:
+  - set item at specified index to `null`
+- clear complex string from list:
   - delete contents from disk
-  - set key to empty string, `""`
-- clear simple string from object:
-  - set key to empty string, `""`
-- clear other (simple data types) from object: delete key from object
-  - set key to `null`
+  - set item at specified index to empty string, `""`
+- clear object from list:
+  - delete contents from disk
+  - set item at specified index to empty object: `{}` in owning list on-disk in `<list-name>.yaml`
+- clear list from list:
+  - do a search on each list item.
+  - delete all contents containing search result name: `rm -rf <list-item-name>*` (there could be nested ID's; i.e., the owned list contains complex data that could be recursive).
+  - delete list itself, then
+  - set item at specified index to empty list, `[]` in owning list on-disk in `<list-name>.yaml`
 
 ### merge conflicts
 
