@@ -167,6 +167,21 @@ describe("Test basic load function for empty element path pointing to an object"
     expect(result.message).to.equal(elementPath);
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
   });
+  it("shall load object with object of complex data types for empty element path", () => {
+    const specCasePath = toSpecCasePath(
+      "1.2.3_object_with_object_of_complex_data_types/" +
+        DEFAULT_SPEC_CASE_FOLDER
+    );
+    const elementPath = "";
+    const workingDir = path.join(specCasePath, "model");
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(specCasePath, "..", "model.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
+  });
 });
 
 // see shortToObject in ElementPathType (enum)
