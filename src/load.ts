@@ -33,7 +33,7 @@ function loadYaml(
       if (typeof (yamlAsJsObj as any)[key] == "string") {
         if (doubleParenthesesRegEx.test((yamlAsJsObj as any)[key])) {
           // parse filepath from ((filepath))
-          const dirPath = filePath.split("/").slice(0, -1).join("/");
+          const dirPath = path.parse(filePath).dir;
           const aComplexDataTypeFilePath = trimDoubleParentheses(
             (yamlAsJsObj as any)[key]
           );
