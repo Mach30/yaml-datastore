@@ -10,7 +10,7 @@ changelog:
         - enhancement
     - title: Bug fixes
       labels:
-        - bug
+        - bug-fix
     - title: DevOps
       labels:
         - DevOps

@@ -5,6 +5,7 @@ import { DEFAULT_SPEC_CASE_FOLDER } from "./spec_constants";
 import { expect } from "chai";
 import fs from "node:fs";
 import path from "path";
+import process from "process";
 
 export function runBasicLoadTest(
   specCaseName: string,
@@ -22,6 +23,8 @@ export function runBasicLoadTest(
   expect(result.message).to.equal(elementPath);
   expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
 }
+
+const projectRootDir = process.cwd();
 
 describe("Test basic load function for empty working directory", () => {
   it("shall return a YdsResult object where success is false, element is null, and message is a correct error message string, given an empty working directory path", () => {
@@ -163,6 +166,58 @@ describe("Test basic load function for empty element path pointing to an object"
       fs.readFileSync(path.resolve(specCasePath, "..", "model.json"), "utf8")
     );
     const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
+  });
+  it("shall load object with object of complex data types for empty element path", () => {
+    const specCasePath = toSpecCasePath(
+      "1.2.3_object_with_object_of_complex_data_types/" +
+        DEFAULT_SPEC_CASE_FOLDER
+    );
+    const elementPath = "";
+    const workingDir = path.join(specCasePath, "model");
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve(specCasePath, "..", "model.json"), "utf8")
+    );
+    const result = load(workingDir, elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
+  });
+});
+
+describe("Test basic load function for empty element path pointing to an object where object is also the current working directory", () => {
+  afterEach(function () {
+    process.chdir(projectRootDir);
+  });
+  it("shall load object for empty element path", () => {
+    const specCasePath = toSpecCasePath(
+      "1.1_object_with_simple_data_types/" + DEFAULT_SPEC_CASE_FOLDER
+    );
+    const elementPath = "";
+    const workingDir = path.join(specCasePath, "model");
+    process.chdir(workingDir);
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve("../..", "model.json"), "utf8")
+    );
+    const result = load(".", elementPath);
+    expect(result.success).to.equal(true);
+    expect(result.message).to.equal(elementPath);
+    expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
+  });
+  it("shall load object with object of complex data types for empty element path", () => {
+    const specCasePath = toSpecCasePath(
+      "1.2.3_object_with_object_of_complex_data_types/" +
+        DEFAULT_SPEC_CASE_FOLDER
+    );
+    const elementPath = "";
+    const workingDir = path.join(specCasePath, "model");
+    process.chdir(workingDir);
+    const expectedModel = JSON.parse(
+      fs.readFileSync(path.resolve("../..", "model.json"), "utf8")
+    );
+    const result = load(".", elementPath);
     expect(result.success).to.equal(true);
     expect(result.message).to.equal(elementPath);
     expect(toJsonString(result.element)).to.equal(toJsonString(expectedModel));
